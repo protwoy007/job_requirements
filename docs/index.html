@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BD + Remote Job Market Radar // Daily 9 AM Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { background: #090d16; color: #e2e8f0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .card { background: #111827; border: 1px solid #1f2937; border-radius: 0.75rem; }
+    .glow-green { color: #34d399; }
+    .pill { border: 1px solid #374151; background: #1f2937; transition: all 0.15s; }
+    .pill:hover, .pill.active { border-color: #10b981; background: #064e3b; color: #6ee7b7; }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-6">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <header class="card p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="text-xs text-emerald-400 tracking-widest uppercase">Automated 9:00 AM BDT Scanner</div>
+        <h1 class="text-2xl font-bold text-white mt-1">BD + Global Remote Job Radar</h1>
+        <p class="text-xs text-slate-400 mt-1">Last Scan: <span id="lastScan" class="text-emerald-300">Loading...</span></p>
+      </div>
+      <div class="grid grid-cols-3 gap-3 text-center">
+        <div class="bg-slate-900/80 px-4 py-2 rounded-lg border border-slate-800">
+          <div id="statTotal" class="text-xl font-bold text-white">0</div>
+          <div class="text-[11px] text-slate-400">Active Circulars</div>
+        </div>
+        <div class="bg-slate-900/80 px-4 py-2 rounded-lg border border-slate-800">
+          <div id="stat50k" class="text-xl font-bold text-emerald-400">0</div>
+          <div class="text-[11px] text-slate-400">50k+ BDT Jobs</div>
+        </div>
+        <div class="bg-slate-900/80 px-4 py-2 rounded-lg border border-slate-800">
+          <div id="statRemote" class="text-xl font-bold text-cyan-400">0</div>
+          <div class="text-[11px] text-slate-400">Remote USD</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="card p-4 space-y-3">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <select id="fSector" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+          <option value="ALL">All Sectors (Tech + Non-Tech)</option>
+        </select>
+        <select id="fTier" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+          <option value="ALL">All Salary Tiers</option>
+          <option value="<25k BDT">&lt;25k BDT</option>
+          <option value="25k–50k BDT">25k–50k BDT</option>
+          <option value="50k–100k BDT">50k–100k BDT</option>
+          <option value="100k+ BDT">100k+ BDT</option>
+          <option value="Remote USD (120k+ BDT eq.)">Remote USD (120k+ BDT eq.)</option>
+        </select>
+        <select id="fExp" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+          <option value="ALL">All Experience Levels</option>
+          <option value="Fresher">Fresher (0y)</option>
+          <option value="Junior (1-2y)">Junior (1-2y)</option>
+          <option value="Mid (3-5y)">Mid (3-5y)</option>
+          <option value="Senior (5+y)">Senior (5+y)</option>
+        </select>
+        <select id="fMode" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+          <option value="ALL">All Modes (BD + Remote)</option>
+          <option value="Remote">Remote Only</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="Onsite">Onsite (BD)</option>
+        </select>
+        <select id="fSort" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-emerald-300">
+          <option value="salary_desc">Sort: Highest Salary</option>
+          <option value="latest">Sort: Latest Posted</option>
+          <option value="skills_desc">Sort: Most Skills Listed</option>
+        </select>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+        <input id="fSearch" type="text" placeholder="Search role, company, or skill (e.g. AI, Flutter, Bank, RMG)..."
+          class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white w-full md:w-96" />
+        <div class="flex items-center gap-4">
+          <label class="flex items-center gap-2 cursor-pointer text-slate-300">
+            <input id="fHideGhost" type="checkbox" checked class="accent-emerald-500" />
+            Hide Ghost Jobs (45+ days old)
+          </label>
+          <button id="btnReset" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">Reset Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-400">Salary Tier -> Required Skills Unlock Matrix</h2>
+        <span class="text-xs text-slate-400">Click any skill to view its Reference Circulars</span>
+      </div>
+      <div id="unlockGrid" class="grid grid-cols-1 md:grid-cols-5 gap-3"></div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="card p-5 lg:col-span-2">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-3">Top Demanding Skills &amp; 50k+ BDT Unlocks</h2>
+        <canvas id="skillsChart" height="125"></canvas>
+      </div>
+
+      <div class="card p-5 flex flex-col justify-between">
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-wider text-cyan-400 mb-2">Personal Skill-Gap ROI Engine</h2>
+          <p class="text-xs text-slate-400 mb-3">Check the skills you already have to find your highest-ROI next skill for 50k+ BDT jobs.</p>
+          <div id="roiChecklist" class="flex flex-wrap gap-1.5 max-h-44 overflow-y-auto mb-4"></div>
+        </div>
+        <div id="roiResult" class="bg-slate-900 border border-emerald-800/60 rounded-lg p-3 text-xs text-emerald-300">
+          Select your current skills to calculate ROI...
+        </div>
+      </div>
+    </section>
+
+    <section class="card p-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-400">
+          Proof-Backed Reference Circulars (<span id="shownCount">0</span>)
+        </h2>
+        <span id="activeSkillBadge" class="hidden text-xs bg-emerald-900/60 border border-emerald-500 text-emerald-200 px-2 py-0.5 rounded cursor-pointer"></span>
+      </div>
+      <div id="circularList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    </section>
+
+  </div>
+
+  <script>
+    const FALLBACK_DATA = {
+      generated_at_bdt: "Demo Mode (Run GitHub Actions for Live 9 AM Data)",
+      trending_skills: [
+        { skill: "AI / LLM APIs", count_30d: 34, velocity_pct: 62, unlocks_50k_plus: 31 },
+        { skill: "Python", count_30d: 42, velocity_pct: 28, unlocks_50k_plus: 36 },
+        { skill: "React / Next.js", count_30d: 39, velocity_pct: 19, unlocks_50k_plus: 30 },
+        { skill: "SQL & Databases", count_30d: 37, velocity_pct: 24, unlocks_50k_plus: 29 },
+        { skill: "Docker / Kubernetes", count_30d: 26, velocity_pct: 41, unlocks_50k_plus: 25 },
+        { skill: "Cybersecurity / SOC", count_30d: 21, velocity_pct: 43, unlocks_50k_plus: 20 },
+        { skill: "Flutter / Mobile", count_30d: 24, velocity_pct: 48, unlocks_50k_plus: 19 },
+        { skill: "Power BI / Tableau", count_30d: 22, velocity_pct: 54, unlocks_50k_plus: 18 }
+      ],
+      salary_unlock_matrix: [
+        { tier: "<25k BDT", job_count: 0, top_skills: [] },
+        { tier: "25k–50k BDT", job_count: 1, top_skills: [{ skill: "Laravel / PHP", count: 1 }, { skill: "SQL & Databases", count: 1 }] },
+        { tier: "50k–100k BDT", job_count: 3, top_skills: [{ skill: "Python", count: 2 }, { skill: "AI / LLM APIs", count: 1 }, { skill: "AI Automation (n8n/Make)", count: 1 }, { skill: "SQL & Databases", count: 1 }, { skill: "Power BI / Tableau", count: 1 }, { skill: "Flutter / Mobile", count: 1 }] },
+        { tier: "100k+ BDT", job_count: 2, top_skills: [{ skill: "Product Management", count: 1 }, { skill: "Cybersecurity / SOC", count: 1 }, { skill: "SQL & Databases", count: 1 }, { skill: "SEO & Performance Ads", count: 1 }] },
+        { tier: "Remote USD (120k+ BDT eq.)", job_count: 1, top_skills: [{ skill: "AI / LLM APIs", count: 1 }, { skill: "Python", count: 1 }, { skill: "React / Next.js", count: 1 }] }
+      ],
+      circulars: [
+        { id: "d1", source: "Bdjobs", region: "Bangladesh", title: "AI Automation & LLM Engineer", company: "Dhaka FinTech Ltd", location: "Dhaka, Bangladesh", work_mode: "Hybrid", sector: "AI, Data & Analytics", experience_level: "Mid (3-5y)", skills: ["AI / LLM APIs", "AI Automation (n8n/Make)", "Python"], salary_bdt_min: 60000, salary_bdt_max: 90000, salary_is_estimated: false, salary_tier: "50k–100k BDT", posted_at: "2026-11-27", deadline: "", circular_url: "#", is_ghost: false },
+        { id: "d2", source: "Remotive", region: "Global Remote", title: "Full-Stack AI Engineer (Next.js + Python)", company: "Remote Labs", location: "Worldwide", work_mode: "Remote", sector: "Tech & Software", experience_level: "Mid (3-5y)", skills: ["AI / LLM APIs", "Python", "React / Next.js"], salary_bdt_min: 150000, salary_bdt_max: 240000, salary_is_estimated: false, salary_tier: "Remote USD (120k+ BDT eq.)", posted_at: "2026-11-26", deadline: "", circular_url: "#", is_ghost: false },
+        { id: "d3", source: "Bdjobs", region: "Bangladesh", title: "Senior Cybersecurity / SOC Analyst", company: "Premier Bank PLC", location: "Dhaka, Bangladesh", work_mode: "Onsite", sector: "Cybersecurity & Cloud", experience_level: "Senior (5+y)", skills: ["Cybersecurity / SOC", "SQL & Databases"], salary_bdt_min: 100000, salary_bdt_max: 140000, salary_is_estimated: true, salary_tier: "100k+ BDT", posted_at: "2026-11-25", deadline: "2026-12-10", circular_url: "#", is_ghost: false },
+        { id: "d4", source: "Bdjobs", region: "Bangladesh", title: "Data Analyst (SQL + Power BI)", company: "bKash Limited", location: "Dhaka, Bangladesh", work_mode: "Hybrid", sector: "AI, Data & Analytics", experience_level: "Junior (1-2y)", skills: ["SQL & Databases", "Power BI / Tableau", "Python"], salary_bdt_min: 55000, salary_bdt_max: 85000, salary_is_estimated: true, salary_tier: "50k–100k BDT", posted_at: "2026-11-24", deadline: "2026-12-05", circular_url: "#", is_ghost: false },
+        { id: "d5", source: "Skill.Jobs", region: "Bangladesh", title: "Flutter Mobile Developer", company: "Pathao Ltd", location: "Dhaka, Bangladesh", work_mode: "Onsite", sector: "Tech & Software", experience_level: "Mid (3-5y)", skills: ["Flutter / Mobile"], salary_bdt_min: 55000, salary_bdt_max: 85000, salary_is_estimated: true, salary_tier: "50k–100k BDT", posted_at: "2026-11-23", deadline: "", circular_url: "#", is_ghost: false },
+        { id: "d6", source: "Bdjobs", region: "Bangladesh", title: "Product Manager (Digital Growth)", company: "ShopUp", location: "Dhaka, Bangladesh", work_mode: "Hybrid", sector: "Business, Product & Marketing", experience_level: "Senior (5+y)", skills: ["Product Management", "SEO & Performance Ads"], salary_bdt_min: 100000, salary_bdt_max: 130000, salary_is_estimated: true, salary_tier: "100k+ BDT", posted_at: "2026-11-22", deadline: "2026-12-15", circular_url: "#", is_ghost: false },
+        { id: "d7", source: "Bdjobs", region: "Bangladesh", title: "Junior Laravel Developer", company: "Dhaka Web Studio", location: "Dhaka, Bangladesh", work_mode: "Onsite", sector: "Tech & Software", experience_level: "Junior (1-2y)", skills: ["Laravel / PHP", "SQL & Databases"], salary_bdt_min: 25000, salary_bdt_max: 40000, salary_is_estimated: true, salary_tier: "25k–50k BDT", posted_at: "2026-11-21", deadline: "", circular_url: "#", is_ghost: false }
+      ]
+    };
+
+    let DATA = null;
+    let activeSkillFilter = null;
+    let ownedSkills = new Set();
+    let chartInstance = null;
+
+    const fmtBDT = n => "৳" + Math.round(n / 1000) + "k";
+
+    async function loadData() {
+      try {
+        const res = await fetch("data/market_intel.json?t=" + Date.now());
+        if (!res.ok) throw new Error("No live JSON yet");
+        DATA = await res.json();
+      } catch {
+        DATA = FALLBACK_DATA;
+      }
+      initUI();
+    }
+
+    function initUI() {
+      document.getElementById("lastScan").textContent = DATA.generated_at_bdt;
+      const sectors = [...new Set(DATA.circulars.map(c => c.sector))].sort();
+      const fSector = document.getElementById("fSector");
+      sectors.forEach(s => {
+        const o = document.createElement("option");
+        o.value = s; o.textContent = s;
+        fSector.appendChild(o);
+      });
+
+      renderUnlockMatrix();
+      renderChart();
+      renderROIChecklist();
+      renderCirculars();
+
+      ["fSector", "fTier", "fExp", "fMode", "fSort", "fHideGhost"].forEach(id =>
+        document.getElementById(id).addEventListener("change", renderCirculars)
+      );
+      document.getElementById("fSearch").addEventListener("input", renderCirculars);
+      document.getElementById("btnReset").addEventListener("click", () => {
+        activeSkillFilter = null;
+        document.getElementById("fSector").value = "ALL";
+        document.getElementById("fTier").value = "ALL";
+        document.getElementById("fExp").value = "ALL";
+        document.getElementById("fMode").value = "ALL";
+        document.getElementById("fSearch").value = "";
+        renderCirculars();
+      });
+    }
+
+    function renderUnlockMatrix() {
+      const grid = document.getElementById("unlockGrid");
+      grid.innerHTML = "";
+      DATA.salary_unlock_matrix.forEach(row => {
+        const box = document.createElement("div");
+        box.className = "bg-slate-900/90 border border-slate-800 rounded-lg p-3 space-y-2";
+        box.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-white">${row.tier}</span>
+            <span class="text-[11px] text-slate-400">${row.job_count} jobs</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            ${row.top_skills.length ? row.top_skills.map(s => `
+              <button class="pill text-[11px] px-2 py-0.5 rounded" data-skill="${s.skill}" data-tier="${row.tier}">
+                ${s.skill} <span class="text-slate-400">(${s.count})</span>
+              </button>
+            `).join("") : '<span class="text-[11px] text-slate-500">No circulars today</span>'}
+          </div>
+        `;
+        grid.appendChild(box);
+      });
+      grid.querySelectorAll("button[data-skill]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeSkillFilter = btn.dataset.skill;
+          document.getElementById("fTier").value = btn.dataset.tier;
+          renderCirculars();
+        });
+      });
+    }
+
+    function renderChart() {
+      const top = DATA.trending_skills.slice(0, 10);
+      const ctx = document.getElementById("skillsChart").getContext("2d");
+      if (chartInstance) chartInstance.destroy();
+      chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: top.map(x => x.skill),
+          datasets: [
+            { label: "Total Demand (30d)", data: top.map(x => x.count_30d), backgroundColor: "#0ea5e9" },
+            { label: "Unlocks 50k+ BDT Jobs", data: top.map(x => x.unlocks_50k_plus), backgroundColor: "#10b981" }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "#cbd5e1", font: { size: 11 } } } },
+          scales: {
+            x: { ticks: { color: "#94a3b8", font: { size: 10 } }, grid: { color: "#1e293b" } },
+            y: { ticks: { color: "#94a3b8" }, grid: { color: "#1e293b" } }
+          }
+        }
+      });
+    }
+
+    function renderROIChecklist() {
+      const box = document.getElementById("roiChecklist");
+      const allSkills = DATA.trending_skills.slice(0, 14).map(x => x.skill);
+      box.innerHTML = allSkills.map(s => `
+        <button class="pill text-[11px] px-2.5 py-1 rounded" data-roi="${s}">${s}</button>`).join("");
+      box.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const sk = btn.dataset.roi;
+          if (ownedSkills.has(sk)) { ownedSkills.delete(sk); btn.classList.remove("active"); }
+          else { ownedSkills.add(sk); btn.classList.add("active"); }
+          computeROI();
+        });
+      });
+      computeROI();
+    }
+
+    function computeROI() {
+      const highPay = DATA.circulars.filter(c => c.salary_bdt_max >= 50000);
+      const counts = {};
+      highPay.forEach(c => c.skills.forEach(s => {
+        if (!ownedSkills.has(s)) counts[s] = (counts[s] || 0) + 1;
+      }));
+      const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      const out = document.getElementById("roiResult");
+      if (!ranked.length) {
+        out.textContent = "You already cover the top high-paying skills in this dataset.";
+        return;
+      }
+      out.innerHTML = `<div class="font-bold text-white mb-1">Highest-ROI Next Skills (50k+ BDT):</div>` +
+        ranked.map(([sk, cnt], i) => `<div>${i + 1}. <span class="text-emerald-300 font-bold">${sk}</span> — unlocks ${cnt} high-paying jobs</div>`).join("");
+    }
+
+    function renderCirculars() {
+      const sec = document.getElementById("fSector").value;
+      const tier = document.getElementById("fTier").value;
+      const exp = document.getElementById("fExp").value;
+      const mode = document.getElementById("fMode").value;
+      const sort = document.getElementById("fSort").value;
+      const q = document.getElementById("fSearch").value.trim().toLowerCase();
+      const hideGhost = document.getElementById("fHideGhost").checked;
+
+      let list = DATA.circulars.filter(c => {
+        if (hideGhost && c.is_ghost) return false;
+        if (sec !== "ALL" && c.sector !== sec) return false;
+        if (tier !== "ALL" && c.salary_tier !== tier) return false;
+        if (exp !== "ALL" && c.experience_level !== exp) return false;
+        if (mode !== "ALL" && c.work_mode !== mode) return false;
+        if (activeSkillFilter && !c.skills.includes(activeSkillFilter)) return false;
+        if (q) {
+          const hay = `${c.title} ${c.company} ${c.sector} ${c.skills.join(" ")}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (sort === "salary_desc") list.sort((a, b) => b.salary_bdt_max - a.salary_bdt_max);
+      else if (sort === "latest") list.sort((a, b) => (b.posted_at || "").localeCompare(a.posted_at || ""));
+      else if (sort === "skills_desc") list.sort((a, b) => b.skills.length - a.skills.length);
+
+      document.getElementById("statTotal").textContent = DATA.circulars.length;
+      document.getElementById("stat50k").textContent = DATA.circulars.filter(c => c.salary_bdt_max >= 50000).length;
+      document.getElementById("statRemote").textContent = DATA.circulars.filter(c => c.region === "Global Remote").length;
+      document.getElementById("shownCount").textContent = list.length;
+
+      const badge = document.getElementById("activeSkillBadge");
+      if (activeSkillFilter) {
+        badge.classList.remove("hidden");
+        badge.textContent = `Filtered by skill: ${activeSkillFilter} ×`;
+        badge.onclick = () => { activeSkillFilter = null; renderCirculars(); };
+      } else {
+        badge.classList.add("hidden");
+      }
+
+      const container = document.getElementById("circularList");
+      container.innerHTML = list.map(c => `
+        <div class="bg-slate-900/80 border border-slate-800 hover:border-emerald-600/60 rounded-lg p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <h3 class="font-bold text-white text-sm">${c.title}</h3>
+                <div class="text-xs text-slate-400">${c.company} • ${c.location}</div>
+              </div>
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 whitespace-nowrap">
+                ${fmtBDT(c.salary_bdt_min)}–${fmtBDT(c.salary_bdt_max)} ${c.salary_is_estimated ? "(Est.)" : ""}
+              </span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mt-2.5">
+              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-cyan-300">${c.sector}</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-200">${c.experience_level}</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-amber-300">${c.work_mode}</span>
+              ${c.skills.map(s => `<span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-900">${s}</span>`).join("")}
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-800 mt-3">
+            <span>Source: <b class="text-slate-200">${c.source}</b> • ${c.posted_at || "Today"} ${c.deadline ? `• Deadline: ${c.deadline}` : ""}</span>
+            <a href="${c.circular_url}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline">View Circular →</a>
+          </div>
+        </div>
+      `).join("") || `<div class="text-sm text-slate-400 col-span-2 py-6 text-center">No circulars match your current filters.</div>`;
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
