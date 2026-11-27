@@ -1,124 +1,193 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BD + Remote Job Market Radar // Daily 9 AM Intelligence</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>BD Job Market Radar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { background: #090d16; color: #e2e8f0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-    .card { background: #111827; border: 1px solid #1f2937; border-radius: 0.75rem; }
-    .glow-green { color: #34d399; }
-    .pill { border: 1px solid #374151; background: #1f2937; transition: all 0.15s; }
-    .pill:hover, .pill.active { border-color: #10b981; background: #064e3b; color: #6ee7b7; }
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --border: #e4e7ec;
+      --text: #101828;
+      --muted: #667085;
+      --accent: #4f46e5;
+      --accent-soft: #eef2ff;
+      --green: #067647;
+      --green-soft: #ecfdf3;
+      --amber-soft: #fffaeb;
+      --amber: #b54708;
+      --blue-soft: #eff8ff;
+      --blue: #175cd3;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
+    .topbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 24px; }
+    .topbar h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+    .topbar p { color: var(--muted); margin-top: 4px; }
+    .kpis { display: grid; grid-template-columns: repeat(3, minmax(120px, 1fr)); gap: 12px; }
+    .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 20px; min-width: 130px; }
+    .kpi .v { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+    .kpi .l { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 16px; }
+    .card-head h2 { font-size: 15px; font-weight: 600; }
+    .card-head .hint { font-size: 12px; color: var(--muted); }
+    .filters { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    select, input[type="text"] {
+      width: 100%; height: 40px; padding: 0 12px; font: inherit; color: var(--text);
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px; outline: none;
+    }
+    select:focus, input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .filter-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
+    .filter-row input[type="text"] { max-width: 420px; }
+    .filter-row .right { display: flex; align-items: center; gap: 16px; }
+    label.check { display: flex; align-items: center; gap: 8px; color: var(--muted); cursor: pointer; }
+    input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
+    .btn { height: 40px; padding: 0 16px; font: inherit; font-weight: 500; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+    .btn:hover { background: var(--bg); }
+    .matrix { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .tier { border: 1px solid var(--border); border-radius: 10px; padding: 14px; background: #fcfcfd; }
+    .tier-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+    .tier-top .name { font-weight: 600; font-size: 13px; }
+    .tier-top .cnt { font-size: 12px; color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+    .chip:hover, .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+    .chip .n { color: var(--muted); margin-left: 2px; }
+    .empty-note { font-size: 12px; color: var(--muted); }
+    .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .two-col .card { margin-bottom: 0; }
+    .roi-box { margin-top: 16px; padding: 12px; background: var(--accent-soft); border-radius: 8px; font-size: 13px; color: #3730a3; }
+    .roi-box .t { font-weight: 600; margin-bottom: 4px; }
+    .scroll { max-height: 180px; overflow-y: auto; }
+    .section-gap { margin-top: 20px; }
+    .badge-filter { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid #c7d2fe; cursor: pointer; }
+    .hidden { display: none; }
+    .jobs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .job { border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); }
+    .job:hover { border-color: #c7d2fe; box-shadow: 0 1px 3px rgba(16,24,40,0.08); }
+    .job-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .job h3 { font-size: 15px; font-weight: 600; }
+    .job .meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .salary { font-size: 13px; font-weight: 600; color: var(--green); background: var(--green-soft); padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); }
+    .tag.sector { background: var(--blue-soft); color: var(--blue); }
+    .tag.mode { background: var(--amber-soft); color: var(--amber); }
+    .tag.skill { background: var(--accent-soft); color: var(--accent); }
+    .job-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+    .job-foot a { color: var(--accent); font-weight: 500; text-decoration: none; }
+    .job-foot a:hover { text-decoration: underline; }
+    .none { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 32px 0; }
+    @media (max-width: 980px) {
+      .filters { grid-template-columns: repeat(2, 1fr); }
+      .matrix { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+      .two-col .card { margin-bottom: 20px; }
+      .jobs { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .filters, .matrix { grid-template-columns: 1fr; }
+      .kpis { grid-template-columns: 1fr 1fr 1fr; }
+      .kpi { padding: 10px 12px; min-width: 0; }
+    }
   </style>
 </head>
-<body class="min-h-screen p-4 md:p-6">
-  <div class="max-w-7xl mx-auto space-y-6">
+<body>
+  <div class="wrap">
 
-    <header class="card p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="topbar">
       <div>
-        <div class="text-xs text-emerald-400 tracking-widest uppercase">Automated 9:00 AM BDT Scanner</div>
-        <h1 class="text-2xl font-bold text-white mt-1">BD + Global Remote Job Radar</h1>
-        <p class="text-xs text-slate-400 mt-1">Last Scan: <span id="lastScan" class="text-emerald-300">Loading...</span></p>
+        <h1>Job Market Radar</h1>
+        <p>Bangladesh and global remote openings, updated daily at 9:00 AM BDT &middot; Last scan: <span id="lastScan">Loading...</span></p>
       </div>
-      <div class="grid grid-cols-3 gap-3 text-center">
-        <div class="bg-slate-900/80 px-4 py-2 rounded-lg border border-slate-800">
-          <div id="statTotal" class="text-xl font-bold text-white">0</div>
-          <div class="text-[11px] text-slate-400">Active Circulars</div>
-        </div>
-        <div class="bg-slate-900/80 px-4 py-2 rounded-lg border border-slate-800">
-          <div id="stat50k" class="text-xl font-bold text-emerald-400">0</div>
-          <div class="text-[11px] text-slate-400">50k+ BDT Jobs</div>
-        </div>
-        <div class="bg-slate-900/80 px-4 py-2 rounded-lg border border-slate-800">
-          <div id="statRemote" class="text-xl font-bold text-cyan-400">0</div>
-          <div class="text-[11px] text-slate-400">Remote USD</div>
-        </div>
+      <div class="kpis">
+        <div class="kpi"><div id="statTotal" class="v">0</div><div class="l">Active circulars</div></div>
+        <div class="kpi"><div id="stat50k" class="v">0</div><div class="l">50k+ BDT jobs</div></div>
+        <div class="kpi"><div id="statRemote" class="v">0</div><div class="l">Remote (USD)</div></div>
       </div>
-    </header>
+    </div>
 
-    <section class="card p-4 space-y-3">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-        <select id="fSector" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-          <option value="ALL">All Sectors (Tech + Non-Tech)</option>
-        </select>
-        <select id="fTier" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-          <option value="ALL">All Salary Tiers</option>
+    <div class="card">
+      <div class="filters">
+        <select id="fSector"><option value="ALL">All sectors</option></select>
+        <select id="fTier">
+          <option value="ALL">All salary tiers</option>
           <option value="<25k BDT">&lt;25k BDT</option>
           <option value="25k–50k BDT">25k–50k BDT</option>
           <option value="50k–100k BDT">50k–100k BDT</option>
           <option value="100k+ BDT">100k+ BDT</option>
           <option value="Remote USD (120k+ BDT eq.)">Remote USD (120k+ BDT eq.)</option>
         </select>
-        <select id="fExp" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-          <option value="ALL">All Experience Levels</option>
+        <select id="fExp">
+          <option value="ALL">All experience levels</option>
           <option value="Fresher">Fresher (0y)</option>
           <option value="Junior (1-2y)">Junior (1-2y)</option>
           <option value="Mid (3-5y)">Mid (3-5y)</option>
           <option value="Senior (5+y)">Senior (5+y)</option>
         </select>
-        <select id="fMode" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
-          <option value="ALL">All Modes (BD + Remote)</option>
-          <option value="Remote">Remote Only</option>
+        <select id="fMode">
+          <option value="ALL">All work modes</option>
+          <option value="Remote">Remote</option>
           <option value="Hybrid">Hybrid</option>
-          <option value="Onsite">Onsite (BD)</option>
+          <option value="Onsite">Onsite</option>
         </select>
-        <select id="fSort" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-emerald-300">
-          <option value="salary_desc">Sort: Highest Salary</option>
-          <option value="latest">Sort: Latest Posted</option>
-          <option value="skills_desc">Sort: Most Skills Listed</option>
+        <select id="fSort">
+          <option value="salary_desc">Sort: highest salary</option>
+          <option value="latest">Sort: latest posted</option>
+          <option value="skills_desc">Sort: most skills listed</option>
         </select>
       </div>
-      <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-        <input id="fSearch" type="text" placeholder="Search role, company, or skill (e.g. AI, Flutter, Bank, RMG)..."
-          class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white w-full md:w-96" />
-        <div class="flex items-center gap-4">
-          <label class="flex items-center gap-2 cursor-pointer text-slate-300">
-            <input id="fHideGhost" type="checkbox" checked class="accent-emerald-500" />
-            Hide Ghost Jobs (45+ days old)
-          </label>
-          <button id="btnReset" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">Reset Filters</button>
+      <div class="filter-row">
+        <input id="fSearch" type="text" placeholder="Search role, company or skill" />
+        <div class="right">
+          <label class="check"><input id="fHideGhost" type="checkbox" checked /> Hide listings older than 45 days</label>
+          <button id="btnReset" class="btn">Reset filters</button>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="card p-5">
-      <div class="flex items-center justify-between mb-3">
-        <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-400">Salary Tier -> Required Skills Unlock Matrix</h2>
-        <span class="text-xs text-slate-400">Click any skill to view its Reference Circulars</span>
+    <div class="card">
+      <div class="card-head">
+        <h2>Skills required by salary tier</h2>
+        <span class="hint">Select a skill to filter the listings below</span>
       </div>
-      <div id="unlockGrid" class="grid grid-cols-1 md:grid-cols-5 gap-3"></div>
-    </section>
+      <div id="unlockGrid" class="matrix"></div>
+    </div>
 
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="card p-5 lg:col-span-2">
-        <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-3">Top Demanding Skills &amp; 50k+ BDT Unlocks</h2>
-        <canvas id="skillsChart" height="125"></canvas>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-head"><h2>Most demanded skills</h2></div>
+        <canvas id="skillsChart" height="130"></canvas>
       </div>
+      <div class="card">
+        <div class="card-head"><h2>Skill gap planner</h2></div>
+        <p class="hint" style="color:var(--muted);font-size:13px;margin-bottom:12px;">Select the skills you already have to see which one to learn next for 50k+ BDT roles.</p>
+        <div id="roiChecklist" class="chips scroll"></div>
+        <div id="roiResult" class="roi-box">Select your current skills to calculate.</div>
+      </div>
+    </div>
 
-      <div class="card p-5 flex flex-col justify-between">
-        <div>
-          <h2 class="text-sm font-bold uppercase tracking-wider text-cyan-400 mb-2">Personal Skill-Gap ROI Engine</h2>
-          <p class="text-xs text-slate-400 mb-3">Check the skills you already have to find your highest-ROI next skill for 50k+ BDT jobs.</p>
-          <div id="roiChecklist" class="flex flex-wrap gap-1.5 max-h-44 overflow-y-auto mb-4"></div>
-        </div>
-        <div id="roiResult" class="bg-slate-900 border border-emerald-800/60 rounded-lg p-3 text-xs text-emerald-300">
-          Select your current skills to calculate ROI...
-        </div>
+    <div class="card section-gap">
+      <div class="card-head">
+        <h2>Circulars (<span id="shownCount">0</span>)</h2>
+        <span id="activeSkillBadge" class="badge-filter hidden"></span>
       </div>
-    </section>
-
-    <section class="card p-5">
-      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-        <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-400">
-          Proof-Backed Reference Circulars (<span id="shownCount">0</span>)
-        </h2>
-        <span id="activeSkillBadge" class="hidden text-xs bg-emerald-900/60 border border-emerald-500 text-emerald-200 px-2 py-0.5 rounded cursor-pointer"></span>
-      </div>
-      <div id="circularList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-    </section>
+      <div id="circularList" class="jobs"></div>
+    </div>
 
   </div>
 
@@ -153,7 +222,7 @@
       ]
     };
 
-    let DATA = null;
+        let DATA = null;
     let activeSkillFilter = null;
     let ownedSkills = new Set();
     let chartInstance = null;
@@ -206,18 +275,16 @@
       grid.innerHTML = "";
       DATA.salary_unlock_matrix.forEach(row => {
         const box = document.createElement("div");
-        box.className = "bg-slate-900/90 border border-slate-800 rounded-lg p-3 space-y-2";
+        box.className = "tier";
         box.innerHTML = `
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-white">${row.tier}</span>
-            <span class="text-[11px] text-slate-400">${row.job_count} jobs</span>
+          <div class="tier-top">
+            <span class="name">${row.tier}</span>
+            <span class="cnt">${row.job_count} jobs</span>
           </div>
-          <div class="flex flex-wrap gap-1.5">
+          <div class="chips">
             ${row.top_skills.length ? row.top_skills.map(s => `
-              <button class="pill text-[11px] px-2 py-0.5 rounded" data-skill="${s.skill}" data-tier="${row.tier}">
-                ${s.skill} <span class="text-slate-400">(${s.count})</span>
-              </button>
-            `).join("") : '<span class="text-[11px] text-slate-500">No circulars today</span>'}
+              <button class="chip" data-skill="${s.skill}" data-tier="${row.tier}">${s.skill}<span class="n">${s.count}</span></button>
+            `).join("") : '<span class="empty-note">No circulars</span>'}
           </div>
         `;
         grid.appendChild(box);
@@ -235,21 +302,22 @@
       const top = DATA.trending_skills.slice(0, 10);
       const ctx = document.getElementById("skillsChart").getContext("2d");
       if (chartInstance) chartInstance.destroy();
+      Chart.defaults.font.family = "Inter, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
       chartInstance = new Chart(ctx, {
         type: "bar",
         data: {
           labels: top.map(x => x.skill),
           datasets: [
-            { label: "Total Demand (30d)", data: top.map(x => x.count_30d), backgroundColor: "#0ea5e9" },
-            { label: "Unlocks 50k+ BDT Jobs", data: top.map(x => x.unlocks_50k_plus), backgroundColor: "#10b981" }
+            { label: "Demand (30 days)", data: top.map(x => x.count_30d), backgroundColor: "#a5b4fc", borderRadius: 4 },
+            { label: "Roles paying 50k+ BDT", data: top.map(x => x.unlocks_50k_plus), backgroundColor: "#4f46e5", borderRadius: 4 }
           ]
         },
         options: {
           responsive: true,
-          plugins: { legend: { labels: { color: "#cbd5e1", font: { size: 11 } } } },
+          plugins: { legend: { position: "bottom", labels: { color: "#475467", boxWidth: 12, boxHeight: 12, font: { size: 12 } } } },
           scales: {
-            x: { ticks: { color: "#94a3b8", font: { size: 10 } }, grid: { color: "#1e293b" } },
-            y: { ticks: { color: "#94a3b8" }, grid: { color: "#1e293b" } }
+            x: { ticks: { color: "#667085", font: { size: 11 } }, grid: { display: false } },
+            y: { ticks: { color: "#667085", font: { size: 11 } }, grid: { color: "#eaecf0" } }
           }
         }
       });
@@ -258,8 +326,7 @@
     function renderROIChecklist() {
       const box = document.getElementById("roiChecklist");
       const allSkills = DATA.trending_skills.slice(0, 14).map(x => x.skill);
-      box.innerHTML = allSkills.map(s => `
-        <button class="pill text-[11px] px-2.5 py-1 rounded" data-roi="${s}">${s}</button>`).join("");
+      box.innerHTML = allSkills.map(s => `<button class="chip" data-roi="${s}">${s}</button>`).join("");
       box.querySelectorAll("button").forEach(btn => {
         btn.addEventListener("click", () => {
           const sk = btn.dataset.roi;
@@ -283,8 +350,8 @@
         out.textContent = "You already cover the top high-paying skills in this dataset.";
         return;
       }
-      out.innerHTML = `<div class="font-bold text-white mb-1">Highest-ROI Next Skills (50k+ BDT):</div>` +
-        ranked.map(([sk, cnt], i) => `<div>${i + 1}. <span class="text-emerald-300 font-bold">${sk}</span> — unlocks ${cnt} high-paying jobs</div>`).join("");
+      out.innerHTML = `<div class="t">Best next skills for 50k+ BDT roles</div>` +
+        ranked.map(([sk, cnt], i) => `<div>${i + 1}. <strong>${sk}</strong> &middot; ${cnt} matching roles</div>`).join("");
     }
 
     function renderCirculars() {
@@ -322,7 +389,7 @@
       const badge = document.getElementById("activeSkillBadge");
       if (activeSkillFilter) {
         badge.classList.remove("hidden");
-        badge.textContent = `Filtered by skill: ${activeSkillFilter} ×`;
+        badge.textContent = `Skill: ${activeSkillFilter} ×`;
         badge.onclick = () => { activeSkillFilter = null; renderCirculars(); };
       } else {
         badge.classList.add("hidden");
@@ -330,30 +397,28 @@
 
       const container = document.getElementById("circularList");
       container.innerHTML = list.map(c => `
-        <div class="bg-slate-900/80 border border-slate-800 hover:border-emerald-600/60 rounded-lg p-4 flex flex-col justify-between">
+        <div class="job">
           <div>
-            <div class="flex items-start justify-between gap-2">
+            <div class="job-top">
               <div>
-                <h3 class="font-bold text-white text-sm">${c.title}</h3>
-                <div class="text-xs text-slate-400">${c.company} • ${c.location}</div>
+                <h3>${c.title}</h3>
+                <div class="meta">${c.company} · ${c.location}</div>
               </div>
-              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 whitespace-nowrap">
-                ${fmtBDT(c.salary_bdt_min)}–${fmtBDT(c.salary_bdt_max)} ${c.salary_is_estimated ? "(Est.)" : ""}
-              </span>
+              <span class="salary">${fmtBDT(c.salary_bdt_min)}–${fmtBDT(c.salary_bdt_max)}${c.salary_is_estimated ? " est." : ""}</span>
             </div>
-            <div class="flex flex-wrap gap-1.5 mt-2.5">
-              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-cyan-300">${c.sector}</span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-200">${c.experience_level}</span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-amber-300">${c.work_mode}</span>
-              ${c.skills.map(s => `<span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-900">${s}</span>`).join("")}
+            <div class="tags">
+              <span class="tag sector">${c.sector}</span>
+              <span class="tag">${c.experience_level}</span>
+              <span class="tag mode">${c.work_mode}</span>
+              ${c.skills.map(s => `<span class="tag skill">${s}</span>`).join("")}
             </div>
           </div>
-          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-800 mt-3">
-            <span>Source: <b class="text-slate-200">${c.source}</b> • ${c.posted_at || "Today"} ${c.deadline ? `• Deadline: ${c.deadline}` : ""}</span>
-            <a href="${c.circular_url}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline">View Circular →</a>
+          <div class="job-foot">
+            <span>${c.source} · ${c.posted_at || "Today"}${c.deadline ? ` · Deadline ${c.deadline}` : ""}</span>
+            <a href="${c.circular_url}" target="_blank" rel="noopener noreferrer">View circular →</a>
           </div>
         </div>
-      `).join("") || `<div class="text-sm text-slate-400 col-span-2 py-6 text-center">No circulars match your current filters.</div>`;
+      `).join("") || `<div class="none">No circulars match your filters.</div>`;
     }
 
     loadData();
