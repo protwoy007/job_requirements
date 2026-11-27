@@ -4,25 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BD Job Market Radar</title>
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (!t) t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
-      --bg: #f6f7f9;
+      color-scheme: light;
+      --bg: #f3f5fb;
       --surface: #ffffff;
-      --border: #e4e7ec;
-      --text: #101828;
-      --muted: #667085;
+      --border: #e3e7f0;
+      --text: #0f172a;
+      --muted: #64748b;
       --accent: #4f46e5;
       --accent-soft: #eef2ff;
-      --green: #067647;
-      --green-soft: #ecfdf3;
-      --amber-soft: #fffaeb;
-      --amber: #b54708;
-      --blue-soft: #eff8ff;
-      --blue: #175cd3;
+      --accent-border: #c7d2fe;
+      --field: #f8fafc;
+      --tag-bg: #f1f5f9;
+      --tag-fg: #475569;
+      --mode-bg: #fef3c7;
+      --mode-fg: #92400e;
+      --skill-bg: #eef2ff;
+      --skill-fg: #4338ca;
+      --roi-bg: linear-gradient(135deg, #eef2ff, #ecfeff);
+      --roi-border: #c7d2fe;
+      --roi-fg: #312e81;
+      --hero: linear-gradient(120deg, #4338ca 0%, #6d28d9 55%, #0ea5e9 100%);
+      --shadow: 0 1px 2px rgba(15,23,42,0.04);
+      --shadow-hover: 0 6px 18px rgba(15,23,42,0.08);
+      --sec-bg-l: 92%;
+      --sec-fg-l: 32%;
+      --sec-bg-s: 85%;
+      --sec-fg-s: 70%;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --surface: #121a30;
+      --border: #25304d;
+      --text: #e6e9f5;
+      --muted: #94a3c0;
+      --accent: #818cf8;
+      --accent-soft: rgba(99,102,241,0.16);
+      --accent-border: rgba(129,140,248,0.4);
+      --field: #0e1630;
+      --tag-bg: #1c2744;
+      --tag-fg: #b6c0dc;
+      --mode-bg: rgba(245,158,11,0.16);
+      --mode-fg: #fbbf24;
+      --skill-bg: rgba(99,102,241,0.2);
+      --skill-fg: #a5b4fc;
+      --roi-bg: linear-gradient(135deg, rgba(99,102,241,0.16), rgba(14,165,233,0.12));
+      --roi-border: rgba(129,140,248,0.35);
+      --roi-fg: #c7d2fe;
+      --hero: linear-gradient(120deg, #312e81 0%, #5b21b6 55%, #0369a1 100%);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4);
+      --shadow-hover: 0 8px 22px rgba(0,0,0,0.45);
+      --sec-bg-l: 22%;
+      --sec-fg-l: 80%;
+      --sec-bg-s: 50%;
+      --sec-fg-s: 85%;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -33,63 +82,78 @@
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
-    .topbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 24px; }
-    .topbar h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
-    .topbar p { color: var(--muted); margin-top: 4px; }
-    .kpis { display: grid; grid-template-columns: repeat(3, minmax(120px, 1fr)); gap: 12px; }
-    .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 20px; min-width: 130px; }
-    .kpi .v { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
-    .kpi .l { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-    .card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 16px; }
-    .card-head h2 { font-size: 15px; font-weight: 600; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px 24px 64px; }
+    .hero {
+      background: var(--hero);
+      border-radius: 16px;
+      padding: 28px 32px;
+      color: #fff;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.25);
+    }
+    .hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+    .hero p { color: rgba(255,255,255,0.85); margin-top: 6px; max-width: 520px; }
+    .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+    .theme-btn { font: inherit; font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.18); color: #fff; cursor: pointer; }
+    .theme-btn:hover { background: rgba(255,255,255,0.3); }
+    .hero .stamp { display: inline-block; font-size: 12px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.28); padding: 3px 10px; border-radius: 999px; }
+    .kpis { display: flex; gap: 12px; flex-wrap: wrap; }
+    .kpi { background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.28); border-radius: 12px; padding: 14px 20px; min-width: 130px; backdrop-filter: blur(4px); }
+    .kpi .v { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+    .kpi .l { font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 2px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+    .card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .card-head h2 { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+    .card-head h2::before { content: ""; width: 4px; height: 16px; border-radius: 2px; background: linear-gradient(180deg, #6366f1, #0ea5e9); }
     .card-head .hint { font-size: 12px; color: var(--muted); }
     .filters { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
     select, input[type="text"] {
       width: 100%; height: 40px; padding: 0 12px; font: inherit; color: var(--text);
-      background: var(--surface); border: 1px solid var(--border); border-radius: 8px; outline: none;
+      background: var(--field); border: 1px solid var(--border); border-radius: 10px; outline: none;
     }
-    select:focus, input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    select:focus, input[type="text"]:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px rgba(99,102,241,0.18); }
     .filter-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
     .filter-row input[type="text"] { max-width: 420px; }
     .filter-row .right { display: flex; align-items: center; gap: 16px; }
     label.check { display: flex; align-items: center; gap: 8px; color: var(--muted); cursor: pointer; }
     input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
-    .btn { height: 40px; padding: 0 16px; font: inherit; font-weight: 500; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
-    .btn:hover { background: var(--bg); }
+    .btn { height: 40px; padding: 0 18px; font: inherit; font-weight: 600; color: #fff; background: #4f46e5; border: 0; border-radius: 10px; cursor: pointer; }
+    .btn:hover { background: #4338ca; }
     .matrix { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-    .tier { border: 1px solid var(--border); border-radius: 10px; padding: 14px; background: #fcfcfd; }
-    .tier-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
-    .tier-top .name { font-weight: 600; font-size: 13px; }
-    .tier-top .cnt { font-size: 12px; color: var(--muted); }
+    .tier { --c: #64748b; border: 1px solid var(--border); border-top: 4px solid var(--c); border-radius: 12px; padding: 14px; background: var(--surface); }
+    .tier.t0 { --c: #64748b; } .tier.t1 { --c: #0ea5e9; } .tier.t2 { --c: #6366f1; } .tier.t3 { --c: #a855f7; } .tier.t4 { --c: #10b981; }
+    .tier-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 6px; }
+    .tier-top .name { font-weight: 700; font-size: 13px; color: var(--c); }
+    .tier-top .cnt { font-size: 12px; color: var(--muted); white-space: nowrap; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
-    .chip:hover, .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
-    .chip .n { color: var(--muted); margin-left: 2px; }
+    .chip { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--field); color: var(--text); cursor: pointer; }
+    .tier .chip:hover { border-color: var(--c); color: var(--c); background: var(--surface); }
+    .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    .chip .n { color: var(--muted); margin-left: 4px; }
     .empty-note { font-size: 12px; color: var(--muted); }
     .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
     .two-col .card { margin-bottom: 0; }
-    .roi-box { margin-top: 16px; padding: 12px; background: var(--accent-soft); border-radius: 8px; font-size: 13px; color: #3730a3; }
-    .roi-box .t { font-weight: 600; margin-bottom: 4px; }
+    .roi-box { margin-top: 16px; padding: 14px; background: var(--roi-bg); border: 1px solid var(--roi-border); border-radius: 10px; font-size: 13px; color: var(--roi-fg); }
+    .roi-box .t { font-weight: 700; margin-bottom: 4px; }
     .scroll { max-height: 180px; overflow-y: auto; }
     .section-gap { margin-top: 20px; }
-    .badge-filter { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid #c7d2fe; cursor: pointer; }
+    .badge-filter { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-border); cursor: pointer; }
     .hidden { display: none; }
     .jobs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .job { border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); }
-    .job:hover { border-color: #c7d2fe; box-shadow: 0 1px 3px rgba(16,24,40,0.08); }
+    .job { border: 1px solid var(--border); border-left: 4px solid #6366f1; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); transition: box-shadow 0.15s, transform 0.15s; }
+    .job:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
     .job-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
     .job h3 { font-size: 15px; font-weight: 600; }
     .job .meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .salary { font-size: 13px; font-weight: 600; color: var(--green); background: var(--green-soft); padding: 4px 10px; border-radius: 6px; white-space: nowrap; }
+    .salary { font-size: 13px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #059669, #10b981); padding: 4px 10px; border-radius: 8px; white-space: nowrap; }
     .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-    .tag { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); }
-    .tag.sector { background: var(--blue-soft); color: var(--blue); }
-    .tag.mode { background: var(--amber-soft); color: var(--amber); }
-    .tag.skill { background: var(--accent-soft); color: var(--accent); }
+    .tag { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--tag-bg); color: var(--tag-fg); }
+    .tag.sector { background: hsl(var(--sh) var(--sec-bg-s) var(--sec-bg-l)); color: hsl(var(--sh) var(--sec-fg-s) var(--sec-fg-l)); }
+    .tag.mode { background: var(--mode-bg); color: var(--mode-fg); }
+    .tag.skill { background: var(--skill-bg); color: var(--skill-fg); }
     .job-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
-    .job-foot a { color: var(--accent); font-weight: 500; text-decoration: none; }
+    .job-foot a { color: var(--accent); font-weight: 600; text-decoration: none; }
     .job-foot a:hover { text-decoration: underline; }
     .none { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 32px 0; }
     @media (max-width: 980px) {
@@ -101,18 +165,22 @@
     }
     @media (max-width: 560px) {
       .filters, .matrix { grid-template-columns: 1fr; }
-      .kpis { grid-template-columns: 1fr 1fr 1fr; }
-      .kpi { padding: 10px 12px; min-width: 0; }
+      .hero { padding: 20px; }
+      .kpi { min-width: 0; flex: 1; padding: 10px 12px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
 
-    <div class="topbar">
+    <div class="hero">
       <div>
         <h1>Job Market Radar</h1>
-        <p>Bangladesh and global remote openings, updated daily at 9:00 AM BDT &middot; Last scan: <span id="lastScan">Loading...</span></p>
+        <p>Bangladesh and global remote openings with salary tiers, in-demand skills and live circulars.</p>
+        <div class="hero-meta">
+          <span class="stamp">Updated daily 9:00 AM BDT &middot; Last scan: <span id="lastScan">Loading...</span></span>
+          <button id="themeToggle" class="theme-btn" type="button">Dark mode</button>
+        </div>
       </div>
       <div class="kpis">
         <div class="kpi"><div id="statTotal" class="v">0</div><div class="l">Active circulars</div></div>
@@ -129,8 +197,8 @@
           <option value="<25k BDT">&lt;25k BDT</option>
           <option value="25k–50k BDT">25k–50k BDT</option>
           <option value="50k–100k BDT">50k–100k BDT</option>
-          <option value="100k+ BDT">100k+ BDT</option>
-          <option value="Remote USD (120k+ BDT eq.)">Remote USD (120k+ BDT eq.)</option>
+          <option value="100k+ BDT">1 lakh+ BDT</option>
+          <option value="Remote USD (120k+ BDT eq.)">Remote USD (1.2 lakh+ BDT eq.)</option>
         </select>
         <select id="fExp">
           <option value="ALL">All experience levels</option>
@@ -227,7 +295,26 @@
     let ownedSkills = new Set();
     let chartInstance = null;
 
-    const fmtBDT = n => "৳" + Math.round(n / 1000) + "k";
+    const fmtBDT = n => {
+      if (n >= 100000) return "৳" + (Math.round(n / 10000) / 10) + " lakh";
+      return "৳" + Math.round(n / 1000) + "k";
+    };
+
+    const tierLabel = t => t.replace("120k+", "1.2 lakh+").replace("100k+", "1 lakh+");
+
+    const tierColors = {
+      "<25k BDT": "#64748b",
+      "25k–50k BDT": "#0ea5e9",
+      "50k–100k BDT": "#6366f1",
+      "100k+ BDT": "#a855f7",
+      "Remote USD (120k+ BDT eq.)": "#10b981"
+    };
+
+    const sectorHue = name => {
+      let h = 0;
+      for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 360;
+      return h;
+    };
 
     async function loadData() {
       try {
@@ -273,12 +360,12 @@
     function renderUnlockMatrix() {
       const grid = document.getElementById("unlockGrid");
       grid.innerHTML = "";
-      DATA.salary_unlock_matrix.forEach(row => {
+      DATA.salary_unlock_matrix.forEach((row, idx) => {
         const box = document.createElement("div");
-        box.className = "tier";
+        box.className = "tier t" + idx;
         box.innerHTML = `
           <div class="tier-top">
-            <span class="name">${row.tier}</span>
+            <span class="name">${tierLabel(row.tier)}</span>
             <span class="cnt">${row.job_count} jobs</span>
           </div>
           <div class="chips">
@@ -300,6 +387,10 @@
 
     function renderChart() {
       const top = DATA.trending_skills.slice(0, 10);
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      const tick = dark ? "#94a3c0" : "#667085";
+      const gridC = dark ? "#25304d" : "#eaecf0";
+      const legendC = dark ? "#c3cbe3" : "#475467";
       const ctx = document.getElementById("skillsChart").getContext("2d");
       if (chartInstance) chartInstance.destroy();
       Chart.defaults.font.family = "Inter, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
@@ -308,16 +399,16 @@
         data: {
           labels: top.map(x => x.skill),
           datasets: [
-            { label: "Demand (30 days)", data: top.map(x => x.count_30d), backgroundColor: "#a5b4fc", borderRadius: 4 },
-            { label: "Roles paying 50k+ BDT", data: top.map(x => x.unlocks_50k_plus), backgroundColor: "#4f46e5", borderRadius: 4 }
+            { label: "Demand (30 days)", data: top.map(x => x.count_30d), backgroundColor: dark ? "#38bdf8" : "#38bdf8", borderRadius: 4 },
+            { label: "Roles paying 50k+ BDT", data: top.map(x => x.unlocks_50k_plus), backgroundColor: dark ? "#8b5cf6" : "#7c3aed", borderRadius: 4 }
           ]
         },
         options: {
           responsive: true,
-          plugins: { legend: { position: "bottom", labels: { color: "#475467", boxWidth: 12, boxHeight: 12, font: { size: 12 } } } },
+          plugins: { legend: { position: "bottom", labels: { color: legendC, boxWidth: 12, boxHeight: 12, font: { size: 12 } } } },
           scales: {
-            x: { ticks: { color: "#667085", font: { size: 11 } }, grid: { display: false } },
-            y: { ticks: { color: "#667085", font: { size: 11 } }, grid: { color: "#eaecf0" } }
+            x: { ticks: { color: tick, font: { size: 11 } }, grid: { display: false } },
+            y: { ticks: { color: tick, font: { size: 11 } }, grid: { color: gridC } }
           }
         }
       });
@@ -397,7 +488,7 @@
 
       const container = document.getElementById("circularList");
       container.innerHTML = list.map(c => `
-        <div class="job">
+        <div class="job" style="border-left-color:${tierColors[c.salary_tier] || '#6366f1'}">
           <div>
             <div class="job-top">
               <div>
@@ -407,7 +498,7 @@
               <span class="salary">${fmtBDT(c.salary_bdt_min)}–${fmtBDT(c.salary_bdt_max)}${c.salary_is_estimated ? " est." : ""}</span>
             </div>
             <div class="tags">
-              <span class="tag sector">${c.sector}</span>
+              <span class="tag sector" style="--sh:${sectorHue(c.sector)}">${c.sector}</span>
               <span class="tag">${c.experience_level}</span>
               <span class="tag mode">${c.work_mode}</span>
               ${c.skills.map(s => `<span class="tag skill">${s}</span>`).join("")}
@@ -420,6 +511,21 @@
         </div>
       `).join("") || `<div class="none">No circulars match your filters.</div>`;
     }
+
+    const themeBtn = document.getElementById("themeToggle");
+    function syncThemeButton() {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      themeBtn.textContent = dark ? "Light mode" : "Dark mode";
+    }
+    themeBtn.addEventListener("click", () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      const next = dark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      syncThemeButton();
+      if (chartInstance) renderChart();
+    });
+    syncThemeButton();
 
     loadData();
   </script>
