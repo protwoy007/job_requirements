@@ -19,59 +19,60 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #f3f5fb;
+      --bg: #f6f5f1;
       --surface: #ffffff;
-      --border: #e3e7f0;
-      --text: #0f172a;
-      --muted: #64748b;
-      --accent: #4f46e5;
-      --accent-soft: #eef2ff;
-      --accent-border: #c7d2fe;
-      --field: #f8fafc;
-      --tag-bg: #f1f5f9;
-      --tag-fg: #475569;
-      --mode-bg: #fef3c7;
-      --mode-fg: #92400e;
-      --skill-bg: #eef2ff;
-      --skill-fg: #4338ca;
-      --roi-bg: linear-gradient(135deg, #eef2ff, #ecfeff);
-      --roi-border: #c7d2fe;
-      --roi-fg: #312e81;
-      --hero: linear-gradient(120deg, #4338ca 0%, #6d28d9 55%, #0ea5e9 100%);
-      --shadow: 0 1px 2px rgba(15,23,42,0.04);
-      --shadow-hover: 0 6px 18px rgba(15,23,42,0.08);
+      --border: #e3e0d8;
+      --text: #1b2421;
+      --muted: #67716d;
+      --accent: #0f766e;
+      --accent-text: #0b5e57;
+      --accent-soft: #e4f1ee;
+      --accent-border: #b5d9d2;
+      --field: #faf9f6;
+      --tag-bg: #efede6;
+      --tag-fg: #4f5a56;
+      --skill-bg: #e4f1ee;
+      --skill-fg: #0b5e57;
+      --usd-bg: #fdeadf;
+      --usd-fg: #a73a0e;
+      --roi-bg: #eef6f4;
+      --roi-border: #b5d9d2;
+      --roi-fg: #0b4f49;
+      --hero: #12302f;
+      --shadow: none;
+      --shadow-hover: 0 4px 14px rgba(27,36,33,0.08);
+      --sec-bg-s: 40%;
       --sec-bg-l: 92%;
-      --sec-fg-l: 32%;
-      --sec-bg-s: 85%;
-      --sec-fg-s: 70%;
+      --sec-fg-s: 45%;
+      --sec-fg-l: 30%;
     }
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --bg: #0b1020;
-      --surface: #121a30;
-      --border: #25304d;
-      --text: #e6e9f5;
-      --muted: #94a3c0;
-      --accent: #818cf8;
-      --accent-soft: rgba(99,102,241,0.16);
-      --accent-border: rgba(129,140,248,0.4);
-      --field: #0e1630;
-      --tag-bg: #1c2744;
-      --tag-fg: #b6c0dc;
-      --mode-bg: rgba(245,158,11,0.16);
-      --mode-fg: #fbbf24;
-      --skill-bg: rgba(99,102,241,0.2);
-      --skill-fg: #a5b4fc;
-      --roi-bg: linear-gradient(135deg, rgba(99,102,241,0.16), rgba(14,165,233,0.12));
-      --roi-border: rgba(129,140,248,0.35);
-      --roi-fg: #c7d2fe;
-      --hero: linear-gradient(120deg, #312e81 0%, #5b21b6 55%, #0369a1 100%);
-      --shadow: 0 1px 2px rgba(0,0,0,0.4);
-      --shadow-hover: 0 8px 22px rgba(0,0,0,0.45);
-      --sec-bg-l: 22%;
-      --sec-fg-l: 80%;
-      --sec-bg-s: 50%;
-      --sec-fg-s: 85%;
+      --bg: #0e1513;
+      --surface: #151e1b;
+      --border: #26332f;
+      --text: #e7ece9;
+      --muted: #93a29c;
+      --accent: #4fd1be;
+      --accent-text: #7fe0d0;
+      --accent-soft: rgba(79,209,190,0.12);
+      --accent-border: rgba(79,209,190,0.35);
+      --field: #101916;
+      --tag-bg: #1d2926;
+      --tag-fg: #b4c3bd;
+      --skill-bg: rgba(79,209,190,0.14);
+      --skill-fg: #7fe0d0;
+      --usd-bg: rgba(251,146,60,0.14);
+      --usd-fg: #fdba74;
+      --roi-bg: rgba(79,209,190,0.08);
+      --roi-border: rgba(79,209,190,0.3);
+      --roi-fg: #b9efe6;
+      --hero: #0a1f1e;
+      --shadow-hover: 0 6px 18px rgba(0,0,0,0.4);
+      --sec-bg-s: 25%;
+      --sec-bg-l: 20%;
+      --sec-fg-s: 50%;
+      --sec-fg-l: 78%;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -85,75 +86,81 @@
     .wrap { max-width: 1200px; margin: 0 auto; padding: 24px 24px 64px; }
     .hero {
       background: var(--hero);
-      border-radius: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 28px 32px;
       color: #fff;
       display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;
       margin-bottom: 24px;
-      box-shadow: 0 10px 30px rgba(79, 70, 229, 0.25);
     }
     .hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
-    .hero p { color: rgba(255,255,255,0.85); margin-top: 6px; max-width: 520px; }
-    .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
-    .theme-btn { font: inherit; font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.18); color: #fff; cursor: pointer; }
-    .theme-btn:hover { background: rgba(255,255,255,0.3); }
-    .hero .stamp { display: inline-block; font-size: 12px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.28); padding: 3px 10px; border-radius: 999px; }
+    .hero p { color: rgba(255,255,255,0.78); margin-top: 6px; max-width: 540px; }
+    .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
+    .hero .stamp { display: inline-block; font-size: 12px; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.22); padding: 3px 10px; border-radius: 6px; }
+    .theme-btn { font: inherit; font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.35); background: transparent; color: #fff; cursor: pointer; }
+    .theme-btn:hover { background: rgba(255,255,255,0.12); }
     .kpis { display: flex; gap: 12px; flex-wrap: wrap; }
-    .kpi { background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.28); border-radius: 12px; padding: 14px 20px; min-width: 130px; backdrop-filter: blur(4px); }
-    .kpi .v { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
-    .kpi .l { font-size: 12px; color: rgba(255,255,255,0.85); margin-top: 2px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+    .kpi { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; padding: 14px 20px; min-width: 140px; }
+    .kpi .v { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .kpi .l { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
     .card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 16px; }
-    .card-head h2 { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-    .card-head h2::before { content: ""; width: 4px; height: 16px; border-radius: 2px; background: linear-gradient(180deg, #6366f1, #0ea5e9); }
+    .card-head h2 { font-size: 15px; font-weight: 600; }
     .card-head .hint { font-size: 12px; color: var(--muted); }
     .filters { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
     select, input[type="text"] {
       width: 100%; height: 40px; padding: 0 12px; font: inherit; color: var(--text);
-      background: var(--field); border: 1px solid var(--border); border-radius: 10px; outline: none;
+      background: var(--field); border: 1px solid var(--border); border-radius: 8px; outline: none;
     }
-    select:focus, input[type="text"]:focus { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px rgba(99,102,241,0.18); }
+    select:focus, input[type="text"]:focus { border-color: var(--accent); }
     .filter-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
     .filter-row input[type="text"] { max-width: 420px; }
     .filter-row .right { display: flex; align-items: center; gap: 16px; }
     label.check { display: flex; align-items: center; gap: 8px; color: var(--muted); cursor: pointer; }
     input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
-    .btn { height: 40px; padding: 0 18px; font: inherit; font-weight: 600; color: #fff; background: #4f46e5; border: 0; border-radius: 10px; cursor: pointer; }
-    .btn:hover { background: #4338ca; }
+    .btn { height: 40px; padding: 0 18px; font: inherit; font-weight: 600; color: #fff; background: #0f766e; border: 0; border-radius: 8px; cursor: pointer; }
+    .btn:hover { background: #0b5e57; }
     .matrix { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-    .tier { --c: #64748b; border: 1px solid var(--border); border-top: 4px solid var(--c); border-radius: 12px; padding: 14px; background: var(--surface); }
-    .tier.t0 { --c: #64748b; } .tier.t1 { --c: #0ea5e9; } .tier.t2 { --c: #6366f1; } .tier.t3 { --c: #a855f7; } .tier.t4 { --c: #10b981; }
+    .t0 { --c: #9aa5a1; } .t1 { --c: #5aa59a; } .t2 { --c: #2f8579; } .t3 { --c: #0f5f57; } .t4 { --c: #c2410c; }
+    :root[data-theme="dark"] .t0 { --c: #7e8c87; }
+    :root[data-theme="dark"] .t1 { --c: #5aa59a; }
+    :root[data-theme="dark"] .t2 { --c: #4bb5a3; }
+    :root[data-theme="dark"] .t3 { --c: #5fd4c4; }
+    :root[data-theme="dark"] .t4 { --c: #fb923c; }
+    .tier { border: 1px solid var(--border); border-top: 3px solid var(--c); border-radius: 10px; padding: 14px; background: var(--surface); }
     .tier-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 6px; }
     .tier-top .name { font-weight: 700; font-size: 13px; color: var(--c); }
     .tier-top .cnt { font-size: 12px; color: var(--muted); white-space: nowrap; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--field); color: var(--text); cursor: pointer; }
-    .tier .chip:hover { border-color: var(--c); color: var(--c); background: var(--surface); }
-    .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+    .chip { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--field); color: var(--text); cursor: pointer; }
+    .tier .chip:hover { border-color: var(--c); color: var(--c); }
+    .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-text); font-weight: 600; }
     .chip .n { color: var(--muted); margin-left: 4px; }
     .empty-note { font-size: 12px; color: var(--muted); }
     .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
     .two-col .card { margin-bottom: 0; }
-    .roi-box { margin-top: 16px; padding: 14px; background: var(--roi-bg); border: 1px solid var(--roi-border); border-radius: 10px; font-size: 13px; color: var(--roi-fg); }
+    .roi-box { margin-top: 16px; padding: 14px; background: var(--roi-bg); border: 1px solid var(--roi-border); border-radius: 8px; font-size: 13px; color: var(--roi-fg); }
     .roi-box .t { font-weight: 700; margin-bottom: 4px; }
     .scroll { max-height: 180px; overflow-y: auto; }
     .section-gap { margin-top: 20px; }
-    .badge-filter { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-border); cursor: pointer; }
+    .badge-filter { font-size: 12px; padding: 4px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--accent-text); border: 1px solid var(--accent-border); cursor: pointer; }
     .hidden { display: none; }
     .jobs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .job { border: 1px solid var(--border); border-left: 4px solid #6366f1; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); transition: box-shadow 0.15s, transform 0.15s; }
-    .job:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+    .job { border: 1px solid var(--border); border-left: 4px solid var(--c, #2f8579); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); transition: box-shadow 0.15s; }
+    .job:hover { box-shadow: var(--shadow-hover); }
     .job-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
     .job h3 { font-size: 15px; font-weight: 600; }
     .job .meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .salary { font-size: 13px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #059669, #10b981); padding: 4px 10px; border-radius: 8px; white-space: nowrap; }
+    .salary { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .salary small { font-weight: 500; opacity: 0.75; }
+    .salary.bdt { background: var(--accent-soft); color: var(--accent-text); }
+    .salary.usd { background: var(--usd-bg); color: var(--usd-fg); }
     .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
     .tag { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--tag-bg); color: var(--tag-fg); }
     .tag.sector { background: hsl(var(--sh) var(--sec-bg-s) var(--sec-bg-l)); color: hsl(var(--sh) var(--sec-fg-s) var(--sec-fg-l)); }
-    .tag.mode { background: var(--mode-bg); color: var(--mode-fg); }
     .tag.skill { background: var(--skill-bg); color: var(--skill-fg); }
     .job-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
-    .job-foot a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .job-foot a { color: var(--accent-text); font-weight: 600; text-decoration: none; }
     .job-foot a:hover { text-decoration: underline; }
     .none { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 32px 0; }
     @media (max-width: 980px) {
@@ -176,7 +183,7 @@
     <div class="hero">
       <div>
         <h1>Job Market Radar</h1>
-        <p>Bangladesh and global remote openings with salary tiers, in-demand skills and live circulars.</p>
+        <p>Bangladesh jobs are shown in ৳ (taka) per month. Global remote jobs are shown in US$ per month.</p>
         <div class="hero-meta">
           <span class="stamp">Updated daily 9:00 AM BDT &middot; Last scan: <span id="lastScan">Loading...</span></span>
           <button id="themeToggle" class="theme-btn" type="button">Dark mode</button>
@@ -184,8 +191,8 @@
       </div>
       <div class="kpis">
         <div class="kpi"><div id="statTotal" class="v">0</div><div class="l">Active circulars</div></div>
-        <div class="kpi"><div id="stat50k" class="v">0</div><div class="l">50k+ BDT jobs</div></div>
-        <div class="kpi"><div id="statRemote" class="v">0</div><div class="l">Remote (USD)</div></div>
+        <div class="kpi"><div id="stat50k" class="v">0</div><div class="l">Paying ৳50k+ per month</div></div>
+        <div class="kpi"><div id="statRemote" class="v">0</div><div class="l">Remote, paid in US$</div></div>
       </div>
     </div>
 
@@ -193,12 +200,12 @@
       <div class="filters">
         <select id="fSector"><option value="ALL">All sectors</option></select>
         <select id="fTier">
-          <option value="ALL">All salary tiers</option>
-          <option value="<25k BDT">&lt;25k BDT</option>
-          <option value="25k–50k BDT">25k–50k BDT</option>
-          <option value="50k–100k BDT">50k–100k BDT</option>
-          <option value="100k+ BDT">1 lakh+ BDT</option>
-          <option value="Remote USD (120k+ BDT eq.)">Remote USD (1.2 lakh+ BDT eq.)</option>
+          <option value="ALL">All salary ranges</option>
+          <option value="<25k BDT">Under ৳25k</option>
+          <option value="25k–50k BDT">৳25k – ৳50k</option>
+          <option value="50k–100k BDT">৳50k – ৳1 lakh</option>
+          <option value="100k+ BDT">৳1 lakh and above</option>
+          <option value="Remote USD (120k+ BDT eq.)">Remote jobs paid in US$</option>
         </select>
         <select id="fExp">
           <option value="ALL">All experience levels</option>
@@ -230,7 +237,7 @@
 
     <div class="card">
       <div class="card-head">
-        <h2>Skills required by salary tier</h2>
+        <h2>Skills required by salary range</h2>
         <span class="hint">Select a skill to filter the listings below</span>
       </div>
       <div id="unlockGrid" class="matrix"></div>
@@ -243,7 +250,7 @@
       </div>
       <div class="card">
         <div class="card-head"><h2>Skill gap planner</h2></div>
-        <p class="hint" style="color:var(--muted);font-size:13px;margin-bottom:12px;">Select the skills you already have to see which one to learn next for 50k+ BDT roles.</p>
+        <p class="hint" style="color:var(--muted);font-size:13px;margin-bottom:12px;">Select the skills you already have to see which one to learn next for roles paying ৳50k+ per month.</p>
         <div id="roiChecklist" class="chips scroll"></div>
         <div id="roiResult" class="roi-box">Select your current skills to calculate.</div>
       </div>
@@ -300,14 +307,34 @@
       return "৳" + Math.round(n / 1000) + "k";
     };
 
-    const tierLabel = t => t.replace("120k+", "1.2 lakh+").replace("100k+", "1 lakh+");
+    const USD_RATE = 122;
 
-    const tierColors = {
-      "<25k BDT": "#64748b",
-      "25k–50k BDT": "#0ea5e9",
-      "50k–100k BDT": "#6366f1",
-      "100k+ BDT": "#a855f7",
-      "Remote USD (120k+ BDT eq.)": "#10b981"
+    const fmtUSD = n => {
+      const u = n / USD_RATE;
+      if (u >= 1000) return "$" + (Math.round(u / 100) / 10) + "k";
+      return "$" + Math.round(u);
+    };
+
+    const salaryText = c => {
+      const f = c.region === "Global Remote" ? fmtUSD : fmtBDT;
+      return f(c.salary_bdt_min) + " – " + f(c.salary_bdt_max);
+    };
+
+    const tierLabels = {
+      "<25k BDT": "Under ৳25k",
+      "25k–50k BDT": "৳25k – ৳50k",
+      "50k–100k BDT": "৳50k – ৳1 lakh",
+      "100k+ BDT": "৳1 lakh and above",
+      "Remote USD (120k+ BDT eq.)": "Remote (paid in US$)"
+    };
+    const tierLabel = t => tierLabels[t] || t;
+
+    const tierIndex = {
+      "<25k BDT": 0,
+      "25k–50k BDT": 1,
+      "50k–100k BDT": 2,
+      "100k+ BDT": 3,
+      "Remote USD (120k+ BDT eq.)": 4
     };
 
     const sectorHue = name => {
@@ -362,7 +389,7 @@
       grid.innerHTML = "";
       DATA.salary_unlock_matrix.forEach((row, idx) => {
         const box = document.createElement("div");
-        box.className = "tier t" + idx;
+        box.className = "tier t" + (tierIndex[row.tier] ?? idx);
         box.innerHTML = `
           <div class="tier-top">
             <span class="name">${tierLabel(row.tier)}</span>
@@ -388,9 +415,9 @@
     function renderChart() {
       const top = DATA.trending_skills.slice(0, 10);
       const dark = document.documentElement.getAttribute("data-theme") === "dark";
-      const tick = dark ? "#94a3c0" : "#667085";
-      const gridC = dark ? "#25304d" : "#eaecf0";
-      const legendC = dark ? "#c3cbe3" : "#475467";
+      const tick = dark ? "#93a29c" : "#67716d";
+      const gridC = dark ? "#26332f" : "#e8e6df";
+      const legendC = dark ? "#c3cfca" : "#4f5a56";
       const ctx = document.getElementById("skillsChart").getContext("2d");
       if (chartInstance) chartInstance.destroy();
       Chart.defaults.font.family = "Inter, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
@@ -399,8 +426,8 @@
         data: {
           labels: top.map(x => x.skill),
           datasets: [
-            { label: "Demand (30 days)", data: top.map(x => x.count_30d), backgroundColor: dark ? "#38bdf8" : "#38bdf8", borderRadius: 4 },
-            { label: "Roles paying 50k+ BDT", data: top.map(x => x.unlocks_50k_plus), backgroundColor: dark ? "#8b5cf6" : "#7c3aed", borderRadius: 4 }
+            { label: "Demand (30 days)", data: top.map(x => x.count_30d), backgroundColor: dark ? "#3b6b66" : "#9fcfc7", borderRadius: 4 },
+            { label: "Roles paying ৳50k+ per month", data: top.map(x => x.unlocks_50k_plus), backgroundColor: dark ? "#5fd4c4" : "#0f766e", borderRadius: 4 }
           ]
         },
         options: {
@@ -441,7 +468,7 @@
         out.textContent = "You already cover the top high-paying skills in this dataset.";
         return;
       }
-      out.innerHTML = `<div class="t">Best next skills for 50k+ BDT roles</div>` +
+      out.innerHTML = `<div class="t">Best next skills for roles paying ৳50k+ per month</div>` +
         ranked.map(([sk, cnt], i) => `<div>${i + 1}. <strong>${sk}</strong> &middot; ${cnt} matching roles</div>`).join("");
     }
 
@@ -488,14 +515,14 @@
 
       const container = document.getElementById("circularList");
       container.innerHTML = list.map(c => `
-        <div class="job" style="border-left-color:${tierColors[c.salary_tier] || '#6366f1'}">
+        <div class="job t${tierIndex[c.salary_tier] ?? 2}">
           <div>
             <div class="job-top">
               <div>
                 <h3>${c.title}</h3>
                 <div class="meta">${c.company} · ${c.location}</div>
               </div>
-              <span class="salary">${fmtBDT(c.salary_bdt_min)}–${fmtBDT(c.salary_bdt_max)}${c.salary_is_estimated ? " est." : ""}</span>
+              <span class="salary ${c.region === "Global Remote" ? "usd" : "bdt"}" title="${c.region === "Global Remote" ? "About " + fmtBDT(c.salary_bdt_min) + " – " + fmtBDT(c.salary_bdt_max) + " per month" : "Taka per month"}">${salaryText(c)}<small> /mo${c.salary_is_estimated ? " est." : ""}</small></span>
             </div>
             <div class="tags">
               <span class="tag sector" style="--sh:${sectorHue(c.sector)}">${c.sector}</span>
