@@ -39,7 +39,7 @@ h1,h2,.v{font-family:"Unbounded","Inter",sans-serif}
 .s2{width:170px;height:170px;background:#1fb0d0;right:-30px;bottom:-40px;clip-path:polygon(100% 0,0 100%,100% 100%);animation:float 8s ease-in-out infinite reverse}
 .s3{width:90px;height:90px;background:#0a5a4c;right:260px;bottom:30px;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);animation:spin 18s linear infinite}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:22px;margin-bottom:20px;transition:box-shadow .3s,transform .3s}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}.reveal.in{opacity:1;transform:none}
+.reveal{animation:rise .6s both}.sal.na{background:var(--tag-bg);color:var(--tag-fg)}.t5{--c:#9aa5a1}
 .head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .head h2{font-size:15px;font-weight:600}.head .sp{flex:1}
 .info{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--muted);background:transparent;color:var(--muted);font:italic 700 12px Georgia,serif;cursor:pointer;transition:.2s}
@@ -130,7 +130,7 @@ h1,h2,.v{font-family:"Unbounded","Inter",sans-serif}
   <div class="dds">
     <select id="fSector" data-label="Sector"><option value="ALL">All sectors</option></select>
     <select id="fTier" data-label="Salary per month">
-      <option value="ALL">Any salary</option><option value="<25k BDT">Under ৳25k</option><option value="25k–50k BDT">৳25k – ৳50k</option><option value="50k–100k BDT">৳50k – ৳1 lakh</option><option value="100k+ BDT">৳1 lakh and above</option><option value="Remote USD (120k+ BDT eq.)">Remote, paid abroad</option>
+      <option value="ALL">Any salary</option><option value="<25k BDT">Under ৳25k</option><option value="25k–50k BDT">৳25k – ৳50k</option><option value="50k–100k BDT">৳50k – ৳1 lakh</option><option value="100k+ BDT">৳1 lakh and above</option><option value="Remote USD (120k+ BDT eq.)">Remote, paid abroad</option><option value="Not listed">Salary not listed</option>
     </select>
     <select id="fPosted" data-label="Posted"><option value="30">Last 30 days</option><option value="7">Last 7 days</option><option value="1">Last 24 hours</option></select>
     <select id="fSort" data-label="Sort by"><option value="salary_desc">Highest salary</option><option value="latest">Latest posted</option><option value="skills_desc">Most skills</option></select>
@@ -160,32 +160,19 @@ h1,h2,.v{font-family:"Unbounded","Inter",sans-serif}
 <div id="pop"></div>
 <div id="modal"><div class="panel">
   <h2>Where the data comes from</h2>
-  <p>Scanned every day at 9:00 AM BDT, kept for 30 days. Circulars past their deadline are removed automatically. Salaries marked est. are estimates for "negotiable" jobs. Counts are from the last scan. Sites that show a captcha are marked Blocked; their jobs can be added by hand in data/manual_jobs.json.</p>
+  <p>Scanned every day at 9:00 AM BDT, kept for 30 days. Circulars past their deadline are removed automatically. Counts are from the last scan. Sites that show a captcha are marked Blocked; their jobs can be added by hand in data/manual_jobs.json.</p>
   <div id="srcList"></div>
   <button id="modalClose" class="btn" style="margin-top:16px">Close</button>
 </div></div>
 
 <script>
-const D=n=>new Date(Date.now()-n*864e5).toISOString().slice(0,10);
-const mk=(id,source,region,title,company,mode,sector,exp,skills,min,max,tier,posted,deadline,cur)=>({id,source,region,title,company,location:region==="Global Remote"?"Worldwide":"Dhaka, Bangladesh",work_mode:mode,sector,experience_level:exp,skills,salary_bdt_min:min,salary_bdt_max:max,salary_is_estimated:true,salary_currency:region==="Global Remote"?(cur||"USD"):"BDT",salary_tier:tier,posted_at:D(posted),deadline:deadline===""?"":D(deadline),circular_url:"#"});
 const T={a:"<25k BDT",b:"25k–50k BDT",c:"50k–100k BDT",d:"100k+ BDT",e:"Remote USD (120k+ BDT eq.)"};
-const FALLBACK_DATA={generated_at_bdt:"Demo data (run the GitHub workflow for live jobs)",
-trending_skills:[["AI / LLM APIs",34,62,31],["Python",42,28,36],["React / Next.js",39,19,30],["SQL & Databases",37,24,29],["Docker / Kubernetes",26,41,25],["Cybersecurity / SOC",21,43,20],["Flutter / Mobile",24,48,19],["Power BI / Tableau",22,54,18]].map(([skill,count_30d,velocity_pct,unlocks_50k_plus])=>({skill,count_30d,velocity_pct,unlocks_50k_plus})),
-circulars:[
-mk("d1","Bdjobs","Bangladesh","AI Automation & LLM Engineer","Dhaka FinTech Ltd","Hybrid","AI, Data & Analytics","Mid (3-5y)",["AI / LLM APIs","Python"],60000,90000,T.c,1,-12),
-mk("d2","Remotive","Global Remote","Full-Stack AI Engineer","Remote Labs","Remote","Tech & Software","Mid (3-5y)",["AI / LLM APIs","Python","React / Next.js"],150000,240000,T.e,3,""),
-mk("d3","Bdjobs","Bangladesh","Senior SOC Analyst","Premier Bank PLC","Onsite","Cybersecurity & Cloud","Senior (5+y)",["Cybersecurity / SOC","SQL & Databases"],100000,140000,T.d,6,-9),
-mk("d4","Bdjobs","Bangladesh","Data Analyst","bKash Limited","Hybrid","AI, Data & Analytics","Junior (1-2y)",["SQL & Databases","Power BI / Tableau"],55000,85000,T.c,9,-5),
-mk("d5","Skill.Jobs","Bangladesh","Flutter Developer","Pathao Ltd","Onsite","Tech & Software","Mid (3-5y)",["Flutter / Mobile"],55000,85000,T.c,15,""),
-mk("d6","Bdjobs","Bangladesh","Product Manager","ShopUp","Hybrid","Business, Product & Marketing","Senior (5+y)",["Product Management","SEO & Performance Ads"],100000,130000,T.d,21,-3),
-mk("d7","Bdjobs","Bangladesh","Junior Laravel Developer","Dhaka Web Studio","Onsite","Tech & Software","Junior (1-2y)",["Laravel / PHP","SQL & Databases"],25000,40000,T.b,27,-20),
-mk("d8","Himalayas","Global Remote","Senior Backend Engineer","Berlin Cloud GmbH","Remote","Tech & Software","Senior (5+y)",["Python","Docker / Kubernetes"],572000,715000,T.e,2,"","EUR")]};
 const SOURCES=[["Bdjobs","https://www.bdjobs.com","Bangladesh · listing pages"],["Skill.Jobs","https://skill.jobs","Bangladesh · listing pages"],["Chakri.com","https://chakri.com","Bangladesh · job pages with structured data"],["Prothom Alo Jobs","https://prothomjobs.com","Bangladesh · job pages with structured data"],["Job.com.bd","https://job.com.bd","Bangladesh · job pages with structured data"],["Himalayas","https://himalayas.app","Remote · public API, salaries in original currency"],["WeWorkRemotely","https://weworkremotely.com","Remote · public RSS feed"],["Remotive","https://remotive.com","Remote · public API, link back to the original job"],["Jobicy","https://jobicy.com","Remote · public API"],["RemoteOK","https://remoteok.com","Remote · public API, link back to the original job"],["Manual list","","Jobs you add yourself, for example from LinkedIn"]];
-const INFO={filters:"Choose your filters, then press Apply filters to see the results. Reset clears everything.",matrix:"Each box is a monthly salary range. The skills shown appear most often in jobs paying that much. Tap a skill to see those jobs. Remote jobs are paid in dollars, euros or pounds.",chart:"Blue bars: jobs mentioning the skill in the last 30 days. Green bars: how many of those pay ৳50k or more per month.",roi:"Tick the skills you already have. The planner shows which missing skills appear most in jobs paying ৳50k+ per month.",jobs:"Jobs from the last 30 days. Expired circulars disappear automatically. Bangladesh jobs are in ৳ per month, remote jobs in their own currency (US$, €, £) per month. Est. means the salary was negotiable and has been estimated."};
+const INFO={filters:"Choose your filters, then press Apply filters to see the results. Reset clears everything.",matrix:"Each box is a monthly salary range. The skills shown appear most often in jobs paying that much. Tap a skill to see those jobs. Remote jobs are paid in dollars, euros or pounds.",chart:"Blue bars: jobs mentioning the skill in the last 30 days. Green bars: how many of those pay ৳50k or more per month.",roi:"Tick the skills you already have. The planner shows which missing skills appear most in jobs paying ৳50k+ per month.",jobs:"Jobs from the last 30 days. Expired circulars disappear automatically. Bangladesh jobs are in ৳ per month, remote jobs in their own currency (US$, €, £) per month. Jobs without a listed salary show Salary not listed."};
 const $=id=>document.getElementById(id);
 let DATA=null,activeSkill=null,owned=new Set(),chart=null;
-const tierIndex={[T.a]:0,[T.b]:1,[T.c]:2,[T.d]:3,[T.e]:4};
-const tierLabels={[T.a]:"Under ৳25k",[T.b]:"৳25k – ৳50k",[T.c]:"৳50k – ৳1 lakh",[T.d]:"৳1 lakh+",[T.e]:"Remote, abroad"};
+const tierIndex={[T.a]:0,[T.b]:1,[T.c]:2,[T.d]:3,[T.e]:4,"Not listed":5};
+const tierLabels={[T.a]:"Under ৳25k",[T.b]:"৳25k – ৳50k",[T.c]:"৳50k – ৳1 lakh",[T.d]:"৳1 lakh+",[T.e]:"Remote, abroad","Not listed":"Salary not listed"};
 const fmtBDT=n=>n>=1e5?"৳"+Math.round(n/1e4)/10+" lakh":"৳"+Math.round(n/1e3)+"k";
 const SYM={USD:"$",EUR:"€",GBP:"£"};let RATES={USD:122,EUR:143,GBP:163};
 const fmtFx=(n,cur)=>{const u=n/(RATES[cur]||122),m=SYM[cur]||cur+" ";return u>=1000?m+Math.round(u/100)/10+"k":m+Math.round(u)};
@@ -211,10 +198,10 @@ function group(id,onChange){const g=$(id);g.value="ALL";g.querySelectorAll("butt
 function resetGroup(id){const g=$(id);g.value="ALL";g.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x.dataset.v==="ALL"))}
 
 async function load(){
-  try{const r=await fetch("data/market_intel.json?t="+Date.now());if(!r.ok)throw 0;DATA=await r.json()}catch{
-    DATA=FALLBACK_DATA;const cs=DATA.circulars;
-    DATA.salary_unlock_matrix=Object.values(T).map(t=>{const js=cs.filter(c=>c.salary_tier===t),n={};js.forEach(c=>c.skills.forEach(s=>n[s]=(n[s]||0)+1));return{tier:t,job_count:js.length,top_skills:Object.entries(n).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([skill,count])=>({skill,count}))}})}
-  if(DATA.rates)RATES={...RATES,...DATA.rates};const t=today();DATA.circulars=DATA.circulars.filter(c=>(!c.deadline||c.deadline>=t)&&age(c)<=30);
+  try{const r=await fetch("data/market_intel.json?t="+Date.now());if(!r.ok)throw 0;DATA=await r.json()}catch{DATA=null}
+  if(!DATA||!DATA.circulars)DATA={circulars:[],trending_skills:[],salary_unlock_matrix:[],generated_at_bdt:"No scan yet",none:true};
+  if(DATA.rates)RATES={...RATES,...DATA.rates};
+  const t=today();DATA.circulars=DATA.circulars.filter(c=>(!c.deadline||c.deadline>=t)&&age(c)<=30);
   init();
 }
 function init(){
@@ -225,7 +212,7 @@ function init(){
   $("btnApply").onclick=apply;
   $("fSearch").addEventListener("keydown",e=>{if(e.key==="Enter")apply()});
   $("btnReset").onclick=()=>{activeSkill=null;["fSector","fTier"].forEach(id=>$(id).value="ALL");$("fPosted").value="30";$("fSort").value="salary_desc";$("fSearch").value="";document.querySelectorAll(".dds select").forEach(s=>s.rebuild());["gRegion","gMode","gExp"].forEach(resetGroup);apply()};
-  matrix();drawChart();planner();apply();
+  [matrix,drawChart,planner,apply].forEach(f=>{try{f()}catch(e){console.error(e)}});
   const cs=DATA.circulars;countUp($("statTotal"),cs.length);countUp($("stat50k"),cs.filter(c=>c.salary_bdt_max>=5e4).length);countUp($("statRemote"),cs.filter(c=>c.region==="Global Remote").length);
 }
 function matrix(){
@@ -235,6 +222,7 @@ function matrix(){
   g.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{activeSkill=b.dataset.s;$("fTier").value=b.dataset.t;$("fTier").rebuild();apply();$("circularList").scrollIntoView({behavior:"smooth",block:"start"})});
 }
 function drawChart(){
+  if(typeof Chart==="undefined")return;
   const top=DATA.trending_skills.slice(0,10),dk=document.documentElement.dataset.theme==="dark";
   const tick=dk?"#8fb0a3":"#4d6b60",grid=dk?"#1f3a31":"#cfeedd";
   if(chart)chart.destroy();Chart.defaults.font.family="Inter, sans-serif";
@@ -251,7 +239,7 @@ function roi(){
   $("roiResult").innerHTML=r.length?"<b>Learn next</b>"+r.map(([s,c],i)=>`${i+1}. ${s} · ${c} jobs`).join("<br>"):"You cover the top skills.";
 }
 let F={};
-function apply(){F={sec:$("fSector").value,tier:$("fTier").value,exp:$("gExp").value,mode:$("gMode").value,region:$("gRegion").value,sort:$("fSort").value,max:+$("fPosted").value,q:$("fSearch").value.trim().toLowerCase()};render()}
+function apply(){F={sec:$("fSector").value,tier:$("fTier").value,exp:$("gExp").value,mode:$("gMode").value,region:$("gRegion").value,sort:$("fSort").value,max:+$("fPosted").value,q:$("fSearch").value.trim().toLowerCase()};try{render()}catch(e){console.error(e);$("circularList").innerHTML='<div class="none">Something went wrong showing the jobs. Press Ctrl+F5 to refresh.</div>'}}
 function render(){
   const {sec,tier,exp,mode,region,sort,max,q}=F;
   const list=DATA.circulars.filter(c=>{
@@ -262,15 +250,15 @@ function render(){
   if(sort==="salary_desc")list.sort((a,b)=>b.salary_bdt_max-a.salary_bdt_max);
   else if(sort==="latest")list.sort((a,b)=>(b.posted_at||"").localeCompare(a.posted_at||""));
   else list.sort((a,b)=>b.skills.length-a.skills.length);
-  $("shownCount").textContent="("+list.length+")";
+  $("shownCount").textContent="("+list.length+" of "+DATA.circulars.length+")";
   const bd=$("activeSkillBadge");bd.classList.toggle("hidden",!activeSkill);
   if(activeSkill){bd.textContent=activeSkill+" ×";bd.onclick=()=>{activeSkill=null;render()}}
   $("circularList").innerHTML=list.map((c,i)=>{const fx=curOf(c)!=="BDT";return`
   <div class="job t${tierIndex[c.salary_tier]??2}" style="--i:${Math.min(i,12)}">
     <div><div class="jt"><div><h3>${c.title}</h3><div class="meta">${c.company} · ${c.location}</div></div>
-    <span class="sal ${fx?"usd":"bdt"}" title="${fx?"About "+fmtBDT(c.salary_bdt_min)+" – "+fmtBDT(c.salary_bdt_max)+" per month":"Taka per month"}">${salaryText(c)}<small> /mo${c.salary_is_estimated?" est.":""}</small></span></div>
+    ${c.salary_is_estimated||!c.salary_bdt_max?'<span class="sal na">Salary not listed</span>':`<span class="sal ${fx?"usd":"bdt"}" title="${fx?"About "+fmtBDT(c.salary_bdt_min)+" – "+fmtBDT(c.salary_bdt_max)+" per month":"Taka per month"}">${salaryText(c)}<small> /mo</small></span>`}</div>
     <div class="tags"><span class="tag sec" style="--sh:${hue(c.sector)}">${c.sector}</span><span class="tag">${c.experience_level}</span><span class="tag">${c.work_mode}</span>${c.skills.map(s=>`<span class="tag" style="background:var(--bdt-bg);color:var(--bdt-fg)">${s}</span>`).join("")}</div></div>
-    <div class="foot"><span>${c.source} · ${c.posted_at||"Today"}${c.deadline?" · Closes "+c.deadline:""}</span><a href="${c.circular_url}" target="_blank" rel="noopener noreferrer">Apply →</a></div></div>`}).join("")||'<div class="none">No circulars match your filters.</div>';
+    <div class="foot"><span>${c.source} · ${c.posted_at||"Today"}${c.deadline?" · Closes "+c.deadline:""}</span><a href="${c.circular_url}" target="_blank" rel="noopener noreferrer">Apply →</a></div></div>`}).join("")||`<div class="none">${DATA.none?"No scan data yet. In GitHub, open Actions, run Daily 9 AM BDT Job Market Scan, then refresh this page.":DATA.circulars.length?"No circulars match your filters.":"The last scan found no open circulars."}</div>`;
 }
 
 const pop=$("pop");let popFor=null;
@@ -287,9 +275,7 @@ $("srcBtn").onclick=()=>{const c={},st=DATA.sources||{};DATA.circulars.forEach(x
 $("modalClose").onclick=()=>$("modal").classList.remove("open");$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.remove("open")};
 const tb=$("themeToggle"),sync=()=>tb.textContent=document.documentElement.dataset.theme==="dark"?"Light":"Dark";
 tb.onclick=()=>{const n=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=n;try{localStorage.setItem("theme",n)}catch(e){}sync();if(chart)drawChart()};sync();
-const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.08});
-const observe=()=>document.querySelectorAll(".reveal:not(.in)").forEach(el=>io.observe(el));
-load().then(observe);
+load();
 </script>
 </body>
 </html>
