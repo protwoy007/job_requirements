@@ -1,560 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BD Job Market Radar</title>
-  <script>
-    (function () {
-      var t = null;
-      try { t = localStorage.getItem("theme"); } catch (e) {}
-      if (!t) t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", t);
-    })();
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f6f5f1;
-      --surface: #ffffff;
-      --border: #e3e0d8;
-      --text: #1b2421;
-      --muted: #67716d;
-      --accent: #0f766e;
-      --accent-text: #0b5e57;
-      --accent-soft: #e4f1ee;
-      --accent-border: #b5d9d2;
-      --field: #faf9f6;
-      --tag-bg: #efede6;
-      --tag-fg: #4f5a56;
-      --skill-bg: #e4f1ee;
-      --skill-fg: #0b5e57;
-      --usd-bg: #fdeadf;
-      --usd-fg: #a73a0e;
-      --roi-bg: #eef6f4;
-      --roi-border: #b5d9d2;
-      --roi-fg: #0b4f49;
-      --hero: #12302f;
-      --shadow: none;
-      --shadow-hover: 0 4px 14px rgba(27,36,33,0.08);
-      --sec-bg-s: 40%;
-      --sec-bg-l: 92%;
-      --sec-fg-s: 45%;
-      --sec-fg-l: 30%;
-    }
-    :root[data-theme="dark"] {
-      color-scheme: dark;
-      --bg: #0e1513;
-      --surface: #151e1b;
-      --border: #26332f;
-      --text: #e7ece9;
-      --muted: #93a29c;
-      --accent: #4fd1be;
-      --accent-text: #7fe0d0;
-      --accent-soft: rgba(79,209,190,0.12);
-      --accent-border: rgba(79,209,190,0.35);
-      --field: #101916;
-      --tag-bg: #1d2926;
-      --tag-fg: #b4c3bd;
-      --skill-bg: rgba(79,209,190,0.14);
-      --skill-fg: #7fe0d0;
-      --usd-bg: rgba(251,146,60,0.14);
-      --usd-fg: #fdba74;
-      --roi-bg: rgba(79,209,190,0.08);
-      --roi-border: rgba(79,209,190,0.3);
-      --roi-fg: #b9efe6;
-      --hero: #0a1f1e;
-      --shadow-hover: 0 6px 18px rgba(0,0,0,0.4);
-      --sec-bg-s: 25%;
-      --sec-bg-l: 20%;
-      --sec-fg-s: 50%;
-      --sec-fg-l: 78%;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Inter", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: 14px;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px 24px 64px; }
-    .hero {
-      background: var(--hero);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px 32px;
-      color: #fff;
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;
-      margin-bottom: 24px;
-    }
-    .hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
-    .hero p { color: rgba(255,255,255,0.78); margin-top: 6px; max-width: 540px; }
-    .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
-    .hero .stamp { display: inline-block; font-size: 12px; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.22); padding: 3px 10px; border-radius: 6px; }
-    .theme-btn { font: inherit; font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.35); background: transparent; color: #fff; cursor: pointer; }
-    .theme-btn:hover { background: rgba(255,255,255,0.12); }
-    .kpis { display: flex; gap: 12px; flex-wrap: wrap; }
-    .kpi { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; padding: 14px 20px; min-width: 140px; }
-    .kpi .v { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-    .kpi .l { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 2px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-    .card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 16px; }
-    .card-head h2 { font-size: 15px; font-weight: 600; }
-    .card-head .hint { font-size: 12px; color: var(--muted); }
-    .filters { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-    select, input[type="text"] {
-      width: 100%; height: 40px; padding: 0 12px; font: inherit; color: var(--text);
-      background: var(--field); border: 1px solid var(--border); border-radius: 8px; outline: none;
-    }
-    select:focus, input[type="text"]:focus { border-color: var(--accent); }
-    .filter-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
-    .filter-row input[type="text"] { max-width: 420px; }
-    .filter-row .right { display: flex; align-items: center; gap: 16px; }
-    label.check { display: flex; align-items: center; gap: 8px; color: var(--muted); cursor: pointer; }
-    input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
-    .btn { height: 40px; padding: 0 18px; font: inherit; font-weight: 600; color: #fff; background: #0f766e; border: 0; border-radius: 8px; cursor: pointer; }
-    .btn:hover { background: #0b5e57; }
-    .matrix { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-    .t0 { --c: #9aa5a1; } .t1 { --c: #5aa59a; } .t2 { --c: #2f8579; } .t3 { --c: #0f5f57; } .t4 { --c: #c2410c; }
-    :root[data-theme="dark"] .t0 { --c: #7e8c87; }
-    :root[data-theme="dark"] .t1 { --c: #5aa59a; }
-    :root[data-theme="dark"] .t2 { --c: #4bb5a3; }
-    :root[data-theme="dark"] .t3 { --c: #5fd4c4; }
-    :root[data-theme="dark"] .t4 { --c: #fb923c; }
-    .tier { border: 1px solid var(--border); border-top: 3px solid var(--c); border-radius: 10px; padding: 14px; background: var(--surface); }
-    .tier-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 6px; }
-    .tier-top .name { font-weight: 700; font-size: 13px; color: var(--c); }
-    .tier-top .cnt { font-size: 12px; color: var(--muted); white-space: nowrap; }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--field); color: var(--text); cursor: pointer; }
-    .tier .chip:hover { border-color: var(--c); color: var(--c); }
-    .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-text); font-weight: 600; }
-    .chip .n { color: var(--muted); margin-left: 4px; }
-    .empty-note { font-size: 12px; color: var(--muted); }
-    .two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-    .two-col .card { margin-bottom: 0; }
-    .roi-box { margin-top: 16px; padding: 14px; background: var(--roi-bg); border: 1px solid var(--roi-border); border-radius: 8px; font-size: 13px; color: var(--roi-fg); }
-    .roi-box .t { font-weight: 700; margin-bottom: 4px; }
-    .scroll { max-height: 180px; overflow-y: auto; }
-    .section-gap { margin-top: 20px; }
-    .badge-filter { font-size: 12px; padding: 4px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--accent-text); border: 1px solid var(--accent-border); cursor: pointer; }
-    .hidden { display: none; }
-    .jobs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .job { border: 1px solid var(--border); border-left: 4px solid var(--c, #2f8579); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); transition: box-shadow 0.15s; }
-    .job:hover { box-shadow: var(--shadow-hover); }
-    .job-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-    .job h3 { font-size: 15px; font-weight: 600; }
-    .job .meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .salary { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
-    .salary small { font-weight: 500; opacity: 0.75; }
-    .salary.bdt { background: var(--accent-soft); color: var(--accent-text); }
-    .salary.usd { background: var(--usd-bg); color: var(--usd-fg); }
-    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-    .tag { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--tag-bg); color: var(--tag-fg); }
-    .tag.sector { background: hsl(var(--sh) var(--sec-bg-s) var(--sec-bg-l)); color: hsl(var(--sh) var(--sec-fg-s) var(--sec-fg-l)); }
-    .tag.skill { background: var(--skill-bg); color: var(--skill-fg); }
-    .job-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
-    .job-foot a { color: var(--accent-text); font-weight: 600; text-decoration: none; }
-    .job-foot a:hover { text-decoration: underline; }
-    .none { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 32px 0; }
-    @media (max-width: 980px) {
-      .filters { grid-template-columns: repeat(2, 1fr); }
-      .matrix { grid-template-columns: repeat(2, 1fr); }
-      .two-col { grid-template-columns: 1fr; }
-      .two-col .card { margin-bottom: 20px; }
-      .jobs { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .filters, .matrix { grid-template-columns: 1fr; }
-      .hero { padding: 20px; }
-      .kpi { min-width: 0; flex: 1; padding: 10px 12px; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Job Radar</title>
+<script>
+(function(){var t=null;try{t=localStorage.getItem("theme")}catch(e){}
+if(!t)t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+document.documentElement.setAttribute("data-theme",t)})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@600;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{color-scheme:light;--bg:#cdf7e1;--surface:#f1fff7;--border:#b9e8d0;--text:#07130f;--muted:#4d6b60;--accent:#00c896;--deep:#0a5a4c;--hero:#00d4a1;--field:#e4fcee;--ink:#0a0f0d;--on-ink:#fff;--bdt-bg:#cdf1e0;--bdt-fg:#0a5a4c;--usd-bg:#ffe39a;--usd-fg:#6b4a00;--tag-bg:#dff6ea;--tag-fg:#35594d;--sb:92%;--sf:28%;--ss:45%}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#050a08;--surface:#0e1714;--border:#1f3a31;--text:#e8f5ef;--muted:#8fb0a3;--accent:#00d4a1;--deep:#5fe8c4;--hero:#0a3b32;--field:#0a120f;--ink:#00d4a1;--on-ink:#04130e;--bdt-bg:rgba(0,212,161,.15);--bdt-fg:#5fe8c4;--usd-bg:rgba(255,201,74,.16);--usd-fg:#ffd978;--tag-bg:#16231f;--tag-fg:#a9c7bb;--sb:20%;--sf:80%;--ss:35%}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:14px/1.5 "Inter",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+h1,h2,.v{font-family:"Unbounded","Inter",sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 20px 60px}
+.hero{position:relative;overflow:hidden;background:var(--hero);border-radius:32px;padding:22px 32px 32px;margin-bottom:20px;color:#07130f;animation:rise .7s both}
+:root[data-theme="dark"] .hero{color:#e8f5ef}
+.top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.logo{display:flex;align-items:center;gap:8px;font-family:"Unbounded",sans-serif;font-weight:800;font-size:17px}
+.logo svg{animation:spin 14s linear infinite}
+.acts{display:flex;gap:8px;align-items:center}
+.pill{font:inherit;font-weight:600;font-size:13px;padding:8px 16px;border-radius:999px;border:1.5px solid currentColor;background:transparent;color:inherit;cursor:pointer;transition:transform .2s,background .2s,color .2s}
+.pill:hover{background:var(--ink);color:var(--on-ink);border-color:var(--ink);transform:translateY(-2px)}
+.hero h1{position:relative;z-index:2;font-weight:800;font-size:clamp(30px,5.2vw,58px);line-height:1.05;letter-spacing:-.02em;margin:34px 0 8px;max-width:640px}
+.stamp{position:relative;z-index:2;font-size:12px;font-weight:600;opacity:.8}
+.kpis{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.kpi{background:var(--surface);color:var(--text);border-radius:20px;padding:14px 22px;min-width:150px;transition:transform .25s}
+.kpi:hover{transform:translateY(-4px) rotate(-1deg)}
+.kpi .v{font-size:26px;font-weight:800}.kpi .l{font-size:12px;color:var(--muted)}
+.shape{position:absolute;z-index:1}
+.s1{width:150px;height:150px;border-radius:50%;background:#ffc94a;right:90px;top:60px;animation:float 6s ease-in-out infinite}
+.s2{width:170px;height:170px;background:#1fb0d0;right:-30px;bottom:-40px;clip-path:polygon(100% 0,0 100%,100% 100%);animation:float 8s ease-in-out infinite reverse}
+.s3{width:90px;height:90px;background:#0a5a4c;right:260px;bottom:30px;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);animation:spin 18s linear infinite}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:22px;margin-bottom:20px;transition:box-shadow .3s,transform .3s}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}.reveal.in{opacity:1;transform:none}
+.head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.head h2{font-size:15px;font-weight:600}.head .sp{flex:1}
+.info{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--muted);background:transparent;color:var(--muted);font:italic 700 12px Georgia,serif;cursor:pointer;transition:.2s}
+.info:hover{background:var(--ink);color:var(--on-ink);border-color:var(--ink);transform:scale(1.12)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.seg{display:flex;gap:4px;padding:4px;background:var(--field);border-radius:999px}
+.seg button,.cx button{font:inherit;font-size:13px;font-weight:500;padding:7px 16px;border-radius:999px;border:0;background:transparent;color:var(--text);cursor:pointer;transition:.2s}
+.seg button.on{background:var(--ink);color:var(--on-ink)}
+.cx{display:flex;flex-wrap:wrap;gap:8px}
+.cx button{border:1px solid var(--border);background:var(--surface)}
+.cx button:hover{border-color:var(--accent);transform:translateY(-1px)}
+.cx button.on{background:var(--accent);border-color:var(--accent);color:#04130e;font-weight:600}
+.search{flex:1;min-width:220px;height:42px;padding:0 18px;font:inherit;color:var(--text);background:var(--field);border:1.5px solid transparent;border-radius:999px;outline:none;transition:.2s}
+.search:focus{border-color:var(--accent)}
+.dds{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.dd{position:relative}
+.dd-btn{width:100%;display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--field);border:1.5px solid transparent;border-radius:16px;font:inherit;color:var(--text);cursor:pointer;text-align:left;transition:.2s}
+.dd-btn:hover,.dd.open .dd-btn{border-color:var(--accent)}
+.dd-l{font-size:11px;color:var(--muted);display:block}.dd-v{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dd-t{flex:1;min-width:0}.dd-btn svg{transition:transform .25s;flex:none}.dd.open .dd-btn svg{transform:rotate(180deg)}
+.dd-menu{position:absolute;z-index:30;left:0;right:0;top:calc(100% + 6px);max-height:260px;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:6px;box-shadow:0 14px 34px rgba(0,0,0,.18);opacity:0;transform:translateY(-8px) scale(.98);pointer-events:none;transition:.2s}
+.dd.open .dd-menu{opacity:1;transform:none;pointer-events:auto}
+.dd-item{display:block;width:100%;text-align:left;font:inherit;padding:9px 12px;border:0;border-radius:10px;background:transparent;color:var(--text);cursor:pointer}
+.dd-item:hover{background:var(--field)}.dd-item.on{background:var(--accent);color:#04130e;font-weight:600}
+.btn{font:inherit;font-weight:600;padding:9px 20px;border-radius:999px;border:0;background:var(--ink);color:var(--on-ink);cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}
+.matrix{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.t0{--c:#7fa595}.t1{--c:#1fb0d0}.t2{--c:#00b88a}.t3{--c:#0a8f78}.t4{--c:#f2a900}
+:root[data-theme="dark"] .t3{--c:#5fe8c4}
+.tier{border:1px solid var(--border);border-top:4px solid var(--c);border-radius:20px;padding:14px;background:var(--surface);transition:transform .25s}.tier:hover{transform:translateY(-4px)}
+.tt{display:flex;justify-content:space-between;gap:6px;margin-bottom:10px}.tt b{font-size:13px;color:var(--c)}.tt span{font-size:12px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:12px;padding:4px 11px;border-radius:999px;border:1px solid var(--border);background:var(--field);color:var(--text);cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--c,var(--accent));transform:translateY(-1px)}.chip.on{background:var(--accent);border-color:var(--accent);color:#04130e;font-weight:600}.chip i{font-style:normal;color:var(--muted);margin-left:4px}
+.two{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:20px}.two .card{margin:0}
+.roi{margin-top:14px;padding:14px;border-radius:16px;background:var(--field);font-size:13px}.roi b{display:block;margin-bottom:4px}
+.scroll{max-height:170px;overflow:auto}
+.hidden{display:none}
+.badge{font-size:12px;padding:4px 12px;border-radius:999px;background:var(--accent);color:#04130e;font-weight:600;border:0;cursor:pointer}
+.jobs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.job{--c:#00b88a;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:20px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:var(--surface);animation:rise .5s both;animation-delay:calc(var(--i)*45ms);transition:transform .25s,box-shadow .25s}
+.job:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,60,45,.16)}
+.jt{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.job h3{font-size:15px;font-weight:600}.meta{font-size:13px;color:var(--muted)}
+.sal{font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;white-space:nowrap;font-variant-numeric:tabular-nums}.sal small{font-weight:500;opacity:.75}
+.sal.bdt{background:var(--bdt-bg);color:var(--bdt-fg)}.sal.usd{background:var(--usd-bg);color:var(--usd-fg)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.tag{font-size:12px;padding:2px 10px;border-radius:999px;background:var(--tag-bg);color:var(--tag-fg)}
+.tag.sec{background:hsl(var(--sh) var(--ss) var(--sb));color:hsl(var(--sh) 50% var(--sf))}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.foot a{color:var(--text);font-weight:700;text-decoration:none;background:var(--accent);color:#04130e;padding:5px 14px;border-radius:999px;transition:.2s}.foot a:hover{transform:translateX(3px)}
+.none{grid-column:1/-1;text-align:center;color:var(--muted);padding:34px 0}
+#pop{position:absolute;z-index:60;max-width:290px;background:var(--ink);color:var(--on-ink);padding:12px 14px;border-radius:16px;font-size:13px;opacity:0;transform:translateY(6px);pointer-events:none;transition:.2s}#pop.open{opacity:1;transform:none}
+#modal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.25s}#modal.open{opacity:1;pointer-events:auto}
+.panel{width:min(620px,100%);max-height:88vh;overflow:auto;background:var(--surface);border-radius:28px;padding:26px;transform:translateY(24px) scale(.97);transition:.3s}#modal.open .panel{transform:none}
+.panel h2{font-size:18px;margin-bottom:6px}.panel p{color:var(--muted);margin-bottom:14px}
+.src{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--border)}.src a{color:var(--text);font-weight:700}.src small{display:block;color:var(--muted)}
+.cnt{font-size:12px;font-weight:700;padding:3px 12px;border-radius:999px;background:var(--bdt-bg);color:var(--bdt-fg);white-space:nowrap}.cnt.z{background:var(--usd-bg);color:var(--usd-fg)}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes float{50%{transform:translateY(-16px) rotate(6deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:980px){.dds{grid-template-columns:repeat(2,1fr)}.matrix{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.jobs{grid-template-columns:1fr}.s1{right:20px;top:90px;width:100px;height:100px}.s3{display:none}}
+@media(max-width:560px){.dds,.matrix{grid-template-columns:1fr}.hero{padding:18px}.kpi{flex:1;min-width:0;padding:10px 14px}.s1,.s2{opacity:.5}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
 </head>
 <body>
-  <div class="wrap">
-
-    <div class="hero">
-      <div>
-        <h1>Job Market Radar</h1>
-        <p>Bangladesh jobs are shown in ৳ (taka) per month. Global remote jobs are shown in US$ per month.</p>
-        <div class="hero-meta">
-          <span class="stamp">Updated daily 9:00 AM BDT &middot; Last scan: <span id="lastScan">Loading...</span></span>
-          <button id="themeToggle" class="theme-btn" type="button">Dark mode</button>
-        </div>
-      </div>
-      <div class="kpis">
-        <div class="kpi"><div id="statTotal" class="v">0</div><div class="l">Active circulars</div></div>
-        <div class="kpi"><div id="stat50k" class="v">0</div><div class="l">Paying ৳50k+ per month</div></div>
-        <div class="kpi"><div id="statRemote" class="v">0</div><div class="l">Remote, paid in US$</div></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="filters">
-        <select id="fSector"><option value="ALL">All sectors</option></select>
-        <select id="fTier">
-          <option value="ALL">All salary ranges</option>
-          <option value="<25k BDT">Under ৳25k</option>
-          <option value="25k–50k BDT">৳25k – ৳50k</option>
-          <option value="50k–100k BDT">৳50k – ৳1 lakh</option>
-          <option value="100k+ BDT">৳1 lakh and above</option>
-          <option value="Remote USD (120k+ BDT eq.)">Remote jobs paid in US$</option>
-        </select>
-        <select id="fExp">
-          <option value="ALL">All experience levels</option>
-          <option value="Fresher">Fresher (0y)</option>
-          <option value="Junior (1-2y)">Junior (1-2y)</option>
-          <option value="Mid (3-5y)">Mid (3-5y)</option>
-          <option value="Senior (5+y)">Senior (5+y)</option>
-        </select>
-        <select id="fMode">
-          <option value="ALL">All work modes</option>
-          <option value="Remote">Remote</option>
-          <option value="Hybrid">Hybrid</option>
-          <option value="Onsite">Onsite</option>
-        </select>
-        <select id="fSort">
-          <option value="salary_desc">Sort: highest salary</option>
-          <option value="latest">Sort: latest posted</option>
-          <option value="skills_desc">Sort: most skills listed</option>
-        </select>
-      </div>
-      <div class="filter-row">
-        <input id="fSearch" type="text" placeholder="Search role, company or skill" />
-        <div class="right">
-          <label class="check"><input id="fHideGhost" type="checkbox" checked /> Hide listings older than 45 days</label>
-          <button id="btnReset" class="btn">Reset filters</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <h2>Skills required by salary range</h2>
-        <span class="hint">Select a skill to filter the listings below</span>
-      </div>
-      <div id="unlockGrid" class="matrix"></div>
-    </div>
-
-    <div class="two-col">
-      <div class="card">
-        <div class="card-head"><h2>Most demanded skills</h2></div>
-        <canvas id="skillsChart" height="130"></canvas>
-      </div>
-      <div class="card">
-        <div class="card-head"><h2>Skill gap planner</h2></div>
-        <p class="hint" style="color:var(--muted);font-size:13px;margin-bottom:12px;">Select the skills you already have to see which one to learn next for roles paying ৳50k+ per month.</p>
-        <div id="roiChecklist" class="chips scroll"></div>
-        <div id="roiResult" class="roi-box">Select your current skills to calculate.</div>
-      </div>
-    </div>
-
-    <div class="card section-gap">
-      <div class="card-head">
-        <h2>Circulars (<span id="shownCount">0</span>)</h2>
-        <span id="activeSkillBadge" class="badge-filter hidden"></span>
-      </div>
-      <div id="circularList" class="jobs"></div>
-    </div>
-
+<div class="wrap">
+<header class="hero">
+  <i class="shape s1"></i><i class="shape s2"></i><i class="shape s3"></i>
+  <div class="top">
+    <div class="logo"><svg width="26" height="26" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0l2.2 7.3L21 3.5l-3.8 6.8L24 12l-6.8 1.7 3.8 6.8-6.8-3.8L12 24l-2.2-7.3L3 20.5l3.8-6.8L0 12l6.8-1.7L3 3.5l6.8 3.8z"/></svg>Radar</div>
+    <div class="acts"><button id="themeToggle" class="pill" type="button">Dark</button><button id="srcBtn" class="pill" type="button">i &nbsp;Sources</button></div>
   </div>
+  <h1>Find your next job</h1>
+  <div class="stamp">Last scan: <span id="lastScan">Loading</span></div>
+  <div class="kpis">
+    <div class="kpi"><div id="statTotal" class="v">0</div><div class="l">Open circulars</div></div>
+    <div class="kpi"><div id="stat50k" class="v">0</div><div class="l">Paying ৳50k+</div></div>
+    <div class="kpi"><div id="statRemote" class="v">0</div><div class="l">Remote in US$</div></div>
+  </div>
+</header>
 
-  <script>
-    const FALLBACK_DATA = {
-      generated_at_bdt: "Demo Mode (Run GitHub Actions for Live 9 AM Data)",
-      trending_skills: [
-        { skill: "AI / LLM APIs", count_30d: 34, velocity_pct: 62, unlocks_50k_plus: 31 },
-        { skill: "Python", count_30d: 42, velocity_pct: 28, unlocks_50k_plus: 36 },
-        { skill: "React / Next.js", count_30d: 39, velocity_pct: 19, unlocks_50k_plus: 30 },
-        { skill: "SQL & Databases", count_30d: 37, velocity_pct: 24, unlocks_50k_plus: 29 },
-        { skill: "Docker / Kubernetes", count_30d: 26, velocity_pct: 41, unlocks_50k_plus: 25 },
-        { skill: "Cybersecurity / SOC", count_30d: 21, velocity_pct: 43, unlocks_50k_plus: 20 },
-        { skill: "Flutter / Mobile", count_30d: 24, velocity_pct: 48, unlocks_50k_plus: 19 },
-        { skill: "Power BI / Tableau", count_30d: 22, velocity_pct: 54, unlocks_50k_plus: 18 }
-      ],
-      salary_unlock_matrix: [
-        { tier: "<25k BDT", job_count: 0, top_skills: [] },
-        { tier: "25k–50k BDT", job_count: 1, top_skills: [{ skill: "Laravel / PHP", count: 1 }, { skill: "SQL & Databases", count: 1 }] },
-        { tier: "50k–100k BDT", job_count: 3, top_skills: [{ skill: "Python", count: 2 }, { skill: "AI / LLM APIs", count: 1 }, { skill: "AI Automation (n8n/Make)", count: 1 }, { skill: "SQL & Databases", count: 1 }, { skill: "Power BI / Tableau", count: 1 }, { skill: "Flutter / Mobile", count: 1 }] },
-        { tier: "100k+ BDT", job_count: 2, top_skills: [{ skill: "Product Management", count: 1 }, { skill: "Cybersecurity / SOC", count: 1 }, { skill: "SQL & Databases", count: 1 }, { skill: "SEO & Performance Ads", count: 1 }] },
-        { tier: "Remote USD (120k+ BDT eq.)", job_count: 1, top_skills: [{ skill: "AI / LLM APIs", count: 1 }, { skill: "Python", count: 1 }, { skill: "React / Next.js", count: 1 }] }
-      ],
-      circulars: [
-        { id: "d1", source: "Bdjobs", region: "Bangladesh", title: "AI Automation & LLM Engineer", company: "Dhaka FinTech Ltd", location: "Dhaka, Bangladesh", work_mode: "Hybrid", sector: "AI, Data & Analytics", experience_level: "Mid (3-5y)", skills: ["AI / LLM APIs", "AI Automation (n8n/Make)", "Python"], salary_bdt_min: 60000, salary_bdt_max: 90000, salary_is_estimated: false, salary_tier: "50k–100k BDT", posted_at: "2026-11-27", deadline: "", circular_url: "#", is_ghost: false },
-        { id: "d2", source: "Remotive", region: "Global Remote", title: "Full-Stack AI Engineer (Next.js + Python)", company: "Remote Labs", location: "Worldwide", work_mode: "Remote", sector: "Tech & Software", experience_level: "Mid (3-5y)", skills: ["AI / LLM APIs", "Python", "React / Next.js"], salary_bdt_min: 150000, salary_bdt_max: 240000, salary_is_estimated: false, salary_tier: "Remote USD (120k+ BDT eq.)", posted_at: "2026-11-26", deadline: "", circular_url: "#", is_ghost: false },
-        { id: "d3", source: "Bdjobs", region: "Bangladesh", title: "Senior Cybersecurity / SOC Analyst", company: "Premier Bank PLC", location: "Dhaka, Bangladesh", work_mode: "Onsite", sector: "Cybersecurity & Cloud", experience_level: "Senior (5+y)", skills: ["Cybersecurity / SOC", "SQL & Databases"], salary_bdt_min: 100000, salary_bdt_max: 140000, salary_is_estimated: true, salary_tier: "100k+ BDT", posted_at: "2026-11-25", deadline: "2026-12-10", circular_url: "#", is_ghost: false },
-        { id: "d4", source: "Bdjobs", region: "Bangladesh", title: "Data Analyst (SQL + Power BI)", company: "bKash Limited", location: "Dhaka, Bangladesh", work_mode: "Hybrid", sector: "AI, Data & Analytics", experience_level: "Junior (1-2y)", skills: ["SQL & Databases", "Power BI / Tableau", "Python"], salary_bdt_min: 55000, salary_bdt_max: 85000, salary_is_estimated: true, salary_tier: "50k–100k BDT", posted_at: "2026-11-24", deadline: "2026-12-05", circular_url: "#", is_ghost: false },
-        { id: "d5", source: "Skill.Jobs", region: "Bangladesh", title: "Flutter Mobile Developer", company: "Pathao Ltd", location: "Dhaka, Bangladesh", work_mode: "Onsite", sector: "Tech & Software", experience_level: "Mid (3-5y)", skills: ["Flutter / Mobile"], salary_bdt_min: 55000, salary_bdt_max: 85000, salary_is_estimated: true, salary_tier: "50k–100k BDT", posted_at: "2026-11-23", deadline: "", circular_url: "#", is_ghost: false },
-        { id: "d6", source: "Bdjobs", region: "Bangladesh", title: "Product Manager (Digital Growth)", company: "ShopUp", location: "Dhaka, Bangladesh", work_mode: "Hybrid", sector: "Business, Product & Marketing", experience_level: "Senior (5+y)", skills: ["Product Management", "SEO & Performance Ads"], salary_bdt_min: 100000, salary_bdt_max: 130000, salary_is_estimated: true, salary_tier: "100k+ BDT", posted_at: "2026-11-22", deadline: "2026-12-15", circular_url: "#", is_ghost: false },
-        { id: "d7", source: "Bdjobs", region: "Bangladesh", title: "Junior Laravel Developer", company: "Dhaka Web Studio", location: "Dhaka, Bangladesh", work_mode: "Onsite", sector: "Tech & Software", experience_level: "Junior (1-2y)", skills: ["Laravel / PHP", "SQL & Databases"], salary_bdt_min: 25000, salary_bdt_max: 40000, salary_is_estimated: true, salary_tier: "25k–50k BDT", posted_at: "2026-11-21", deadline: "", circular_url: "#", is_ghost: false }
-      ]
-    };
+<section class="card reveal">
+  <div class="head"><h2>Filters</h2><button class="info" data-i="filters">i</button></div>
+  <div class="row">
+    <div class="seg" id="gMode"><button data-v="ALL" class="on">All</button><button data-v="Remote">Remote</button><button data-v="Hybrid">Hybrid</button><button data-v="Onsite">On-site</button></div>
+    <input id="fSearch" class="search" type="text" placeholder="Search role, company or skill" />
+  </div>
+  <div class="dds">
+    <select id="fSector" data-label="Sector"><option value="ALL">All sectors</option></select>
+    <select id="fTier" data-label="Salary per month">
+      <option value="ALL">Any salary</option><option value="<25k BDT">Under ৳25k</option><option value="25k–50k BDT">৳25k – ৳50k</option><option value="50k–100k BDT">৳50k – ৳1 lakh</option><option value="100k+ BDT">৳1 lakh and above</option><option value="Remote USD (120k+ BDT eq.)">Remote, paid in US$</option>
+    </select>
+    <select id="fPosted" data-label="Posted"><option value="30">Last 30 days</option><option value="7">Last 7 days</option><option value="1">Last 24 hours</option></select>
+    <select id="fSort" data-label="Sort by"><option value="salary_desc">Highest salary</option><option value="latest">Latest posted</option><option value="skills_desc">Most skills</option></select>
+  </div>
+  <div class="row">
+    <div class="cx" id="gExp"><button data-v="ALL" class="on">Any level</button><button data-v="Fresher">Fresher</button><button data-v="Junior (1-2y)">Junior</button><button data-v="Mid (3-5y)">Mid</button><button data-v="Senior (5+y)">Senior</button></div>
+    <span style="flex:1"></span><button id="btnReset" class="btn">Reset</button>
+  </div>
+</section>
 
-        let DATA = null;
-    let activeSkillFilter = null;
-    let ownedSkills = new Set();
-    let chartInstance = null;
+<section class="card reveal">
+  <div class="head"><h2>Skills by salary</h2><button class="info" data-i="matrix">i</button></div>
+  <div id="unlockGrid" class="matrix"></div>
+</section>
 
-    const fmtBDT = n => {
-      if (n >= 100000) return "৳" + (Math.round(n / 10000) / 10) + " lakh";
-      return "৳" + Math.round(n / 1000) + "k";
-    };
+<div class="two reveal">
+  <div class="card"><div class="head"><h2>Top skills</h2><button class="info" data-i="chart">i</button></div><canvas id="skillsChart" height="130"></canvas></div>
+  <div class="card"><div class="head"><h2>Skill planner</h2><button class="info" data-i="roi">i</button></div><div id="roiChecklist" class="chips scroll"></div><div id="roiResult" class="roi">Pick your skills</div></div>
+</div>
 
-    const USD_RATE = 122;
+<section class="card reveal">
+  <div class="head"><h2>Circulars <span id="shownCount">0</span></h2><button class="info" data-i="jobs">i</button><span class="sp"></span><button id="activeSkillBadge" class="badge hidden"></button></div>
+  <div id="circularList" class="jobs"></div>
+</section>
+</div>
 
-    const fmtUSD = n => {
-      const u = n / USD_RATE;
-      if (u >= 1000) return "$" + (Math.round(u / 100) / 10) + "k";
-      return "$" + Math.round(u);
-    };
+<div id="pop"></div>
+<div id="modal"><div class="panel">
+  <h2>Where the data comes from</h2>
+  <p>Scanned every day at 9:00 AM BDT, kept for 30 days. Circulars past their deadline are removed automatically. Salaries marked est. are estimates for "negotiable" jobs. Counts below are from the last scan; a source showing 0 may have blocked the scanner.</p>
+  <div id="srcList"></div>
+  <button id="modalClose" class="btn" style="margin-top:16px">Close</button>
+</div></div>
 
-    const salaryText = c => {
-      const f = c.region === "Global Remote" ? fmtUSD : fmtBDT;
-      return f(c.salary_bdt_min) + " – " + f(c.salary_bdt_max);
-    };
+<script>
+const D=n=>new Date(Date.now()-n*864e5).toISOString().slice(0,10);
+const mk=(id,source,region,title,company,mode,sector,exp,skills,min,max,tier,posted,deadline)=>({id,source,region,title,company,location:region==="Global Remote"?"Worldwide":"Dhaka, Bangladesh",work_mode:mode,sector,experience_level:exp,skills,salary_bdt_min:min,salary_bdt_max:max,salary_is_estimated:true,salary_tier:tier,posted_at:D(posted),deadline:deadline===""?"":D(deadline),circular_url:"#"});
+const T={a:"<25k BDT",b:"25k–50k BDT",c:"50k–100k BDT",d:"100k+ BDT",e:"Remote USD (120k+ BDT eq.)"};
+const FALLBACK_DATA={generated_at_bdt:"Demo data (run the GitHub workflow for live jobs)",
+trending_skills:[["AI / LLM APIs",34,62,31],["Python",42,28,36],["React / Next.js",39,19,30],["SQL & Databases",37,24,29],["Docker / Kubernetes",26,41,25],["Cybersecurity / SOC",21,43,20],["Flutter / Mobile",24,48,19],["Power BI / Tableau",22,54,18]].map(([skill,count_30d,velocity_pct,unlocks_50k_plus])=>({skill,count_30d,velocity_pct,unlocks_50k_plus})),
+circulars:[
+mk("d1","Bdjobs","Bangladesh","AI Automation & LLM Engineer","Dhaka FinTech Ltd","Hybrid","AI, Data & Analytics","Mid (3-5y)",["AI / LLM APIs","Python"],60000,90000,T.c,1,-12),
+mk("d2","Remotive","Global Remote","Full-Stack AI Engineer","Remote Labs","Remote","Tech & Software","Mid (3-5y)",["AI / LLM APIs","Python","React / Next.js"],150000,240000,T.e,3,""),
+mk("d3","Bdjobs","Bangladesh","Senior SOC Analyst","Premier Bank PLC","Onsite","Cybersecurity & Cloud","Senior (5+y)",["Cybersecurity / SOC","SQL & Databases"],100000,140000,T.d,6,-9),
+mk("d4","Bdjobs","Bangladesh","Data Analyst","bKash Limited","Hybrid","AI, Data & Analytics","Junior (1-2y)",["SQL & Databases","Power BI / Tableau"],55000,85000,T.c,9,-5),
+mk("d5","Skill.Jobs","Bangladesh","Flutter Developer","Pathao Ltd","Onsite","Tech & Software","Mid (3-5y)",["Flutter / Mobile"],55000,85000,T.c,15,""),
+mk("d6","Bdjobs","Bangladesh","Product Manager","ShopUp","Hybrid","Business, Product & Marketing","Senior (5+y)",["Product Management","SEO & Performance Ads"],100000,130000,T.d,21,-3),
+mk("d7","Bdjobs","Bangladesh","Junior Laravel Developer","Dhaka Web Studio","Onsite","Tech & Software","Junior (1-2y)",["Laravel / PHP","SQL & Databases"],25000,40000,T.b,27,-20)]};
+const SOURCES=[["Bdjobs","https://www.bdjobs.com","Bangladesh · public listing pages"],["Skill.Jobs","https://skill.jobs","Bangladesh · public listing pages"],["Remotive","https://remotive.com","Remote · public API, link back to the original job"],["Jobicy","https://jobicy.com","Remote · public API"],["RemoteOK","https://remoteok.com","Remote · public API, link back to the original job"]];
+const INFO={filters:"Combine any filters. Results update instantly. Reset clears everything.",matrix:"Each box is a monthly salary range. The skills shown appear most often in jobs paying that much. Tap a skill to see those jobs. Remote jobs are paid in US dollars.",chart:"Blue bars: jobs mentioning the skill in the last 30 days. Green bars: how many of those pay ৳50k or more per month.",roi:"Tick the skills you already have. The planner shows which missing skills appear most in jobs paying ৳50k+ per month.",jobs:"Jobs from the last 30 days. Expired circulars disappear automatically. Bangladesh jobs are in ৳ per month, remote jobs in US$ per month. Est. means the salary was negotiable and has been estimated."};
+const $=id=>document.getElementById(id);
+let DATA=null,activeSkill=null,owned=new Set(),chart=null;
+const tierIndex={[T.a]:0,[T.b]:1,[T.c]:2,[T.d]:3,[T.e]:4};
+const tierLabels={[T.a]:"Under ৳25k",[T.b]:"৳25k – ৳50k",[T.c]:"৳50k – ৳1 lakh",[T.d]:"৳1 lakh+",[T.e]:"Remote, US$"};
+const fmtBDT=n=>n>=1e5?"৳"+Math.round(n/1e4)/10+" lakh":"৳"+Math.round(n/1e3)+"k";
+const fmtUSD=n=>{const u=n/122;return u>=1000?"$"+Math.round(u/100)/10+"k":"$"+Math.round(u)};
+const salaryText=c=>{const f=c.region==="Global Remote"?fmtUSD:fmtBDT;return f(c.salary_bdt_min)+" – "+f(c.salary_bdt_max)};
+const hue=s=>{let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))%360;return h};
+const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const age=c=>c.posted_at?Math.max(0,(Date.now()-Date.parse(c.posted_at))/864e5):0;
 
-    const tierLabels = {
-      "<25k BDT": "Under ৳25k",
-      "25k–50k BDT": "৳25k – ৳50k",
-      "50k–100k BDT": "৳50k – ৳1 lakh",
-      "100k+ BDT": "৳1 lakh and above",
-      "Remote USD (120k+ BDT eq.)": "Remote (paid in US$)"
-    };
-    const tierLabel = t => tierLabels[t] || t;
+function countUp(el,to){const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)}
 
-    const tierIndex = {
-      "<25k BDT": 0,
-      "25k–50k BDT": 1,
-      "50k–100k BDT": 2,
-      "100k+ BDT": 3,
-      "Remote USD (120k+ BDT eq.)": 4
-    };
+function enhance(sel){
+  const w=document.createElement("div");w.className="dd";
+  const b=document.createElement("button");b.type="button";b.className="dd-btn";
+  const m=document.createElement("div");m.className="dd-menu";
+  sel.hidden=true;sel.after(w);w.append(b,m);
+  const build=()=>{m.innerHTML="";[...sel.options].forEach(o=>{const i=document.createElement("button");i.type="button";i.className="dd-item"+(o.value===sel.value?" on":"");i.textContent=o.textContent;i.onclick=e=>{e.stopPropagation();sel.value=o.value;sel.dispatchEvent(new Event("change"));w.classList.remove("open");build()};m.appendChild(i)});
+    b.innerHTML=`<span class="dd-t"><span class="dd-l">${sel.dataset.label}</span><span class="dd-v">${sel.selectedOptions[0].textContent}</span></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>`};
+  b.onclick=e=>{e.stopPropagation();const o=w.classList.contains("open");document.querySelectorAll(".dd.open").forEach(x=>x.classList.remove("open"));if(!o)w.classList.add("open")};
+  sel.rebuild=build;build();
+}
+function group(id,onChange){const g=$(id);g.value="ALL";g.querySelectorAll("button").forEach(b=>b.onclick=()=>{g.value=b.dataset.v;g.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));onChange()});}
+function resetGroup(id){const g=$(id);g.value="ALL";g.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x.dataset.v==="ALL"))}
 
-    const sectorHue = name => {
-      let h = 0;
-      for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 360;
-      return h;
-    };
+async function load(){
+  try{const r=await fetch("data/market_intel.json?t="+Date.now());if(!r.ok)throw 0;DATA=await r.json()}catch{
+    DATA=FALLBACK_DATA;const cs=DATA.circulars;
+    DATA.salary_unlock_matrix=Object.values(T).map(t=>{const js=cs.filter(c=>c.salary_tier===t),n={};js.forEach(c=>c.skills.forEach(s=>n[s]=(n[s]||0)+1));return{tier:t,job_count:js.length,top_skills:Object.entries(n).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([skill,count])=>({skill,count}))}})}
+  const t=today();DATA.circulars=DATA.circulars.filter(c=>(!c.deadline||c.deadline>=t)&&age(c)<=30);
+  init();
+}
+function init(){
+  $("lastScan").textContent=DATA.generated_at_bdt;
+  [...new Set(DATA.circulars.map(c=>c.sector))].sort().forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;$("fSector").appendChild(o)});
+  document.querySelectorAll(".dds select").forEach(enhance);
+  group("gMode",render);group("gExp",render);
+  ["fSector","fTier","fPosted","fSort"].forEach(id=>$(id).addEventListener("change",render));
+  $("fSearch").addEventListener("input",render);
+  $("btnReset").onclick=()=>{activeSkill=null;["fSector","fTier"].forEach(id=>$(id).value="ALL");$("fPosted").value="30";$("fSort").value="salary_desc";$("fSearch").value="";document.querySelectorAll(".dds select").forEach(s=>s.rebuild());resetGroup("gMode");resetGroup("gExp");render()};
+  matrix();drawChart();planner();render();
+  const cs=DATA.circulars;countUp($("statTotal"),cs.length);countUp($("stat50k"),cs.filter(c=>c.salary_bdt_max>=5e4).length);countUp($("statRemote"),cs.filter(c=>c.region==="Global Remote").length);
+}
+function matrix(){
+  const g=$("unlockGrid");g.innerHTML="";
+  DATA.salary_unlock_matrix.forEach((r,i)=>{const b=document.createElement("div");b.className="tier reveal t"+(tierIndex[r.tier]??i);
+    b.innerHTML=`<div class="tt"><b>${tierLabels[r.tier]||r.tier}</b><span>${r.job_count} jobs</span></div><div class="chips">${r.top_skills.length?r.top_skills.map(s=>`<button class="chip" data-s="${s.skill}" data-t="${r.tier}">${s.skill}<i>${s.count}</i></button>`).join(""):'<span style="font-size:12px;color:var(--muted)">None</span>'}</div>`;g.appendChild(b)});
+  g.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{activeSkill=b.dataset.s;$("fTier").value=b.dataset.t;$("fTier").rebuild();render();$("circularList").scrollIntoView({behavior:"smooth",block:"start"})});
+}
+function drawChart(){
+  const top=DATA.trending_skills.slice(0,10),dk=document.documentElement.dataset.theme==="dark";
+  const tick=dk?"#8fb0a3":"#4d6b60",grid=dk?"#1f3a31":"#cfeedd";
+  if(chart)chart.destroy();Chart.defaults.font.family="Inter, sans-serif";
+  chart=new Chart($("skillsChart").getContext("2d"),{type:"bar",data:{labels:top.map(x=>x.skill),datasets:[{label:"Jobs (30 days)",data:top.map(x=>x.count_30d),backgroundColor:"#1fb0d0",borderRadius:8},{label:"Paying ৳50k+",data:top.map(x=>x.unlocks_50k_plus),backgroundColor:dk?"#00d4a1":"#0a5a4c",borderRadius:8}]},
+  options:{responsive:true,animation:{duration:900,easing:"easeOutQuart"},plugins:{legend:{position:"bottom",labels:{color:tick,usePointStyle:true,boxWidth:8}}},scales:{x:{ticks:{color:tick,font:{size:11}},grid:{display:false}},y:{ticks:{color:tick},grid:{color:grid}}}}});
+}
+function planner(){
+  const box=$("roiChecklist");box.innerHTML=DATA.trending_skills.slice(0,14).map(x=>`<button class="chip" data-r="${x.skill}">${x.skill}</button>`).join("");
+  box.querySelectorAll("button").forEach(b=>b.onclick=()=>{const s=b.dataset.r;owned.has(s)?owned.delete(s):owned.add(s);b.classList.toggle("on",owned.has(s));roi()});roi();
+}
+function roi(){
+  const n={};DATA.circulars.filter(c=>c.salary_bdt_max>=5e4).forEach(c=>c.skills.forEach(s=>{if(!owned.has(s))n[s]=(n[s]||0)+1}));
+  const r=Object.entries(n).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  $("roiResult").innerHTML=r.length?"<b>Learn next</b>"+r.map(([s,c],i)=>`${i+1}. ${s} · ${c} jobs`).join("<br>"):"You cover the top skills.";
+}
+function render(){
+  const sec=$("fSector").value,tier=$("fTier").value,exp=$("gExp").value,mode=$("gMode").value,sort=$("fSort").value,max=+$("fPosted").value,q=$("fSearch").value.trim().toLowerCase();
+  const list=DATA.circulars.filter(c=>{
+    if(sec!=="ALL"&&c.sector!==sec)return false;if(tier!=="ALL"&&c.salary_tier!==tier)return false;
+    if(exp!=="ALL"&&c.experience_level!==exp)return false;if(mode!=="ALL"&&c.work_mode!==mode)return false;
+    if(age(c)>max)return false;if(activeSkill&&!c.skills.includes(activeSkill))return false;
+    return !q||`${c.title} ${c.company} ${c.sector} ${c.skills.join(" ")}`.toLowerCase().includes(q)});
+  if(sort==="salary_desc")list.sort((a,b)=>b.salary_bdt_max-a.salary_bdt_max);
+  else if(sort==="latest")list.sort((a,b)=>(b.posted_at||"").localeCompare(a.posted_at||""));
+  else list.sort((a,b)=>b.skills.length-a.skills.length);
+  $("shownCount").textContent="("+list.length+")";
+  const bd=$("activeSkillBadge");bd.classList.toggle("hidden",!activeSkill);
+  if(activeSkill){bd.textContent=activeSkill+" ×";bd.onclick=()=>{activeSkill=null;render()}}
+  $("circularList").innerHTML=list.map((c,i)=>{const rm=c.region==="Global Remote";return`
+  <div class="job t${tierIndex[c.salary_tier]??2}" style="--i:${Math.min(i,12)}">
+    <div><div class="jt"><div><h3>${c.title}</h3><div class="meta">${c.company} · ${c.location}</div></div>
+    <span class="sal ${rm?"usd":"bdt"}" title="${rm?"About "+fmtBDT(c.salary_bdt_min)+" – "+fmtBDT(c.salary_bdt_max)+" per month":"Taka per month"}">${salaryText(c)}<small> /mo${c.salary_is_estimated?" est.":""}</small></span></div>
+    <div class="tags"><span class="tag sec" style="--sh:${hue(c.sector)}">${c.sector}</span><span class="tag">${c.experience_level}</span><span class="tag">${c.work_mode}</span>${c.skills.map(s=>`<span class="tag" style="background:var(--bdt-bg);color:var(--bdt-fg)">${s}</span>`).join("")}</div></div>
+    <div class="foot"><span>${c.source} · ${c.posted_at||"Today"}${c.deadline?" · Closes "+c.deadline:""}</span><a href="${c.circular_url}" target="_blank" rel="noopener noreferrer">Apply →</a></div></div>`}).join("")||'<div class="none">No circulars match your filters.</div>';
+}
 
-    async function loadData() {
-      try {
-        const res = await fetch("data/market_intel.json?t=" + Date.now());
-        if (!res.ok) throw new Error("No live JSON yet");
-        DATA = await res.json();
-      } catch {
-        DATA = FALLBACK_DATA;
-      }
-      initUI();
-    }
-
-    function initUI() {
-      document.getElementById("lastScan").textContent = DATA.generated_at_bdt;
-      const sectors = [...new Set(DATA.circulars.map(c => c.sector))].sort();
-      const fSector = document.getElementById("fSector");
-      sectors.forEach(s => {
-        const o = document.createElement("option");
-        o.value = s; o.textContent = s;
-        fSector.appendChild(o);
-      });
-
-      renderUnlockMatrix();
-      renderChart();
-      renderROIChecklist();
-      renderCirculars();
-
-      ["fSector", "fTier", "fExp", "fMode", "fSort", "fHideGhost"].forEach(id =>
-        document.getElementById(id).addEventListener("change", renderCirculars)
-      );
-      document.getElementById("fSearch").addEventListener("input", renderCirculars);
-      document.getElementById("btnReset").addEventListener("click", () => {
-        activeSkillFilter = null;
-        document.getElementById("fSector").value = "ALL";
-        document.getElementById("fTier").value = "ALL";
-        document.getElementById("fExp").value = "ALL";
-        document.getElementById("fMode").value = "ALL";
-        document.getElementById("fSearch").value = "";
-        renderCirculars();
-      });
-    }
-
-    function renderUnlockMatrix() {
-      const grid = document.getElementById("unlockGrid");
-      grid.innerHTML = "";
-      DATA.salary_unlock_matrix.forEach((row, idx) => {
-        const box = document.createElement("div");
-        box.className = "tier t" + (tierIndex[row.tier] ?? idx);
-        box.innerHTML = `
-          <div class="tier-top">
-            <span class="name">${tierLabel(row.tier)}</span>
-            <span class="cnt">${row.job_count} jobs</span>
-          </div>
-          <div class="chips">
-            ${row.top_skills.length ? row.top_skills.map(s => `
-              <button class="chip" data-skill="${s.skill}" data-tier="${row.tier}">${s.skill}<span class="n">${s.count}</span></button>
-            `).join("") : '<span class="empty-note">No circulars</span>'}
-          </div>
-        `;
-        grid.appendChild(box);
-      });
-      grid.querySelectorAll("button[data-skill]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          activeSkillFilter = btn.dataset.skill;
-          document.getElementById("fTier").value = btn.dataset.tier;
-          renderCirculars();
-        });
-      });
-    }
-
-    function renderChart() {
-      const top = DATA.trending_skills.slice(0, 10);
-      const dark = document.documentElement.getAttribute("data-theme") === "dark";
-      const tick = dark ? "#93a29c" : "#67716d";
-      const gridC = dark ? "#26332f" : "#e8e6df";
-      const legendC = dark ? "#c3cfca" : "#4f5a56";
-      const ctx = document.getElementById("skillsChart").getContext("2d");
-      if (chartInstance) chartInstance.destroy();
-      Chart.defaults.font.family = "Inter, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
-      chartInstance = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: top.map(x => x.skill),
-          datasets: [
-            { label: "Demand (30 days)", data: top.map(x => x.count_30d), backgroundColor: dark ? "#3b6b66" : "#9fcfc7", borderRadius: 4 },
-            { label: "Roles paying ৳50k+ per month", data: top.map(x => x.unlocks_50k_plus), backgroundColor: dark ? "#5fd4c4" : "#0f766e", borderRadius: 4 }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { position: "bottom", labels: { color: legendC, boxWidth: 12, boxHeight: 12, font: { size: 12 } } } },
-          scales: {
-            x: { ticks: { color: tick, font: { size: 11 } }, grid: { display: false } },
-            y: { ticks: { color: tick, font: { size: 11 } }, grid: { color: gridC } }
-          }
-        }
-      });
-    }
-
-    function renderROIChecklist() {
-      const box = document.getElementById("roiChecklist");
-      const allSkills = DATA.trending_skills.slice(0, 14).map(x => x.skill);
-      box.innerHTML = allSkills.map(s => `<button class="chip" data-roi="${s}">${s}</button>`).join("");
-      box.querySelectorAll("button").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const sk = btn.dataset.roi;
-          if (ownedSkills.has(sk)) { ownedSkills.delete(sk); btn.classList.remove("active"); }
-          else { ownedSkills.add(sk); btn.classList.add("active"); }
-          computeROI();
-        });
-      });
-      computeROI();
-    }
-
-    function computeROI() {
-      const highPay = DATA.circulars.filter(c => c.salary_bdt_max >= 50000);
-      const counts = {};
-      highPay.forEach(c => c.skills.forEach(s => {
-        if (!ownedSkills.has(s)) counts[s] = (counts[s] || 0) + 1;
-      }));
-      const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3);
-      const out = document.getElementById("roiResult");
-      if (!ranked.length) {
-        out.textContent = "You already cover the top high-paying skills in this dataset.";
-        return;
-      }
-      out.innerHTML = `<div class="t">Best next skills for roles paying ৳50k+ per month</div>` +
-        ranked.map(([sk, cnt], i) => `<div>${i + 1}. <strong>${sk}</strong> &middot; ${cnt} matching roles</div>`).join("");
-    }
-
-    function renderCirculars() {
-      const sec = document.getElementById("fSector").value;
-      const tier = document.getElementById("fTier").value;
-      const exp = document.getElementById("fExp").value;
-      const mode = document.getElementById("fMode").value;
-      const sort = document.getElementById("fSort").value;
-      const q = document.getElementById("fSearch").value.trim().toLowerCase();
-      const hideGhost = document.getElementById("fHideGhost").checked;
-
-      let list = DATA.circulars.filter(c => {
-        if (hideGhost && c.is_ghost) return false;
-        if (sec !== "ALL" && c.sector !== sec) return false;
-        if (tier !== "ALL" && c.salary_tier !== tier) return false;
-        if (exp !== "ALL" && c.experience_level !== exp) return false;
-        if (mode !== "ALL" && c.work_mode !== mode) return false;
-        if (activeSkillFilter && !c.skills.includes(activeSkillFilter)) return false;
-        if (q) {
-          const hay = `${c.title} ${c.company} ${c.sector} ${c.skills.join(" ")}`.toLowerCase();
-          if (!hay.includes(q)) return false;
-        }
-        return true;
-      });
-
-      if (sort === "salary_desc") list.sort((a, b) => b.salary_bdt_max - a.salary_bdt_max);
-      else if (sort === "latest") list.sort((a, b) => (b.posted_at || "").localeCompare(a.posted_at || ""));
-      else if (sort === "skills_desc") list.sort((a, b) => b.skills.length - a.skills.length);
-
-      document.getElementById("statTotal").textContent = DATA.circulars.length;
-      document.getElementById("stat50k").textContent = DATA.circulars.filter(c => c.salary_bdt_max >= 50000).length;
-      document.getElementById("statRemote").textContent = DATA.circulars.filter(c => c.region === "Global Remote").length;
-      document.getElementById("shownCount").textContent = list.length;
-
-      const badge = document.getElementById("activeSkillBadge");
-      if (activeSkillFilter) {
-        badge.classList.remove("hidden");
-        badge.textContent = `Skill: ${activeSkillFilter} ×`;
-        badge.onclick = () => { activeSkillFilter = null; renderCirculars(); };
-      } else {
-        badge.classList.add("hidden");
-      }
-
-      const container = document.getElementById("circularList");
-      container.innerHTML = list.map(c => `
-        <div class="job t${tierIndex[c.salary_tier] ?? 2}">
-          <div>
-            <div class="job-top">
-              <div>
-                <h3>${c.title}</h3>
-                <div class="meta">${c.company} · ${c.location}</div>
-              </div>
-              <span class="salary ${c.region === "Global Remote" ? "usd" : "bdt"}" title="${c.region === "Global Remote" ? "About " + fmtBDT(c.salary_bdt_min) + " – " + fmtBDT(c.salary_bdt_max) + " per month" : "Taka per month"}">${salaryText(c)}<small> /mo${c.salary_is_estimated ? " est." : ""}</small></span>
-            </div>
-            <div class="tags">
-              <span class="tag sector" style="--sh:${sectorHue(c.sector)}">${c.sector}</span>
-              <span class="tag">${c.experience_level}</span>
-              <span class="tag mode">${c.work_mode}</span>
-              ${c.skills.map(s => `<span class="tag skill">${s}</span>`).join("")}
-            </div>
-          </div>
-          <div class="job-foot">
-            <span>${c.source} · ${c.posted_at || "Today"}${c.deadline ? ` · Deadline ${c.deadline}` : ""}</span>
-            <a href="${c.circular_url}" target="_blank" rel="noopener noreferrer">View circular →</a>
-          </div>
-        </div>
-      `).join("") || `<div class="none">No circulars match your filters.</div>`;
-    }
-
-    const themeBtn = document.getElementById("themeToggle");
-    function syncThemeButton() {
-      const dark = document.documentElement.getAttribute("data-theme") === "dark";
-      themeBtn.textContent = dark ? "Light mode" : "Dark mode";
-    }
-    themeBtn.addEventListener("click", () => {
-      const dark = document.documentElement.getAttribute("data-theme") === "dark";
-      const next = dark ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      try { localStorage.setItem("theme", next); } catch (e) {}
-      syncThemeButton();
-      if (chartInstance) renderChart();
-    });
-    syncThemeButton();
-
-    loadData();
-  </script>
+const pop=$("pop");let popFor=null;
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".dd"))document.querySelectorAll(".dd.open").forEach(x=>x.classList.remove("open"));
+  const b=e.target.closest(".info");pop.classList.remove("open");
+  if(!b||popFor===b){popFor=null;return}
+  popFor=b;pop.textContent=INFO[b.dataset.i];const r=b.getBoundingClientRect();
+  pop.style.top=r.bottom+scrollY+8+"px";pop.style.left=Math.max(10,Math.min(r.left+scrollX-8,innerWidth-300))+"px";pop.classList.add("open");
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){pop.classList.remove("open");popFor=null;$("modal").classList.remove("open");document.querySelectorAll(".dd.open").forEach(x=>x.classList.remove("open"))}});
+$("srcBtn").onclick=()=>{const c={};DATA.circulars.forEach(x=>c[x.source]=(c[x.source]||0)+1);
+  $("srcList").innerHTML=SOURCES.map(([n,u,d])=>`<div class="src"><div><a href="${u}" target="_blank" rel="noopener noreferrer">${n}</a><small>${d}</small></div><span class="cnt ${c[n]?"":"z"}">${c[n]||0} jobs</span></div>`).join("");$("modal").classList.add("open")};
+$("modalClose").onclick=()=>$("modal").classList.remove("open");$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.remove("open")};
+const tb=$("themeToggle"),sync=()=>tb.textContent=document.documentElement.dataset.theme==="dark"?"Light":"Dark";
+tb.onclick=()=>{const n=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=n;try{localStorage.setItem("theme",n)}catch(e){}sync();if(chart)drawChart()};sync();
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.08});
+const observe=()=>document.querySelectorAll(".reveal:not(.in)").forEach(el=>io.observe(el));
+load().then(observe);
+</script>
 </body>
 </html>
