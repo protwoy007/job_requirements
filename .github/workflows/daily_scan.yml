@@ -8,12 +8,18 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: daily-scan-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   scan-and-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
