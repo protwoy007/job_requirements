@@ -74,9 +74,15 @@ def upsert_jobs(conn: sqlite3.Connection, jobs: list[dict], today: str):
             jid, j["source"], j["region"], j["title"], j["company"], j["location"],
             j["work_mode"], j["sector"], j["experience_level"], json.dumps(j["skills"]),
             j["salary_bdt_min"], j["salary_bdt_max"], int(j["salary_is_estimated"]),
-            j["raw_salary"], j["posted_at"] or today, j["deadline"], j["circular_url"],
+            j["raw_salary"], j["posted_at"] or first_seen, j["deadline"], j["circular_url"],
             first_seen, today,
         ))
+    conn.commit()
+
+
+def purge(conn: sqlite3.Connection, today: str, d30: str):
+    conn.execute("DELETE FROM jobs WHERE deadline != '' AND deadline < ?", (today,))
+    conn.execute("DELETE FROM jobs WHERE posted_at < ?", (d30,))
     conn.commit()
 
 
@@ -86,7 +92,10 @@ def build_market_intel(conn: sqlite3.Connection, today_dt: datetime) -> dict:
     d30 = (today_dt - timedelta(days=30)).strftime("%Y-%m-%d")
 
     conn.row_factory = sqlite3.Row
-    rows = conn.execute("SELECT * FROM jobs WHERE last_seen >= ?", (d30,)).fetchall()
+    rows = conn.execute(
+        "SELECT * FROM jobs WHERE last_seen >= ? AND posted_at >= ? AND (deadline = '' OR deadline >= ?)",
+        (d30, d30, today),
+    ).fetchall()
 
     active_jobs = []
     skill_7d, skill_30d = Counter(), Counter()
@@ -97,8 +106,6 @@ def build_market_intel(conn: sqlite3.Connection, today_dt: datetime) -> dict:
 
     for r in rows:
         skills = json.loads(r["skills_json"] or "[]")
-        days_open = (today_dt - datetime.strptime(r["first_seen"], "%Y-%m-%d").replace(tzinfo=timezone.utc)).days
-        is_ghost = days_open >= 45
         tier = salary_tier(r["salary_bdt_max"], r["region"])
 
         job_obj = {
@@ -119,8 +126,6 @@ def build_market_intel(conn: sqlite3.Connection, today_dt: datetime) -> dict:
             "posted_at": r["posted_at"],
             "deadline": r["deadline"],
             "circular_url": r["circular_url"],
-            "is_ghost": is_ghost,
-            "days_open": days_open,
         }
         active_jobs.append(job_obj)
 
@@ -188,9 +193,16 @@ def main():
     raw_jobs = collect_all()
     enriched_jobs = analyze_jobs_hybrid(raw_jobs)
 
+    d30 = (now_utc - timedelta(days=30)).strftime("%Y-%m-%d")
+    enriched_jobs = [
+        j for j in enriched_jobs
+        if (not j["deadline"] or j["deadline"] >= today) and (j["posted_at"] or today) >= d30
+    ]
+
     conn = sqlite3.connect(DB_PATH)
     init_db(conn)
     upsert_jobs(conn, enriched_jobs, today)
+    purge(conn, today, d30)
     intel = build_market_intel(conn, now_utc)
     conn.close()
 

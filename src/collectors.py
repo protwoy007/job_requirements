@@ -10,6 +10,23 @@ HEADERS = {
 TIMEOUT = 20
 
 
+MONTHS = {m: i for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
+
+
+def parse_deadline(text: str) -> str:
+    t = (text or "").lower()
+    m = re.search(r"\d{4}-\d{2}-\d{2}", t)
+    if m:
+        return m.group(0)
+    m = re.search(r"(\d{1,2})\s+([a-z]{3})[a-z]*,?\s+(\d{4})", t)
+    if m and m.group(2) in MONTHS:
+        return f"{m.group(3)}-{MONTHS[m.group(2)]:02d}-{int(m.group(1)):02d}"
+    m = re.search(r"([a-z]{3})[a-z]*\s+(\d{1,2}),?\s+(\d{4})", t)
+    if m and m.group(1) in MONTHS:
+        return f"{m.group(3)}-{MONTHS[m.group(1)]:02d}-{int(m.group(2)):02d}"
+    return ""
+
+
 def clean_html(raw_html: str) -> str:
     if not raw_html:
         return ""
@@ -17,7 +34,7 @@ def clean_html(raw_html: str) -> str:
     return re.sub(r"\s+", " ", text)[:2500]
 
 
-def fetch_remotive(limit: int = 45) -> list[dict]:
+def fetch_remotive(limit: int = 100) -> list[dict]:
     jobs = []
     try:
         r = requests.get(
@@ -47,7 +64,7 @@ def fetch_remotive(limit: int = 45) -> list[dict]:
     return jobs
 
 
-def fetch_jobicy(count: int = 40) -> list[dict]:
+def fetch_jobicy(count: int = 50) -> list[dict]:
     jobs = []
     try:
         r = requests.get(
@@ -80,7 +97,7 @@ def fetch_jobicy(count: int = 40) -> list[dict]:
     return jobs
 
 
-def fetch_remoteok(limit: int = 35) -> list[dict]:
+def fetch_remoteok(limit: int = 100) -> list[dict]:
     jobs = []
     try:
         r = requests.get("https://remoteok.com/api", headers=HEADERS, timeout=TIMEOUT)
@@ -155,8 +172,8 @@ def fetch_bdjobs_public(pages: int = 2) -> list[dict]:
                         "category_hint": hint,
                         "tags": [],
                         "description": desc,
-                        "posted_at": today,
-                        "deadline": dead_el.get_text(" ", strip=True) if dead_el else "",
+                        "posted_at": "",
+                        "deadline": parse_deadline(dead_el.get_text(" ", strip=True)) if dead_el else "",
                         "circular_url": full_url,
                     })
                 time.sleep(1.2)
@@ -190,7 +207,7 @@ def fetch_skilljobs_bd() -> list[dict]:
                 "category_hint": "Bangladesh Local",
                 "tags": [],
                 "description": title,
-                "posted_at": today,
+                "posted_at": "",
                 "deadline": "",
                 "circular_url": full_url,
             })
@@ -203,8 +220,8 @@ def collect_all() -> list[dict]:
     all_jobs = []
     all_jobs.extend(fetch_bdjobs_public(pages=2))
     all_jobs.extend(fetch_skilljobs_bd())
-    all_jobs.extend(fetch_remotive(limit=45))
-    all_jobs.extend(fetch_jobicy(count=40))
-    all_jobs.extend(fetch_remoteok(limit=35))
+    all_jobs.extend(fetch_remotive(limit=100))
+    all_jobs.extend(fetch_jobicy(count=50))
+    all_jobs.extend(fetch_remoteok(limit=100))
     print(f"[INFO] Collected {len(all_jobs)} raw job circulars.")
     return all_jobs
