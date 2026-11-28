@@ -5,8 +5,8 @@ import sqlite3
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
 
-from collectors import collect_all
-from analyzer import analyze_jobs_hybrid
+from collectors import collect_all, STATUS
+from analyzer import analyze_jobs_hybrid, RATES
 
 DB_PATH = "data/jobs.db"
 OUT_PATH = "docs/data/market_intel.json"
@@ -28,6 +28,7 @@ def init_db(conn: sqlite3.Connection):
             salary_bdt_min INTEGER,
             salary_bdt_max INTEGER,
             salary_is_estimated INTEGER,
+            salary_currency TEXT,
             raw_salary TEXT,
             posted_at TEXT,
             deadline TEXT,
@@ -36,6 +37,9 @@ def init_db(conn: sqlite3.Connection):
             last_seen TEXT
         )
     """)
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(jobs)")]
+    if "salary_currency" not in cols:
+        conn.execute("ALTER TABLE jobs ADD COLUMN salary_currency TEXT DEFAULT 'BDT'")
     conn.commit()
 
 
@@ -67,13 +71,13 @@ def upsert_jobs(conn: sqlite3.Connection, jobs: list[dict], today: str):
             INSERT OR REPLACE INTO jobs (
                 id, source, region, title, company, location, work_mode,
                 sector, experience_level, skills_json, salary_bdt_min, salary_bdt_max,
-                salary_is_estimated, raw_salary, posted_at, deadline, circular_url,
+                salary_is_estimated, salary_currency, raw_salary, posted_at, deadline, circular_url,
                 first_seen, last_seen
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             jid, j["source"], j["region"], j["title"], j["company"], j["location"],
             j["work_mode"], j["sector"], j["experience_level"], json.dumps(j["skills"]),
-            j["salary_bdt_min"], j["salary_bdt_max"], int(j["salary_is_estimated"]),
+            j["salary_bdt_min"], j["salary_bdt_max"], int(j["salary_is_estimated"]), j["salary_currency"],
             j["raw_salary"], j["posted_at"] or first_seen, j["deadline"], j["circular_url"],
             first_seen, today,
         ))
@@ -106,7 +110,9 @@ def build_market_intel(conn: sqlite3.Connection, today_dt: datetime) -> dict:
 
     for r in rows:
         skills = json.loads(r["skills_json"] or "[]")
-        tier = salary_tier(r["salary_bdt_max"], r["region"])
+        est = bool(r["salary_is_estimated"])
+        smin, smax = (0, 0) if est else (r["salary_bdt_min"], r["salary_bdt_max"])
+        tier = "Not listed" if est else salary_tier(smax, r["region"])
 
         job_obj = {
             "id": r["id"],
@@ -119,9 +125,10 @@ def build_market_intel(conn: sqlite3.Connection, today_dt: datetime) -> dict:
             "sector": r["sector"],
             "experience_level": r["experience_level"],
             "skills": skills,
-            "salary_bdt_min": r["salary_bdt_min"],
-            "salary_bdt_max": r["salary_bdt_max"],
-            "salary_is_estimated": bool(r["salary_is_estimated"]),
+            "salary_bdt_min": smin,
+            "salary_bdt_max": smax,
+            "salary_is_estimated": est,
+            "salary_currency": r["salary_currency"] or "BDT",
             "salary_tier": tier,
             "posted_at": r["posted_at"],
             "deadline": r["deadline"],
@@ -179,6 +186,8 @@ def build_market_intel(conn: sqlite3.Connection, today_dt: datetime) -> dict:
         "trending_skills": trending_skills,
         "salary_unlock_matrix": salary_unlock_matrix,
         "hiring_pulse": hiring_pulse,
+        "rates": RATES,
+        "sources": STATUS,
         "circulars": sorted(active_jobs, key=lambda x: (x["posted_at"], x["salary_bdt_max"]), reverse=True),
     }
 
