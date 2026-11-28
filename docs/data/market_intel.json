@@ -1,80 +1,103 @@
 {
-  "generated_at_bdt": "2026-11-28 01:08 AM BDT",
-  "total_active_circulars": 91,
+  "generated_at_bdt": "2026-11-28 05:17 PM BDT",
+  "total_active_circulars": 157,
   "sector_breakdown": {
-    "Cybersecurity & Cloud": 31,
-    "AI, Data & Analytics": 28,
-    "Tech & Software": 20,
-    "Banking & FinTech": 9,
-    "Business, Product & Marketing": 2,
-    "Govt, NGO & Others": 1
+    "Cybersecurity & Cloud": 59,
+    "AI, Data & Analytics": 42,
+    "Tech & Software": 29,
+    "Banking & FinTech": 14,
+    "Business, Product & Marketing": 9,
+    "Govt, NGO & Others": 2,
+    "RMG & Textile": 1,
+    "Healthcare & Pharma": 1
   },
   "trending_skills": [
     {
       "skill": "Communication",
-      "count_30d": 34,
-      "count_7d": 34,
+      "count_30d": 64,
+      "count_7d": 64,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 32
+      "unlocks_50k_plus": 62
     },
     {
       "skill": "Domain Expertise",
-      "count_30d": 34,
-      "count_7d": 34,
+      "count_30d": 64,
+      "count_7d": 64,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 32
+      "unlocks_50k_plus": 62
     },
     {
       "skill": "AI / LLM APIs",
-      "count_30d": 18,
-      "count_7d": 18,
+      "count_30d": 30,
+      "count_7d": 30,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 18
-    },
-    {
-      "skill": "SEO & Performance Ads",
-      "count_30d": 11,
-      "count_7d": 11,
-      "velocity_pct": 300,
-      "unlocks_50k_plus": 11
+      "unlocks_50k_plus": 30
     },
     {
       "skill": "Product Management",
-      "count_30d": 11,
-      "count_7d": 11,
+      "count_30d": 23,
+      "count_7d": 23,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 11
+      "unlocks_50k_plus": 23
+    },
+    {
+      "skill": "SEO & Performance Ads",
+      "count_30d": 16,
+      "count_7d": 16,
+      "velocity_pct": 300,
+      "unlocks_50k_plus": 16
+    },
+    {
+      "skill": "AWS / Azure / GCP",
+      "count_30d": 15,
+      "count_7d": 15,
+      "velocity_pct": 300,
+      "unlocks_50k_plus": 15
     },
     {
       "skill": "JavaScript / TypeScript",
-      "count_30d": 10,
-      "count_7d": 10,
+      "count_30d": 13,
+      "count_7d": 13,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 10
-    },
-    {
-      "skill": "Flutter / Mobile",
-      "count_30d": 8,
-      "count_7d": 8,
-      "velocity_pct": 300,
-      "unlocks_50k_plus": 7
+      "unlocks_50k_plus": 13
     },
     {
       "skill": "Python",
-      "count_30d": 7,
-      "count_7d": 7,
+      "count_30d": 12,
+      "count_7d": 12,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 7
+      "unlocks_50k_plus": 12
+    },
+    {
+      "skill": "Flutter / Mobile",
+      "count_30d": 10,
+      "count_7d": 10,
+      "velocity_pct": 300,
+      "unlocks_50k_plus": 9
     },
     {
       "skill": "React / Next.js",
+      "count_30d": 9,
+      "count_7d": 9,
+      "velocity_pct": 300,
+      "unlocks_50k_plus": 9
+    },
+    {
+      "skill": "Cybersecurity / SOC",
+      "count_30d": 9,
+      "count_7d": 9,
+      "velocity_pct": 300,
+      "unlocks_50k_plus": 9
+    },
+    {
+      "skill": "Laravel / PHP",
       "count_30d": 6,
       "count_7d": 6,
       "velocity_pct": 300,
       "unlocks_50k_plus": 6
     },
     {
-      "skill": "AWS / Azure / GCP",
+      "skill": "Java / Spring",
       "count_30d": 6,
       "count_7d": 6,
       "velocity_pct": 300,
@@ -82,52 +105,31 @@
     },
     {
       "skill": "SQL & Databases",
-      "count_30d": 5,
-      "count_7d": 5,
+      "count_30d": 6,
+      "count_7d": 6,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 5
+      "unlocks_50k_plus": 6
     },
     {
       "skill": "Financial Modeling / FinTech",
-      "count_30d": 5,
-      "count_7d": 5,
+      "count_30d": 6,
+      "count_7d": 6,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 5
-    },
-    {
-      "skill": "Laravel / PHP",
-      "count_30d": 5,
-      "count_7d": 5,
-      "velocity_pct": 300,
-      "unlocks_50k_plus": 5
-    },
-    {
-      "skill": "Java / Spring",
-      "count_30d": 5,
-      "count_7d": 5,
-      "velocity_pct": 300,
-      "unlocks_50k_plus": 5
-    },
-    {
-      "skill": "Cybersecurity / SOC",
-      "count_30d": 5,
-      "count_7d": 5,
-      "velocity_pct": 300,
-      "unlocks_50k_plus": 5
+      "unlocks_50k_plus": 6
     },
     {
       "skill": "SAP / ERP",
-      "count_30d": 4,
-      "count_7d": 4,
+      "count_30d": 5,
+      "count_7d": 5,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 4
+      "unlocks_50k_plus": 5
     },
     {
       "skill": "Docker / Kubernetes",
-      "count_30d": 2,
-      "count_7d": 2,
+      "count_30d": 5,
+      "count_7d": 5,
       "velocity_pct": 300,
-      "unlocks_50k_plus": 2
+      "unlocks_50k_plus": 5
     },
     {
       "skill": "UI/UX & Figma",
@@ -137,6 +139,20 @@
       "unlocks_50k_plus": 2
     },
     {
+      "skill": "Power BI / Tableau",
+      "count_30d": 2,
+      "count_7d": 2,
+      "velocity_pct": 300,
+      "unlocks_50k_plus": 2
+    },
+    {
+      "skill": "Machine Learning",
+      "count_30d": 1,
+      "count_7d": 1,
+      "velocity_pct": 100,
+      "unlocks_50k_plus": 1
+    },
+    {
       "skill": "AI Automation (n8n/Make)",
       "count_30d": 1,
       "count_7d": 1,
@@ -144,7 +160,7 @@
       "unlocks_50k_plus": 1
     },
     {
-      "skill": "Machine Learning",
+      "skill": "RMG Merchandising / Lean",
       "count_30d": 1,
       "count_7d": 1,
       "velocity_pct": 100,
@@ -187,44 +203,48 @@
     },
     {
       "tier": "Remote USD (120k+ BDT eq.)",
-      "job_count": 88,
+      "job_count": 154,
       "top_skills": [
         {
           "skill": "Communication",
-          "count": 32
+          "count": 62
         },
         {
           "skill": "Domain Expertise",
-          "count": 32
+          "count": 62
         },
         {
           "skill": "AI / LLM APIs",
-          "count": 18
-        },
-        {
-          "skill": "SEO & Performance Ads",
-          "count": 11
+          "count": 30
         },
         {
           "skill": "Product Management",
-          "count": 11
+          "count": 23
+        },
+        {
+          "skill": "SEO & Performance Ads",
+          "count": 16
+        },
+        {
+          "skill": "AWS / Azure / GCP",
+          "count": 15
         },
         {
           "skill": "JavaScript / TypeScript",
-          "count": 10
+          "count": 13
         },
         {
           "skill": "Python",
-          "count": 7
-        },
-        {
-          "skill": "Flutter / Mobile",
-          "count": 7
+          "count": 12
         }
       ]
     }
   ],
   "hiring_pulse": [
+    {
+      "company": "Grafana Labs",
+      "openings": 8
+    },
     {
       "company": "Elation Health",
       "openings": 7
@@ -234,7 +254,15 @@
       "openings": 7
     },
     {
+      "company": "Wellhub",
+      "openings": 6
+    },
+    {
       "company": "Welo Global",
+      "openings": 5
+    },
+    {
+      "company": "Vultr",
       "openings": 5
     },
     {
@@ -258,23 +286,1281 @@
       "openings": 3
     },
     {
-      "company": "Vultr",
+      "company": "Twilio",
       "openings": 3
-    },
-    {
-      "company": "Coalition Technologies",
-      "openings": 2
-    },
-    {
-      "company": "Thumbtack",
-      "openings": 2
-    },
-    {
-      "company": "Airalo",
-      "openings": 2
     }
   ],
   "circulars": [
+    {
+      "id": "d9f1b763119f031c",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Staff Product Manager | Referral Program and Client Management",
+      "company": "Wellhub",
+      "location": "Brazil",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 280000,
+      "salary_bdt_max": 429000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164624-staff-product-manager-referral-program-and-client-management",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "99c2bbe60e2eeb29",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Software Engineer, Containers",
+      "company": "Chainguard",
+      "location": "Canada,  Germany,  UK,  USA",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Product Management"
+      ],
+      "salary_bdt_min": 190000,
+      "salary_bdt_max": 396000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157668-senior-software-engineer-containers",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "e9da6acdbc8820f9",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Staff Platform Engineer | Observability",
+      "company": "Wellhub",
+      "location": "Brazil",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Python",
+        "Docker / Kubernetes",
+        "AWS / Azure / GCP"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164619-staff-platform-engineer-observability",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "c7549c6224beecd5",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Staff Platform Engineer",
+      "company": "Wellhub",
+      "location": "Brazil",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Python",
+        "Docker / Kubernetes",
+        "AWS / Azure / GCP"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164617-staff-platform-engineer-5",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "d177cbaf3c0d7c57",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Staff Corporate Network Engineer | CorpIT",
+      "company": "Wellhub",
+      "location": "Brazil",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AWS / Azure / GCP",
+        "Cybersecurity / SOC"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164615-staff-corporate-network-engineer-corpit",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "08cb6678ee6ced97",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Director of Growth, Web Strategy & Operations",
+      "company": "Wellhub",
+      "location": "Brazil",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Power BI / Tableau",
+        "Product Management"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164613-senior-director-of-growth-web-strategy-operations",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "756afaaaf63574b2",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Head of Growth, Web Strategy & Digital Experience",
+      "company": "Wellhub",
+      "location": "Brazil",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Power BI / Tableau",
+        "Product Management"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164611-head-of-growth-web-strategy-digital-experience",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "5d803231cef2ba9e",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Enterprise Account Executive, CEE",
+      "company": "Horizon3.ai",
+      "location": "Poland",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Cybersecurity / SOC"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164608-enterprise-account-executive-cee",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "666d7bc1f1f4dfef",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Threat Intelligence Analyst, Crypto (Transnational Crime Organizations)",
+      "company": "TRM Labs",
+      "location": "EMEA,  USA",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Cybersecurity / SOC"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164605-threat-intelligence-analyst-crypto-transnational-crime-organizations",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "e47b45c658332f95",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Staff Data Engineer",
+      "company": "Twilio",
+      "location": "Ireland",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AWS / Azure / GCP"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164604-staff-data-engineer-6",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "1e91458d79b13c56",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Staff Security Engineer",
+      "company": "Paddle",
+      "location": "Ireland,  Portugal,  UK",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AWS / Azure / GCP",
+        "Cybersecurity / SOC"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164603-staff-security-engineer-3",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "bbfe63de413c8e74",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Art Director",
+      "company": "StackAdapt",
+      "location": "Canada,  USA",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "SEO & Performance Ads"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157658-art-director-2",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "7645ea92e2a0d194",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Strategic Project Lead - Speech & Audio AI (London)",
+      "company": "Appen",
+      "location": "UK",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 165000,
+      "salary_bdt_max": 330000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157678-strategic-project-lead-speech-audio-ai-london",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "dbefced944681cb9",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Strategic Project Lead - Multimodal AI (London)",
+      "company": "Appen",
+      "location": "UK",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 165000,
+      "salary_bdt_max": 330000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157673-strategic-project-lead-multimodal-ai-london",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "dc34bbdb1ad5794b",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Strategic Project Lead - AI Post-Training (London)",
+      "company": "Appen",
+      "location": "UK",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Financial Modeling / FinTech"
+      ],
+      "salary_bdt_min": 165000,
+      "salary_bdt_max": 330000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157662-strategic-project-lead-ai-post-training-london",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "11ebc5b90456cec6",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Product Marketing Manager | Spain | Remote",
+      "company": "Grafana Labs",
+      "location": "Spain",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 165000,
+      "salary_bdt_max": 330000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157687-senior-product-marketing-manager-spain-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "aa764f073c730bd3",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Engineering Manager, Grafana Frontend | Spain | Remote",
+      "company": "Grafana Labs",
+      "location": "Spain",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 165000,
+      "salary_bdt_max": 330000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157676-senior-engineering-manager-grafana-frontend-spain-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "46ff56aa6fbdae3f",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Compliance Lead, Japan",
+      "company": "Binance",
+      "location": "Japan",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164620-compliance-lead-japan",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "1425c0257aa49da5",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Binance Accelerator Program - User Communications Specialist (Chinese Content)",
+      "company": "Binance",
+      "location": "Hong Kong,  Malaysia,  Singapore",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164612-binance-accelerator-program-user-communications-specialist-chinese-content",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "aa4b4673bc233e41",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Manager, Business Development, APJ",
+      "company": "Temporal Technologies",
+      "location": "Singapore",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164602-manager-business-development-apj",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "be756ac74723395a",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Product Marketing Manager | Sweden | Remote",
+      "company": "Grafana Labs",
+      "location": "Europe",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157688-senior-product-marketing-manager-sweden-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "ac5fdecbf0f04f3d",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Product Marketing Manager | Ireland | Remote",
+      "company": "Grafana Labs",
+      "location": "Ireland",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157686-senior-product-marketing-manager-ireland-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "227c42718a5e8737",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Product Marketing Manager | Germany | Remote",
+      "company": "Grafana Labs",
+      "location": "Germany",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157685-senior-product-marketing-manager-germany-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "8bffc6451389251c",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Engineering Manager, Grafana Frontend | United Kingdom | Remote",
+      "company": "Grafana Labs",
+      "location": "UK",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157684-senior-engineering-manager-grafana-frontend-united-kingdom-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "650b441cf5396a77",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Engineering Manager, Grafana Frontend | Sweden | Remote",
+      "company": "Grafana Labs",
+      "location": "Sweden",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157681-senior-engineering-manager-grafana-frontend-sweden-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "1721fc92bb39b544",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Principal Software Architect",
+      "company": "Testlio",
+      "location": "EMEA,  USA",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157679-principal-software-architect-2",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "914efa05914533e1",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Engineering Manager, Grafana Frontend | Ireland | Remote",
+      "company": "Grafana Labs",
+      "location": "Europe",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157670-senior-engineering-manager-grafana-frontend-ireland-remote",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "920affd2a139d17e",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Software Engineer - Search Infrastructure",
+      "company": "Algolia",
+      "location": "France",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157669-senior-software-engineer-search-infrastructure",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "8c237f02d9abf8a3",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Federal Health (VA, DHA, HHS) Account Executive (Remote: DC/MD/VA)",
+      "company": "Veeam Software",
+      "location": "USA",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157652-federal-health-va-dha-hhs-account-executive-remote-dc-md-va",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "3289d9068b72e390",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Digital Web Research Analyst",
+      "company": "Veeam Software",
+      "location": "USA",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157638-digital-web-research-analyst",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "e7ce0f5ab99bdb72",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Senior Clinical Research Associate",
+      "company": "Precision Medicine Group",
+      "location": "Germany",
+      "work_mode": "Remote",
+      "sector": "Banking & FinTech",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AWS / Azure / GCP"
+      ],
+      "salary_bdt_min": 152000,
+      "salary_bdt_max": 297000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157672-senior-clinical-research-associate",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "0fbe56a123a55db2",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Customer Success Manager, Israel",
+      "company": "TRM Labs",
+      "location": "Israel",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 148000,
+      "salary_bdt_max": 264000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164601-customer-success-manager-israel",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "35faa1968c78f00f",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Presales Engineer",
+      "company": "Twilio",
+      "location": "Ireland,  Spain,  UK",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 148000,
+      "salary_bdt_max": 264000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164600-presales-engineer-2",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "6b69533183904506",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Director of Brand Strategy",
+      "company": "Who Gives A Crap",
+      "location": "Australia",
+      "work_mode": "Remote",
+      "sector": "Business, Product & Marketing",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164609-director-of-brand-strategy",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "723816cf1790906a",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Sr. Customer Success Manager",
+      "company": "Firework",
+      "location": "Bulgaria,  Romania",
+      "work_mode": "Remote",
+      "sector": "Banking & FinTech",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164607-sr-customer-success-manager-11",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "034b5244217b449f",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Account Manager, Western Canada",
+      "company": "StackAdapt",
+      "location": "Canada",
+      "work_mode": "Remote",
+      "sector": "Business, Product & Marketing",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "SEO & Performance Ads"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157655-account-manager-western-canada",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "3da52be82ebca29e",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Account Manager, SoCal",
+      "company": "StackAdapt",
+      "location": "USA",
+      "work_mode": "Remote",
+      "sector": "Business, Product & Marketing",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "SEO & Performance Ads"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/157647-account-manager-socal",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "a894b6857cd94c3d",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Strategic Account Executive 3 (Central EMEA)",
+      "company": "Twilio",
+      "location": "UK",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Mid (3-5y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 110000,
+      "salary_bdt_max": 240000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164606-strategic-account-executive-3-central-emea",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "a4938de93ccc0a87",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "Business Development Representative",
+      "company": "Paddle",
+      "location": "UK",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Mid (3-5y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 110000,
+      "salary_bdt_max": 240000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164599-business-development-representative-27",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "f4eae8be667cbf85",
+      "source": "Jobicy",
+      "region": "Global Remote",
+      "title": "WordPress Advanced Support Guide",
+      "company": "GoDaddy",
+      "location": "Serbia",
+      "work_mode": "Remote",
+      "sector": "Govt, NGO & Others",
+      "experience_level": "Mid (3-5y)",
+      "skills": [
+        "SQL & Databases"
+      ],
+      "salary_bdt_min": 110000,
+      "salary_bdt_max": 240000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-28",
+      "deadline": "",
+      "circular_url": "https://jobicy.com/jobs/164598-wordpress-advanced-support-guide",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "d3111205244d973f",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Software Engineer - Backend",
+      "company": "Sardine",
+      "location": "Asia",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Product Management"
+      ],
+      "salary_bdt_min": 30500000,
+      "salary_bdt_max": 50833333,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-software-engineer-backend-sardine-1138211",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "650a3002eabf9431",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "VP of Brand and Communications",
+      "company": "Oscilar",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs"
+      ],
+      "salary_bdt_min": 2983916,
+      "salary_bdt_max": 3350933,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-vp-of-brand-and-communications-oscilar-1138205",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "b7223f48f0926bb6",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Senior Forward Deployed Engineer (United States)",
+      "company": "Coder Technologies Inc.",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Product Management"
+      ],
+      "salary_bdt_min": 1626666,
+      "salary_bdt_max": 2501000,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-forward-deployed-engineer-united-states-coder-technologies-inc-1138209",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "e6016f80413820be",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Founding Engineer",
+      "company": "3Y Health",
+      "location": "Canada Only",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Python",
+        "JavaScript / TypeScript",
+        "React / Next.js",
+        "Flutter / Mobile",
+        "AWS / Azure / GCP"
+      ],
+      "salary_bdt_min": 1525000,
+      "salary_bdt_max": 2033333,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-founding-engineer-3y-health-1138213",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "202e4d2e739b5b1b",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Senior Software Engineer",
+      "company": "3Y Health",
+      "location": "Canada Only",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Python",
+        "JavaScript / TypeScript",
+        "React / Next.js",
+        "Flutter / Mobile",
+        "AWS / Azure / GCP"
+      ],
+      "salary_bdt_min": 1525000,
+      "salary_bdt_max": 2033333,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-3y-health-1138212",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "32d6589956245e9c",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Diagnostic Specialist - Appalachia",
+      "company": "EVERSANA",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Business, Product & Marketing",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 1728333,
+      "salary_bdt_max": 1931666,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-diagnostic-specialist-appalachia-eversana-1138224",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "f1d19fcfc96b44ee",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Senior Account Executive (US West)",
+      "company": "Coder Technologies Inc.",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Docker / Kubernetes"
+      ],
+      "salary_bdt_min": 1250500,
+      "salary_bdt_max": 1697833,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-account-executive-us-west-coder-technologies-inc-1138207",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "eaf29e0fca618320",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Senior Software Developer",
+      "company": "Loopio Inc.",
+      "location": "Toronto",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs",
+        "Python",
+        "JavaScript / TypeScript",
+        "React / Next.js",
+        "Laravel / PHP",
+        "Java / Spring"
+      ],
+      "salary_bdt_min": 1273883,
+      "salary_bdt_max": 1697833,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-software-developer-loopio-inc-1138202",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "30149344c9a1b75d",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Strategic Account Manager - Louisiana and Mississippi",
+      "company": "AbbVie",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Business, Product & Marketing",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 813333,
+      "salary_bdt_max": 1423333,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-strategic-account-manager-louisiana-and-mississippi-abbvie-1138225",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "e3d92562dda4826e",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Director, Sales - Retail Merchandising Analytics",
+      "company": "NielsenIQ",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "RMG & Textile",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "RMG Merchandising / Lean"
+      ],
+      "salary_bdt_min": 1194583,
+      "salary_bdt_max": 1321666,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-director-sales-retail-merchandising-analytics-nielseniq-1138221",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "a02d9589813af0da",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Associate, External Resource Management",
+      "company": "Snowflake",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AI / LLM APIs"
+      ],
+      "salary_bdt_min": 762500,
+      "salary_bdt_max": 1003450,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-associate-external-resource-management-snowflake-1138208",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "cbef0bd875dd5bc1",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Client Manager, Retail Collaboration",
+      "company": "NielsenIQ",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Business, Product & Marketing",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 850950,
+      "salary_bdt_max": 965833,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-client-manager-retail-collaboration-nielseniq-1138220",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "0066c7717769ad42",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Account Manager, Financial Services Team",
+      "company": "NielsenIQ",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Fresher",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 850950,
+      "salary_bdt_max": 864166,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-account-manager-financial-services-team-nielseniq-1138218",
+      "is_ghost": false,
+      "days_open": 0
+    },
     {
       "id": "b0a99764d83eebfc",
       "source": "Jobicy",
@@ -297,7 +1583,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164570-brazilian-subject-matter-expert-in-tv-movies",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "2e3c16eedc456880",
@@ -321,7 +1607,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164568-brazilian-subject-matter-expert-in-home-garden",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "fcff176baff4c291",
@@ -345,7 +1631,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164567-brazilian-subject-matter-expert-in-games-puzzles-play",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "04f46754f7ebcd6c",
@@ -369,7 +1655,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164566-brazilian-subject-matter-expert-in-fashion-style",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "fe27976ec7f36b9a",
@@ -393,7 +1679,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164563-talent-sourcer",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "8d83418781e3229b",
@@ -417,7 +1703,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164556-senior-software-engineer-32",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "61b47756784da9ca",
@@ -445,7 +1731,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164553-staff-software-engineer-19",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "88545d442cb665a4",
@@ -468,7 +1754,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164544-senior-enterprise-new-logo-account-executive-federal-government",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "aeeadf5586f80b66",
@@ -491,7 +1777,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164542-tax-manager-2",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "dd3a5f3954805f17",
@@ -514,7 +1800,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164537-staff-software-engineer-18",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "81f0751bc7d7292b",
@@ -536,6 +1822,29 @@
       "posted_at": "2026-11-27",
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164531-sr-events-manager-2",
+      "is_ghost": false,
+      "days_open": 1
+    },
+    {
+      "id": "528fa15bcfa90a43",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Senior Microsoft Dynamics 365 Consultant",
+      "company": "Version 1",
+      "location": "UK Only",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "AWS / Azure / GCP"
+      ],
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-microsoft-dynamics-365-consultant-version-1-1138219",
       "is_ghost": false,
       "days_open": 0
     },
@@ -560,7 +1869,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164569-brazilian-subject-matter-expert-in-literature-and-linguistics",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "9f02fca681213522",
@@ -584,7 +1893,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164565-japan-marketing-manager",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "ef5d02e284afd59e",
@@ -608,7 +1917,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164562-workforce-management-planning-analyst",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "1f704f9b12c00d66",
@@ -631,7 +1940,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164551-associate-geo-and-seo-specialist",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "036ae3634e8d2d97",
@@ -654,7 +1963,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164549-senior-or-staff-product-designer",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "ba6d4e32b3bcb32d",
@@ -678,7 +1987,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164548-senior-event-specialist",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "1dab0b392bcc8c22",
@@ -701,7 +2010,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164545-senior-manager-commercial-learning-and-development",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "9eeee36517bc941d",
@@ -724,7 +2033,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164543-senior-analytics-engineer-finance",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "e42cfcf6d66c6f17",
@@ -748,7 +2057,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164536-recruiter-2",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "925bd56ddfc8a3bf",
@@ -772,7 +2081,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164530-part-time-temporary-hr-business-partner-hr-generalist",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "db8acc24506768ab",
@@ -795,7 +2104,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164529-director-customer-adoption-digital-success",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "838f22cb49b8ed43",
@@ -818,6 +2127,78 @@
       "posted_at": "2026-11-27",
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164528-financial-analyst-7",
+      "is_ghost": false,
+      "days_open": 1
+    },
+    {
+      "id": "960db553060b9710",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Manager, DC Commercial Diligence",
+      "company": "Vultr",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-manager-dc-commercial-diligence-vultr-1138210",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "84cb92b2d23169ba",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Social Media & Community Manager",
+      "company": "The Global Talent Co.",
+      "location": "Africa",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-social-media-community-manager-the-global-talent-co-1138206",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "0339b548f5e62c6f",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Account Manager - Poland",
+      "company": "ElevenLabs",
+      "location": "Europe",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-account-manager-poland-elevenlabs-1138204",
       "is_ghost": false,
       "days_open": 0
     },
@@ -843,7 +2224,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164559-abm-specialist",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "8d5d4840fe8daee3",
@@ -867,7 +2248,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164541-sales-engineer-billing",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "30d6a02d0d3be772",
@@ -891,7 +2272,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164540-sales-engineer-ii-edu",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "f0b42586bb73dbad",
@@ -915,7 +2296,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164539-senior-accountant-14",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "08f76365dc2bcc08",
@@ -938,7 +2319,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164534-senior-field-marketing-manager-public-sector",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "642bde86b5869b11",
@@ -961,7 +2342,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164527-regional-vice-president-of-sales-west",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "52b5901bc76b10be",
@@ -984,6 +2365,54 @@
       "posted_at": "2026-11-27",
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164526-dental-sales-engineer",
+      "is_ghost": false,
+      "days_open": 1
+    },
+    {
+      "id": "3118c888bf60e971",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Demo Specialist I",
+      "company": "HighLevel",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 148000,
+      "salary_bdt_max": 264000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-demo-specialist-i-highlevel-1138228",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "68a9b19b7f0f1324",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Area Sales Representative",
+      "company": "Intuitive",
+      "location": "Canada Only",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 148000,
+      "salary_bdt_max": 264000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-area-sales-representative-intuitive-1138226",
       "is_ghost": false,
       "days_open": 0
     },
@@ -1009,7 +2438,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164561-inside-sales-representative-germany-m-f-d",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "986f15c3a5dc784b",
@@ -1033,7 +2462,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164552-senior-sales-compensation-analyst-2",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "5524b3782f2230c5",
@@ -1057,7 +2486,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164547-account-executive-operators",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "37eb310d87d5db94",
@@ -1080,7 +2509,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164538-demand-generation-manager-auto",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "ebbe26aa6a56b091",
@@ -1104,7 +2533,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164535-payroll-tax-analyst",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "39632647368b9ede",
@@ -1127,6 +2556,99 @@
       "posted_at": "2026-11-27",
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164533-procurement-lead",
+      "is_ghost": false,
+      "days_open": 1
+    },
+    {
+      "id": "f7771b375f46e366",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Account Manager II",
+      "company": "HighLevel",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Business, Product & Marketing",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "SEO & Performance Ads"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-account-manager-ii-highlevel-1138227",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "17755d5eac10098d",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Social Systems Lead Auditor - North UK",
+      "company": "SGS",
+      "location": "UK Only",
+      "work_mode": "Remote",
+      "sector": "Banking & FinTech",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "SAP / ERP"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-social-systems-lead-auditor-north-uk-sgs-1138223",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "554d523877eb0fe8",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Senior Marketing Manager",
+      "company": "Sibylline Ltd",
+      "location": "UK Only",
+      "work_mode": "Remote",
+      "sector": "Banking & FinTech",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "SEO & Performance Ads"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-marketing-manager-sibylline-ltd-1138222",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "755d9cf7affe1bbd",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Customer Success Manager",
+      "company": "Wiser Solutions",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Banking & FinTech",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 132000,
+      "salary_bdt_max": 248000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-customer-success-manager-wiser-solutions-1138216",
       "is_ghost": false,
       "days_open": 0
     },
@@ -1152,7 +2674,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164560-customer-service-advocate-multi-channel-support",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "db04b36d4f5f5f76",
@@ -1175,7 +2697,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164557-technical-support-specialist-2",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "444fdc74c1e73149",
@@ -1198,7 +2720,7 @@
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164532-dealer-development-manager-portland-or",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "3ff5e4d4a58d7df2",
@@ -1220,6 +2742,78 @@
       "posted_at": "2026-11-27",
       "deadline": "",
       "circular_url": "https://jobicy.com/jobs/164525-dealer-development-manager-las-vegas-nv",
+      "is_ghost": false,
+      "days_open": 1
+    },
+    {
+      "id": "817fa0c46d072fc2",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Bilingual Spanish Customer Support Specialist",
+      "company": "Experian",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Mid (3-5y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 110000,
+      "salary_bdt_max": 240000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-bilingual-spanish-customer-support-specialist-experian-1138217",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "3300c5e3b7964f0f",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Bilingual French Support Representative - Streaming Services",
+      "company": "Sutherland",
+      "location": "Canada Only",
+      "work_mode": "Remote",
+      "sector": "Healthcare & Pharma",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 110000,
+      "salary_bdt_max": 240000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-bilingual-french-support-representative-streaming-services-sutherland-1138215",
+      "is_ghost": false,
+      "days_open": 0
+    },
+    {
+      "id": "93427208b3b18f1c",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Subsidiary General Ledger Accountant",
+      "company": "Vultr",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "Cybersecurity & Cloud",
+      "experience_level": "Fresher",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 110000,
+      "salary_bdt_max": 240000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-27",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-subsidiary-general-ledger-accountant-vultr-1138214",
       "is_ghost": false,
       "days_open": 0
     },
@@ -1245,7 +2839,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-director-demand-generation-clickup-1138192",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "f94d432156357e56",
@@ -1269,7 +2863,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-staff-compliance-engineer-livekit-1138183",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "2083798df7efbebb",
@@ -1292,7 +2886,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-district-manager-majors-financial-services-snowflake-1138196",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "b0d4d6c38b3c137b",
@@ -1318,7 +2912,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-content-engineer-developer-documentation-livekit-1138185",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "8052620c2d89f2b7",
@@ -1342,7 +2936,30 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-service-delivery-manager-vultr-1138191",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
+    },
+    {
+      "id": "f6eb3d69a5a2281e",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Sales Engineer",
+      "company": "Ethena",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 1270833,
+      "salary_bdt_max": 1525000,
+      "salary_is_estimated": false,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-26",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-sales-engineer-ethena-1138178",
+      "is_ghost": false,
+      "days_open": 1
     },
     {
       "id": "d6471835d65c8ffc",
@@ -1366,30 +2983,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-service-delivery-manager-vultr-1138190",
       "is_ghost": false,
-      "days_open": 0
-    },
-    {
-      "id": "f6eb3d69a5a2281e",
-      "source": "RemoteOK",
-      "region": "Global Remote",
-      "title": "Sales Engineer",
-      "company": "Ethena",
-      "location": "US Only",
-      "work_mode": "Remote",
-      "sector": "AI, Data & Analytics",
-      "experience_level": "Senior (5+y)",
-      "skills": [
-        "Product Management"
-      ],
-      "salary_bdt_min": 1270833,
-      "salary_bdt_max": 1525000,
-      "salary_is_estimated": false,
-      "salary_tier": "Remote USD (120k+ BDT eq.)",
-      "posted_at": "2026-11-26",
-      "deadline": "",
-      "circular_url": "https://remoteOK.com/remote-jobs/remote-sales-engineer-ethena-1138178",
-      "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "6a67c58e39f91bd2",
@@ -1413,7 +3007,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-accountant-ethena-1138175",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "3440de47a100ab26",
@@ -1439,7 +3033,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-sr-dynamics-365-app-developer-remote-protective-life-1138182",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "cdfdf1045adb8141",
@@ -1462,7 +3056,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-energy-markets-analyst-pjm-voltus-1138181",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "148c0348bf900b1c",
@@ -1486,7 +3080,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-android-developer-airalo-1138176",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "af8b579e6d156dad",
@@ -1509,30 +3103,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-paid-media-manager-remote-silverback-strategies-1138165",
       "is_ghost": false,
-      "days_open": 0
-    },
-    {
-      "id": "10cf5348240db585",
-      "source": "RemoteOK",
-      "region": "Global Remote",
-      "title": "Partner Sales Manager - EMEA Central (Eastern Europe)",
-      "company": "Snowflake",
-      "location": "Europe",
-      "work_mode": "Remote",
-      "sector": "Cybersecurity & Cloud",
-      "experience_level": "Senior (5+y)",
-      "skills": [
-        "AI / LLM APIs"
-      ],
-      "salary_bdt_min": 209000,
-      "salary_bdt_max": 376000,
-      "salary_is_estimated": true,
-      "salary_tier": "Remote USD (120k+ BDT eq.)",
-      "posted_at": "2026-11-26",
-      "deadline": "",
-      "circular_url": "https://remoteOK.com/remote-jobs/remote-partner-sales-manager-emea-central-eastern-europe-snowflake-1138198",
-      "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "1eb935d0fd736acf",
@@ -1556,7 +3127,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-support-operations-lead-zip-1138188",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "ec92383d3d14281f",
@@ -1579,7 +3150,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-director-client-service-fit-bounteous-1138177",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "fcbc5fbe878a4a42",
@@ -1602,7 +3173,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-engineering-manager-agentic-products-spotify-1138174",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "f2d99a834a4027b5",
@@ -1628,7 +3199,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-developer-advocate-network-apis-aduna-1138170",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "e7278cf2dc06ab94",
@@ -1651,7 +3222,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-partner-director-federal-netomi-1138167",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "f6f3542e4bf3b53b",
@@ -1675,7 +3246,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-enterprise-account-executive-new-york-zimperium-1138166",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "7e2d7cbbea5e6135",
@@ -1699,78 +3270,30 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-brazilian-subject-matter-expert-in-games-puzzles-play-welo-data-1138162",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
-      "id": "f352a5cfc561e06e",
+      "id": "10cf5348240db585",
       "source": "RemoteOK",
       "region": "Global Remote",
-      "title": "MSP Account Executive - DACH",
-      "company": "Rubrik Job Board",
+      "title": "Partner Sales Manager - EMEA Central (Eastern Europe)",
+      "company": "Snowflake",
       "location": "Europe",
       "work_mode": "Remote",
       "sector": "Cybersecurity & Cloud",
       "experience_level": "Senior (5+y)",
       "skills": [
-        "Communication",
-        "Domain Expertise"
+        "AI / LLM APIs"
       ],
-      "salary_bdt_min": 182000,
-      "salary_bdt_max": 314000,
+      "salary_bdt_min": 209000,
+      "salary_bdt_max": 376000,
       "salary_is_estimated": true,
       "salary_tier": "Remote USD (120k+ BDT eq.)",
       "posted_at": "2026-11-26",
       "deadline": "",
-      "circular_url": "https://remoteOK.com/remote-jobs/remote-msp-account-executive-dach-rubrik-job-board-1138195",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-partner-sales-manager-emea-central-eastern-europe-snowflake-1138198",
       "is_ghost": false,
-      "days_open": 0
-    },
-    {
-      "id": "f952b7cdb193a9dc",
-      "source": "RemoteOK",
-      "region": "Global Remote",
-      "title": "Account Manager - UK/I",
-      "company": "ElevenLabs",
-      "location": "UK Only",
-      "work_mode": "Remote",
-      "sector": "AI, Data & Analytics",
-      "experience_level": "Senior (5+y)",
-      "skills": [
-        "Communication",
-        "Domain Expertise"
-      ],
-      "salary_bdt_min": 182000,
-      "salary_bdt_max": 314000,
-      "salary_is_estimated": true,
-      "salary_tier": "Remote USD (120k+ BDT eq.)",
-      "posted_at": "2026-11-26",
-      "deadline": "",
-      "circular_url": "https://remoteOK.com/remote-jobs/remote-account-manager-uk-i-elevenlabs-1138194",
-      "is_ghost": false,
-      "days_open": 0
-    },
-    {
-      "id": "6b71c771de85d72f",
-      "source": "RemoteOK",
-      "region": "Global Remote",
-      "title": "Customer Success Manager",
-      "company": "Outmarket AI",
-      "location": "US Only",
-      "work_mode": "Remote",
-      "sector": "AI, Data & Analytics",
-      "experience_level": "Senior (5+y)",
-      "skills": [
-        "Product Management"
-      ],
-      "salary_bdt_min": 182000,
-      "salary_bdt_max": 314000,
-      "salary_is_estimated": true,
-      "salary_tier": "Remote USD (120k+ BDT eq.)",
-      "posted_at": "2026-11-26",
-      "deadline": "",
-      "circular_url": "https://remoteOK.com/remote-jobs/remote-customer-success-manager-outmarket-ai-1138189",
-      "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "c8732851dd227036",
@@ -1793,7 +3316,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-frontend-engineer-lastpass-1138187",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "a4aa3c9148d4159b",
@@ -1817,7 +3340,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-director-of-software-engineering-warner-music-group-1138173",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "4cf703334cc0fea8",
@@ -1841,7 +3364,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-head-of-professional-services-nice-ttec-digital-1138171",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "32261ec188023456",
@@ -1864,7 +3387,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-sales-director-quality-veeva-systems-1138168",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "8550630499d85f18",
@@ -1888,7 +3411,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-account-executive-chicago-saviynt-1138164",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "af5919104ebcbd80",
@@ -1911,31 +3434,78 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-brazilian-subject-matter-expert-in-fandoms-music-pop-disney-political-memes-welo-data-1138163",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
-      "id": "d8ec9934d2a79f52",
+      "id": "f352a5cfc561e06e",
       "source": "RemoteOK",
       "region": "Global Remote",
-      "title": "Account Executive, Japan",
-      "company": "Socket",
-      "location": "Asia",
+      "title": "MSP Account Executive - DACH",
+      "company": "Rubrik Job Board",
+      "location": "Europe",
       "work_mode": "Remote",
-      "sector": "Tech & Software",
+      "sector": "Cybersecurity & Cloud",
       "experience_level": "Senior (5+y)",
       "skills": [
-        "UI/UX & Figma",
-        "SAP / ERP"
+        "Communication",
+        "Domain Expertise"
       ],
-      "salary_bdt_min": 148000,
-      "salary_bdt_max": 264000,
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
       "salary_is_estimated": true,
       "salary_tier": "Remote USD (120k+ BDT eq.)",
       "posted_at": "2026-11-26",
       "deadline": "",
-      "circular_url": "https://remoteOK.com/remote-jobs/remote-account-executive-japan-socket-1138193",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-msp-account-executive-dach-rubrik-job-board-1138195",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
+    },
+    {
+      "id": "f952b7cdb193a9dc",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Account Manager - UK/I",
+      "company": "ElevenLabs",
+      "location": "UK Only",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Communication",
+        "Domain Expertise"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-26",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-account-manager-uk-i-elevenlabs-1138194",
+      "is_ghost": false,
+      "days_open": 1
+    },
+    {
+      "id": "6b71c771de85d72f",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Customer Success Manager",
+      "company": "Outmarket AI",
+      "location": "US Only",
+      "work_mode": "Remote",
+      "sector": "AI, Data & Analytics",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "Product Management"
+      ],
+      "salary_bdt_min": 182000,
+      "salary_bdt_max": 314000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-26",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-customer-success-manager-outmarket-ai-1138189",
+      "is_ghost": false,
+      "days_open": 1
     },
     {
       "id": "f3da2ae40c6061b3",
@@ -1958,7 +3528,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-senior-ios-engineer-foundations-raya-1138180",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "eb7160ffac27d54a",
@@ -1982,7 +3552,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-partner-solution-architect-partner-center-of-excellence-agiloft-1138172",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "46aee8fb610f0800",
@@ -2006,7 +3576,31 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-enterprise-account-executive-western-us-agiloft-1138169",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
+    },
+    {
+      "id": "d8ec9934d2a79f52",
+      "source": "RemoteOK",
+      "region": "Global Remote",
+      "title": "Account Executive, Japan",
+      "company": "Socket",
+      "location": "Asia",
+      "work_mode": "Remote",
+      "sector": "Tech & Software",
+      "experience_level": "Senior (5+y)",
+      "skills": [
+        "UI/UX & Figma",
+        "SAP / ERP"
+      ],
+      "salary_bdt_min": 148000,
+      "salary_bdt_max": 264000,
+      "salary_is_estimated": true,
+      "salary_tier": "Remote USD (120k+ BDT eq.)",
+      "posted_at": "2026-11-26",
+      "deadline": "",
+      "circular_url": "https://remoteOK.com/remote-jobs/remote-account-executive-japan-socket-1138193",
+      "is_ghost": false,
+      "days_open": 1
     },
     {
       "id": "7b658a0e94303963",
@@ -2030,7 +3624,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-customer-service-representative-vultr-1138186",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "d91e80bfd139f2e7",
@@ -2056,7 +3650,7 @@
       "deadline": "",
       "circular_url": "https://remoteOK.com/remote-jobs/remote-enterprise-sales-engineer-germany-datadog-1138184",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "fdaf5807a2b4bc6e",
@@ -2079,7 +3673,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/customer-service/produktspezialist-in-german-speaking-2091212",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "7752ef70139cb014",
@@ -2103,7 +3697,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/software-development/wordpress-theme-plugin-developer-2091179",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "d37c5e132147cd39",
@@ -2131,7 +3725,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/software-development/tech-lead-full-stack-rails-engineer-2069746",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "a3c24eaab304c7a7",
@@ -2154,7 +3748,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/marketing/content-creator-youtube-2091173",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "feff0851b438caac",
@@ -2178,7 +3772,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/marketing/remote-office-assistant-1680495",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "bee8f0d933ffd8c5",
@@ -2206,7 +3800,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/data/senior-data-engineer-2091137",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "afe4a43a3bd136a6",
@@ -2230,7 +3824,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/customer-service/customer-service-representative-2091171",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "17a2002294b3c38a",
@@ -2258,7 +3852,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/software-development/senior-react-full-stack-developer-2091136",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "79e3bc7a49609c31",
@@ -2282,7 +3876,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/sales/inside-sales-contractor-2086540",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "5e17369b14fe929c",
@@ -2305,7 +3899,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/information-technology/tier-iii-service-desk-engineer-2091045",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "42fb79ad36e1a789",
@@ -2329,7 +3923,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/customer-service/us-remote-patient-care-advocate-customer-service-2091168",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "ce9cb360b55921d1",
@@ -2353,7 +3947,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/writing/freelance-writer-1185979",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "29f35ed483aed39e",
@@ -2376,7 +3970,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/all-others/content-reviewer-united-states-2091166",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "f3f1b97250fcd9dc",
@@ -2399,7 +3993,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/writing/freelance-copywriter-1749306",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "ecdd7e4a3d0d4dd4",
@@ -2427,7 +4021,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/software-development/full-stack-developer-2091165",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     },
     {
       "id": "68a0e102b59bfbdf",
@@ -2455,7 +4049,7 @@
       "deadline": "",
       "circular_url": "https://remotive.com/remote-jobs/software-development/senior-back-end-developerusa-2091135",
       "is_ghost": false,
-      "days_open": 0
+      "days_open": 1
     }
   ]
 }
