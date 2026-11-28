@@ -4,7 +4,8 @@ import json
 from typing import List
 from pydantic import BaseModel, Field
 
-USD_TO_BDT = 122
+RATES = {"BDT": 1, "USD": 122, "EUR": 143, "GBP": 163}
+USD_TO_BDT = RATES["USD"]
 
 SECTORS = [
     "Tech & Software",
@@ -59,6 +60,19 @@ class BatchResult(BaseModel):
     items: List[ParsedJob]
 
 
+def detect_currency(raw_salary: str, region: str) -> str:
+    s = (raw_salary or "").lower()
+    if "€" in s or re.search(r"\beur\b", s):
+        return "EUR"
+    if "£" in s or re.search(r"\bgbp\b", s):
+        return "GBP"
+    if "$" in s or re.search(r"\busd\b", s):
+        return "USD"
+    if "৳" in s or re.search(r"\bbdt\b", s):
+        return "BDT"
+    return "USD" if region == "Global Remote" else "BDT"
+
+
 def parse_explicit_salary_bdt(raw_salary: str, region: str) -> tuple[int, int, bool]:
     if not raw_salary or "negotiable" in raw_salary.lower():
         return 0, 0, True
@@ -75,14 +89,10 @@ def parse_explicit_salary_bdt(raw_salary: str, region: str) -> tuple[int, int, b
         low *= 1000
         high *= 1000
 
-    if "$" in raw_salary or "usd" in lower_s or region == "Global Remote":
-        if low > 12000 or "/yr" in lower_s or "year" in lower_s or "annual" in lower_s:
-            low = int((low / 12) * USD_TO_BDT)
-            high = int((high / 12) * USD_TO_BDT)
-        else:
-            low = int(low * USD_TO_BDT)
-            high = int(high * USD_TO_BDT)
-    return low, high, False
+    cur = detect_currency(raw_salary, region)
+    if "/yr" in lower_s or "year" in lower_s or "annual" in lower_s or (cur != "BDT" and low > 12000):
+        low, high = low / 12, high / 12
+    return int(low * RATES[cur]), int(high * RATES[cur]), False
 
 
 def estimate_salary_offline(title: str, sector: str, exp: str, skills: list[str], region: str) -> tuple[int, int]:
@@ -172,6 +182,7 @@ def analyze_offline(job: dict) -> dict:
         "salary_bdt_min": sal_min,
         "salary_bdt_max": sal_max,
         "salary_is_estimated": is_est,
+        "salary_currency": detect_currency(job.get("raw_salary", ""), job["region"]),
     }
 
 
@@ -202,7 +213,7 @@ def analyze_jobs_hybrid(raw_jobs: list[dict], batch_size: int = 15, max_ai_batch
                 prompt = (
                     "You are a Bangladesh & Global Remote job market analyst (2026). "
                     "For each job JSON item, extract structured fields. "
-                    f"Use 1 USD = {USD_TO_BDT} BDT. Convert yearly USD salaries to monthly BDT. "
+                    f"Use 1 USD = {RATES['USD']} BDT, 1 EUR = {RATES['EUR']} BDT, 1 GBP = {RATES['GBP']} BDT. Convert yearly salaries to monthly BDT. "
                     "If salary is Negotiable or missing, estimate realistic monthly BDT for 2026 and set salary_is_estimated=true. "
                     f"Jobs:\n{json.dumps(payload)}"
                 )
@@ -226,6 +237,10 @@ def analyze_jobs_hybrid(raw_jobs: list[dict], batch_size: int = 15, max_ai_batch
     final_jobs = []
     for i, job in enumerate(raw_jobs):
         meta = enriched[i] if enriched[i] else analyze_offline(job)
+        meta.setdefault("salary_currency", detect_currency(job["raw_salary"], job["region"]))
+        lo, hi, est = parse_explicit_salary_bdt(job["raw_salary"], job["region"])
+        if not est:
+            meta.update(salary_bdt_min=lo, salary_bdt_max=hi, salary_is_estimated=False)
         merged = {**job, **meta}
         final_jobs.append(merged)
     return final_jobs

@@ -64,7 +64,7 @@ h1,h2,.v{font-family:"Unbounded","Inter",sans-serif}
 .dd.open .dd-menu{opacity:1;transform:none;pointer-events:auto}
 .dd-item{display:block;width:100%;text-align:left;font:inherit;padding:9px 12px;border:0;border-radius:10px;background:transparent;color:var(--text);cursor:pointer}
 .dd-item:hover{background:var(--field)}.dd-item.on{background:var(--accent);color:#04130e;font-weight:600}
-.btn{font:inherit;font-weight:600;padding:9px 20px;border-radius:999px;border:0;background:var(--ink);color:var(--on-ink);cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}
+.btn{font:inherit;font-weight:600;padding:9px 20px;border-radius:999px;border:0;background:var(--ink);color:var(--on-ink);cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--text);border:1.5px solid var(--border)}#btnApply{background:var(--accent);color:#04130e}.blk{background:var(--usd-bg);color:var(--usd-fg)}
 .matrix{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 .t0{--c:#7fa595}.t1{--c:#1fb0d0}.t2{--c:#00b88a}.t3{--c:#0a8f78}.t4{--c:#f2a900}
 :root[data-theme="dark"] .t3{--c:#5fe8c4}
@@ -116,27 +116,28 @@ h1,h2,.v{font-family:"Unbounded","Inter",sans-serif}
   <div class="kpis">
     <div class="kpi"><div id="statTotal" class="v">0</div><div class="l">Open circulars</div></div>
     <div class="kpi"><div id="stat50k" class="v">0</div><div class="l">Paying ৳50k+</div></div>
-    <div class="kpi"><div id="statRemote" class="v">0</div><div class="l">Remote in US$</div></div>
+    <div class="kpi"><div id="statRemote" class="v">0</div><div class="l">Abroad (remote)</div></div>
   </div>
 </header>
 
 <section class="card reveal">
   <div class="head"><h2>Filters</h2><button class="info" data-i="filters">i</button></div>
   <div class="row">
+    <div class="seg" id="gRegion"><button data-v="ALL" class="on">Everywhere</button><button data-v="Bangladesh">Bangladesh</button><button data-v="Global Remote">Abroad</button></div>
     <div class="seg" id="gMode"><button data-v="ALL" class="on">All</button><button data-v="Remote">Remote</button><button data-v="Hybrid">Hybrid</button><button data-v="Onsite">On-site</button></div>
     <input id="fSearch" class="search" type="text" placeholder="Search role, company or skill" />
   </div>
   <div class="dds">
     <select id="fSector" data-label="Sector"><option value="ALL">All sectors</option></select>
     <select id="fTier" data-label="Salary per month">
-      <option value="ALL">Any salary</option><option value="<25k BDT">Under ৳25k</option><option value="25k–50k BDT">৳25k – ৳50k</option><option value="50k–100k BDT">৳50k – ৳1 lakh</option><option value="100k+ BDT">৳1 lakh and above</option><option value="Remote USD (120k+ BDT eq.)">Remote, paid in US$</option>
+      <option value="ALL">Any salary</option><option value="<25k BDT">Under ৳25k</option><option value="25k–50k BDT">৳25k – ৳50k</option><option value="50k–100k BDT">৳50k – ৳1 lakh</option><option value="100k+ BDT">৳1 lakh and above</option><option value="Remote USD (120k+ BDT eq.)">Remote, paid abroad</option>
     </select>
     <select id="fPosted" data-label="Posted"><option value="30">Last 30 days</option><option value="7">Last 7 days</option><option value="1">Last 24 hours</option></select>
     <select id="fSort" data-label="Sort by"><option value="salary_desc">Highest salary</option><option value="latest">Latest posted</option><option value="skills_desc">Most skills</option></select>
   </div>
   <div class="row">
     <div class="cx" id="gExp"><button data-v="ALL" class="on">Any level</button><button data-v="Fresher">Fresher</button><button data-v="Junior (1-2y)">Junior</button><button data-v="Mid (3-5y)">Mid</button><button data-v="Senior (5+y)">Senior</button></div>
-    <span style="flex:1"></span><button id="btnReset" class="btn">Reset</button>
+    <span style="flex:1"></span><button id="btnReset" class="btn ghost">Reset</button><button id="btnApply" class="btn">Apply filters</button>
   </div>
 </section>
 
@@ -159,14 +160,14 @@ h1,h2,.v{font-family:"Unbounded","Inter",sans-serif}
 <div id="pop"></div>
 <div id="modal"><div class="panel">
   <h2>Where the data comes from</h2>
-  <p>Scanned every day at 9:00 AM BDT, kept for 30 days. Circulars past their deadline are removed automatically. Salaries marked est. are estimates for "negotiable" jobs. Counts below are from the last scan; a source showing 0 may have blocked the scanner.</p>
+  <p>Scanned every day at 9:00 AM BDT, kept for 30 days. Circulars past their deadline are removed automatically. Salaries marked est. are estimates for "negotiable" jobs. Counts are from the last scan. Sites that show a captcha are marked Blocked; their jobs can be added by hand in data/manual_jobs.json.</p>
   <div id="srcList"></div>
   <button id="modalClose" class="btn" style="margin-top:16px">Close</button>
 </div></div>
 
 <script>
 const D=n=>new Date(Date.now()-n*864e5).toISOString().slice(0,10);
-const mk=(id,source,region,title,company,mode,sector,exp,skills,min,max,tier,posted,deadline)=>({id,source,region,title,company,location:region==="Global Remote"?"Worldwide":"Dhaka, Bangladesh",work_mode:mode,sector,experience_level:exp,skills,salary_bdt_min:min,salary_bdt_max:max,salary_is_estimated:true,salary_tier:tier,posted_at:D(posted),deadline:deadline===""?"":D(deadline),circular_url:"#"});
+const mk=(id,source,region,title,company,mode,sector,exp,skills,min,max,tier,posted,deadline,cur)=>({id,source,region,title,company,location:region==="Global Remote"?"Worldwide":"Dhaka, Bangladesh",work_mode:mode,sector,experience_level:exp,skills,salary_bdt_min:min,salary_bdt_max:max,salary_is_estimated:true,salary_currency:region==="Global Remote"?(cur||"USD"):"BDT",salary_tier:tier,posted_at:D(posted),deadline:deadline===""?"":D(deadline),circular_url:"#"});
 const T={a:"<25k BDT",b:"25k–50k BDT",c:"50k–100k BDT",d:"100k+ BDT",e:"Remote USD (120k+ BDT eq.)"};
 const FALLBACK_DATA={generated_at_bdt:"Demo data (run the GitHub workflow for live jobs)",
 trending_skills:[["AI / LLM APIs",34,62,31],["Python",42,28,36],["React / Next.js",39,19,30],["SQL & Databases",37,24,29],["Docker / Kubernetes",26,41,25],["Cybersecurity / SOC",21,43,20],["Flutter / Mobile",24,48,19],["Power BI / Tableau",22,54,18]].map(([skill,count_30d,velocity_pct,unlocks_50k_plus])=>({skill,count_30d,velocity_pct,unlocks_50k_plus})),
@@ -177,16 +178,19 @@ mk("d3","Bdjobs","Bangladesh","Senior SOC Analyst","Premier Bank PLC","Onsite","
 mk("d4","Bdjobs","Bangladesh","Data Analyst","bKash Limited","Hybrid","AI, Data & Analytics","Junior (1-2y)",["SQL & Databases","Power BI / Tableau"],55000,85000,T.c,9,-5),
 mk("d5","Skill.Jobs","Bangladesh","Flutter Developer","Pathao Ltd","Onsite","Tech & Software","Mid (3-5y)",["Flutter / Mobile"],55000,85000,T.c,15,""),
 mk("d6","Bdjobs","Bangladesh","Product Manager","ShopUp","Hybrid","Business, Product & Marketing","Senior (5+y)",["Product Management","SEO & Performance Ads"],100000,130000,T.d,21,-3),
-mk("d7","Bdjobs","Bangladesh","Junior Laravel Developer","Dhaka Web Studio","Onsite","Tech & Software","Junior (1-2y)",["Laravel / PHP","SQL & Databases"],25000,40000,T.b,27,-20)]};
-const SOURCES=[["Bdjobs","https://www.bdjobs.com","Bangladesh · public listing pages"],["Skill.Jobs","https://skill.jobs","Bangladesh · public listing pages"],["Remotive","https://remotive.com","Remote · public API, link back to the original job"],["Jobicy","https://jobicy.com","Remote · public API"],["RemoteOK","https://remoteok.com","Remote · public API, link back to the original job"]];
-const INFO={filters:"Combine any filters. Results update instantly. Reset clears everything.",matrix:"Each box is a monthly salary range. The skills shown appear most often in jobs paying that much. Tap a skill to see those jobs. Remote jobs are paid in US dollars.",chart:"Blue bars: jobs mentioning the skill in the last 30 days. Green bars: how many of those pay ৳50k or more per month.",roi:"Tick the skills you already have. The planner shows which missing skills appear most in jobs paying ৳50k+ per month.",jobs:"Jobs from the last 30 days. Expired circulars disappear automatically. Bangladesh jobs are in ৳ per month, remote jobs in US$ per month. Est. means the salary was negotiable and has been estimated."};
+mk("d7","Bdjobs","Bangladesh","Junior Laravel Developer","Dhaka Web Studio","Onsite","Tech & Software","Junior (1-2y)",["Laravel / PHP","SQL & Databases"],25000,40000,T.b,27,-20),
+mk("d8","Himalayas","Global Remote","Senior Backend Engineer","Berlin Cloud GmbH","Remote","Tech & Software","Senior (5+y)",["Python","Docker / Kubernetes"],572000,715000,T.e,2,"","EUR")]};
+const SOURCES=[["Bdjobs","https://www.bdjobs.com","Bangladesh · listing pages"],["Skill.Jobs","https://skill.jobs","Bangladesh · listing pages"],["Chakri.com","https://chakri.com","Bangladesh · job pages with structured data"],["Prothom Alo Jobs","https://prothomjobs.com","Bangladesh · job pages with structured data"],["Job.com.bd","https://job.com.bd","Bangladesh · job pages with structured data"],["Himalayas","https://himalayas.app","Remote · public API, salaries in original currency"],["WeWorkRemotely","https://weworkremotely.com","Remote · public RSS feed"],["Remotive","https://remotive.com","Remote · public API, link back to the original job"],["Jobicy","https://jobicy.com","Remote · public API"],["RemoteOK","https://remoteok.com","Remote · public API, link back to the original job"],["Manual list","","Jobs you add yourself, for example from LinkedIn"]];
+const INFO={filters:"Choose your filters, then press Apply filters to see the results. Reset clears everything.",matrix:"Each box is a monthly salary range. The skills shown appear most often in jobs paying that much. Tap a skill to see those jobs. Remote jobs are paid in dollars, euros or pounds.",chart:"Blue bars: jobs mentioning the skill in the last 30 days. Green bars: how many of those pay ৳50k or more per month.",roi:"Tick the skills you already have. The planner shows which missing skills appear most in jobs paying ৳50k+ per month.",jobs:"Jobs from the last 30 days. Expired circulars disappear automatically. Bangladesh jobs are in ৳ per month, remote jobs in their own currency (US$, €, £) per month. Est. means the salary was negotiable and has been estimated."};
 const $=id=>document.getElementById(id);
 let DATA=null,activeSkill=null,owned=new Set(),chart=null;
 const tierIndex={[T.a]:0,[T.b]:1,[T.c]:2,[T.d]:3,[T.e]:4};
-const tierLabels={[T.a]:"Under ৳25k",[T.b]:"৳25k – ৳50k",[T.c]:"৳50k – ৳1 lakh",[T.d]:"৳1 lakh+",[T.e]:"Remote, US$"};
+const tierLabels={[T.a]:"Under ৳25k",[T.b]:"৳25k – ৳50k",[T.c]:"৳50k – ৳1 lakh",[T.d]:"৳1 lakh+",[T.e]:"Remote, abroad"};
 const fmtBDT=n=>n>=1e5?"৳"+Math.round(n/1e4)/10+" lakh":"৳"+Math.round(n/1e3)+"k";
-const fmtUSD=n=>{const u=n/122;return u>=1000?"$"+Math.round(u/100)/10+"k":"$"+Math.round(u)};
-const salaryText=c=>{const f=c.region==="Global Remote"?fmtUSD:fmtBDT;return f(c.salary_bdt_min)+" – "+f(c.salary_bdt_max)};
+const SYM={USD:"$",EUR:"€",GBP:"£"};let RATES={USD:122,EUR:143,GBP:163};
+const fmtFx=(n,cur)=>{const u=n/(RATES[cur]||122),m=SYM[cur]||cur+" ";return u>=1000?m+Math.round(u/100)/10+"k":m+Math.round(u)};
+const curOf=c=>c.salary_currency||(c.region==="Global Remote"?"USD":"BDT");
+const salaryText=c=>{const cu=curOf(c),f=cu==="BDT"?fmtBDT:n=>fmtFx(n,cu);return f(c.salary_bdt_min)+" – "+f(c.salary_bdt_max)};
 const hue=s=>{let h=0;for(const ch of s)h=(h*31+ch.charCodeAt(0))%360;return h};
 const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
 const age=c=>c.posted_at?Math.max(0,(Date.now()-Date.parse(c.posted_at))/864e5):0;
@@ -210,25 +214,25 @@ async function load(){
   try{const r=await fetch("data/market_intel.json?t="+Date.now());if(!r.ok)throw 0;DATA=await r.json()}catch{
     DATA=FALLBACK_DATA;const cs=DATA.circulars;
     DATA.salary_unlock_matrix=Object.values(T).map(t=>{const js=cs.filter(c=>c.salary_tier===t),n={};js.forEach(c=>c.skills.forEach(s=>n[s]=(n[s]||0)+1));return{tier:t,job_count:js.length,top_skills:Object.entries(n).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([skill,count])=>({skill,count}))}})}
-  const t=today();DATA.circulars=DATA.circulars.filter(c=>(!c.deadline||c.deadline>=t)&&age(c)<=30);
+  if(DATA.rates)RATES={...RATES,...DATA.rates};const t=today();DATA.circulars=DATA.circulars.filter(c=>(!c.deadline||c.deadline>=t)&&age(c)<=30);
   init();
 }
 function init(){
   $("lastScan").textContent=DATA.generated_at_bdt;
   [...new Set(DATA.circulars.map(c=>c.sector))].sort().forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;$("fSector").appendChild(o)});
   document.querySelectorAll(".dds select").forEach(enhance);
-  group("gMode",render);group("gExp",render);
-  ["fSector","fTier","fPosted","fSort"].forEach(id=>$(id).addEventListener("change",render));
-  $("fSearch").addEventListener("input",render);
-  $("btnReset").onclick=()=>{activeSkill=null;["fSector","fTier"].forEach(id=>$(id).value="ALL");$("fPosted").value="30";$("fSort").value="salary_desc";$("fSearch").value="";document.querySelectorAll(".dds select").forEach(s=>s.rebuild());resetGroup("gMode");resetGroup("gExp");render()};
-  matrix();drawChart();planner();render();
+  ["gRegion","gMode","gExp"].forEach(g=>group(g,()=>{}));
+  $("btnApply").onclick=apply;
+  $("fSearch").addEventListener("keydown",e=>{if(e.key==="Enter")apply()});
+  $("btnReset").onclick=()=>{activeSkill=null;["fSector","fTier"].forEach(id=>$(id).value="ALL");$("fPosted").value="30";$("fSort").value="salary_desc";$("fSearch").value="";document.querySelectorAll(".dds select").forEach(s=>s.rebuild());["gRegion","gMode","gExp"].forEach(resetGroup);apply()};
+  matrix();drawChart();planner();apply();
   const cs=DATA.circulars;countUp($("statTotal"),cs.length);countUp($("stat50k"),cs.filter(c=>c.salary_bdt_max>=5e4).length);countUp($("statRemote"),cs.filter(c=>c.region==="Global Remote").length);
 }
 function matrix(){
   const g=$("unlockGrid");g.innerHTML="";
   DATA.salary_unlock_matrix.forEach((r,i)=>{const b=document.createElement("div");b.className="tier reveal t"+(tierIndex[r.tier]??i);
     b.innerHTML=`<div class="tt"><b>${tierLabels[r.tier]||r.tier}</b><span>${r.job_count} jobs</span></div><div class="chips">${r.top_skills.length?r.top_skills.map(s=>`<button class="chip" data-s="${s.skill}" data-t="${r.tier}">${s.skill}<i>${s.count}</i></button>`).join(""):'<span style="font-size:12px;color:var(--muted)">None</span>'}</div>`;g.appendChild(b)});
-  g.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{activeSkill=b.dataset.s;$("fTier").value=b.dataset.t;$("fTier").rebuild();render();$("circularList").scrollIntoView({behavior:"smooth",block:"start"})});
+  g.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{activeSkill=b.dataset.s;$("fTier").value=b.dataset.t;$("fTier").rebuild();apply();$("circularList").scrollIntoView({behavior:"smooth",block:"start"})});
 }
 function drawChart(){
   const top=DATA.trending_skills.slice(0,10),dk=document.documentElement.dataset.theme==="dark";
@@ -246,11 +250,13 @@ function roi(){
   const r=Object.entries(n).sort((a,b)=>b[1]-a[1]).slice(0,3);
   $("roiResult").innerHTML=r.length?"<b>Learn next</b>"+r.map(([s,c],i)=>`${i+1}. ${s} · ${c} jobs`).join("<br>"):"You cover the top skills.";
 }
+let F={};
+function apply(){F={sec:$("fSector").value,tier:$("fTier").value,exp:$("gExp").value,mode:$("gMode").value,region:$("gRegion").value,sort:$("fSort").value,max:+$("fPosted").value,q:$("fSearch").value.trim().toLowerCase()};render()}
 function render(){
-  const sec=$("fSector").value,tier=$("fTier").value,exp=$("gExp").value,mode=$("gMode").value,sort=$("fSort").value,max=+$("fPosted").value,q=$("fSearch").value.trim().toLowerCase();
+  const {sec,tier,exp,mode,region,sort,max,q}=F;
   const list=DATA.circulars.filter(c=>{
     if(sec!=="ALL"&&c.sector!==sec)return false;if(tier!=="ALL"&&c.salary_tier!==tier)return false;
-    if(exp!=="ALL"&&c.experience_level!==exp)return false;if(mode!=="ALL"&&c.work_mode!==mode)return false;
+    if(exp!=="ALL"&&c.experience_level!==exp)return false;if(mode!=="ALL"&&c.work_mode!==mode)return false;if(region!=="ALL"&&c.region!==region)return false;
     if(age(c)>max)return false;if(activeSkill&&!c.skills.includes(activeSkill))return false;
     return !q||`${c.title} ${c.company} ${c.sector} ${c.skills.join(" ")}`.toLowerCase().includes(q)});
   if(sort==="salary_desc")list.sort((a,b)=>b.salary_bdt_max-a.salary_bdt_max);
@@ -259,10 +265,10 @@ function render(){
   $("shownCount").textContent="("+list.length+")";
   const bd=$("activeSkillBadge");bd.classList.toggle("hidden",!activeSkill);
   if(activeSkill){bd.textContent=activeSkill+" ×";bd.onclick=()=>{activeSkill=null;render()}}
-  $("circularList").innerHTML=list.map((c,i)=>{const rm=c.region==="Global Remote";return`
+  $("circularList").innerHTML=list.map((c,i)=>{const fx=curOf(c)!=="BDT";return`
   <div class="job t${tierIndex[c.salary_tier]??2}" style="--i:${Math.min(i,12)}">
     <div><div class="jt"><div><h3>${c.title}</h3><div class="meta">${c.company} · ${c.location}</div></div>
-    <span class="sal ${rm?"usd":"bdt"}" title="${rm?"About "+fmtBDT(c.salary_bdt_min)+" – "+fmtBDT(c.salary_bdt_max)+" per month":"Taka per month"}">${salaryText(c)}<small> /mo${c.salary_is_estimated?" est.":""}</small></span></div>
+    <span class="sal ${fx?"usd":"bdt"}" title="${fx?"About "+fmtBDT(c.salary_bdt_min)+" – "+fmtBDT(c.salary_bdt_max)+" per month":"Taka per month"}">${salaryText(c)}<small> /mo${c.salary_is_estimated?" est.":""}</small></span></div>
     <div class="tags"><span class="tag sec" style="--sh:${hue(c.sector)}">${c.sector}</span><span class="tag">${c.experience_level}</span><span class="tag">${c.work_mode}</span>${c.skills.map(s=>`<span class="tag" style="background:var(--bdt-bg);color:var(--bdt-fg)">${s}</span>`).join("")}</div></div>
     <div class="foot"><span>${c.source} · ${c.posted_at||"Today"}${c.deadline?" · Closes "+c.deadline:""}</span><a href="${c.circular_url}" target="_blank" rel="noopener noreferrer">Apply →</a></div></div>`}).join("")||'<div class="none">No circulars match your filters.</div>';
 }
@@ -276,8 +282,8 @@ document.addEventListener("click",e=>{
   pop.style.top=r.bottom+scrollY+8+"px";pop.style.left=Math.max(10,Math.min(r.left+scrollX-8,innerWidth-300))+"px";pop.classList.add("open");
 });
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){pop.classList.remove("open");popFor=null;$("modal").classList.remove("open");document.querySelectorAll(".dd.open").forEach(x=>x.classList.remove("open"))}});
-$("srcBtn").onclick=()=>{const c={};DATA.circulars.forEach(x=>c[x.source]=(c[x.source]||0)+1);
-  $("srcList").innerHTML=SOURCES.map(([n,u,d])=>`<div class="src"><div><a href="${u}" target="_blank" rel="noopener noreferrer">${n}</a><small>${d}</small></div><span class="cnt ${c[n]?"":"z"}">${c[n]||0} jobs</span></div>`).join("");$("modal").classList.add("open")};
+$("srcBtn").onclick=()=>{const c={},st=DATA.sources||{};DATA.circulars.forEach(x=>c[x.source]=(c[x.source]||0)+1);
+  $("srcList").innerHTML=SOURCES.map(([n,u,d])=>{const bl=st[n]&&st[n].blocked;return`<div class="src"><div>${u?`<a href="${u}" target="_blank" rel="noopener noreferrer">${n}</a>`:`<b>${n}</b>`}<small>${d}</small></div><span class="cnt ${bl||!c[n]?"z":""}">${bl?"Blocked":(c[n]||0)+" jobs"}</span></div>`}).join("");$("modal").classList.add("open")};
 $("modalClose").onclick=()=>$("modal").classList.remove("open");$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.remove("open")};
 const tb=$("themeToggle"),sync=()=>tb.textContent=document.documentElement.dataset.theme==="dark"?"Light":"Dark";
 tb.onclick=()=>{const n=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=n;try{localStorage.setItem("theme",n)}catch(e){}sync();if(chart)drawChart()};sync();
