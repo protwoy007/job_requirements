@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: "0 3 * * *"
   workflow_dispatch:
+  push:
+    paths:
+      - "data/manual_jobs.json"
 
 permissions:
   contents: write
@@ -40,4 +43,5 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git add data/jobs.db docs/data/market_intel.json
           git diff --staged --quiet || git commit -m "chore: daily 9 AM BDT market scan"
+          git pull --rebase origin main
           git push
